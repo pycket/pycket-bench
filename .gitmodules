@@ -1,0 +1,3 @@
+[submodule "pycket"]
+	path = pycket
+	url = https://github.com/samth/pycket.git

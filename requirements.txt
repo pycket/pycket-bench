@@ -1,2 +1,3 @@
-rebench>=0.2.1
+#rebench>=0.2.1
+-e git://github.com/smarr/ReBench.git#egg=rebench
 

@@ -12,7 +12,7 @@
           (catport port)))))
 
 (define (go)
-  (set! inport (open-input-file "../../src/bib"))
+  (set! inport (open-input-file "../data/bib"))
   (set! outport (open-output-file "foo"))
   (catport inport)
   (close-input-port inport))

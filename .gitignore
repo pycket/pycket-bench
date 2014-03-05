@@ -1,4 +1,7 @@
 output/
+CrossBenchmarks/dish/*.rkt
+CrossBenchmarks/dish/foo
+*.json
 
 *.py[cod]
 

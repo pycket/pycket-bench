@@ -1,6 +1,6 @@
 (begin
-(require racket/fixnum)
-(require racket/flonum)
+;(require racket/fixnum)
+;(require racket/flonum)
 ; Specialize fixnum and flonum arithmetic.
 
 (define-syntax FLOATvector-const

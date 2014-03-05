@@ -18,10 +18,8 @@
        (syntax/loc
            stx
          (let-values ([(v cpu user gc) (time-apply (lambda () expr1 expr ...) null)])
-           (printf "RESULT-cpu: ~a\nRESULT-total: ~a\nRESULT-gc: ~a\n"
-                   (real->decimal-string cpu)
-                   (real->decimal-string user)
-                   (real->decimal-string gc))
+           (printf "RESULT-cpu: ~a.0\nRESULT-total: ~a.0\nRESULT-gc: ~a.0\n"
+                   cpu user gc)
            (apply values v)))])))
 ;------------------------------------------------------------------------------
 (define (run-bench name count ok? run)
@@ -34,14 +32,13 @@
   (newline)
   (let* ((run (apply run-maker args))
          (result (time (run-bench name count ok? run))))
-    (if (not (ok? result))
+    (when (not (ok? result))
       (begin
         (display "*** wrong result ***")
         (newline)
         (display "*** got: ")
         (write result)
-        (newline))))
-  (exit 0))
+        (newline)))))
 
 (define (fatal-error . args)
   (apply error #f args))

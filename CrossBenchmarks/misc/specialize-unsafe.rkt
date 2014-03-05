@@ -1,6 +1,6 @@
 (begin
 
-(require racket/unsafe/ops)
+;(require racket/unsafe/ops)
 
 (define-syntax FLOATvector-const
   (syntax-rules ()

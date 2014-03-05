@@ -947,4 +947,4 @@
          y))))
 
 (define (main . args)
-  (parsing-benchmark parsing-iters "../../src/test.sch"))
+  (parsing-benchmark parsing-iters "../data/test.sch"))

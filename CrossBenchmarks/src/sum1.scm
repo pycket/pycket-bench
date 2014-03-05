@@ -12,7 +12,7 @@
   (sumport port 0.0))
 
 (define (go)
-  (set! inport (open-input-file "../../src/rn100"))
+  (set! inport (open-input-file "../data/rn100"))
   (let ((result (sum inport)))
     (close-input-port inport)
     result))

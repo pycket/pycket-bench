@@ -2305,7 +2305,7 @@
 (define doit 
   (lambda ()
     (i!)
-    (let ((foo (dynamic-parse-file "../../src/dynamic.scm")))
+    (let ((foo (dynamic-parse-file "../src/dynamic.scm")))
       (normalize-global-constraints!)
       (reset-counters!)
       (tag-ast*-show foo)

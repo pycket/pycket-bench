@@ -2336,4 +2336,4 @@
     slatex-iters
     (lambda (result) #t)
     (lambda (filename) (lambda () (slatex.process-main-tex-file filename)))
-    "../../src/test"))
+    "../data/test"))

@@ -1,7 +1,21 @@
-#!/bin/sh
+#! /bin/sh
 
 PROGRAM=`echo $0 | sed 's%.*/%%'`
 PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+set +e
+type pushd 2>/dev/null >/dev/null
+if [ 0 -ne "$?" ]; then
+    _OLD=""
+    pushd() {
+        _OLD=`echo $PWD`
+        cd "$1"
+    }
+    popd() {
+        cd "$_OLD"
+    }
+fi
+set -e
 
 REBENCH="`command -v rebench`"
 if [ -z "$REBENCH" ]; then

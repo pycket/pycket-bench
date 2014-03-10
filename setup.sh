@@ -15,10 +15,13 @@ else
   FETCH="$ECHO Please download "
 fi
 
-
-
-_go() { _OLD=`echo $PWD`; cd "$1" }
-_gone() { cd "$_OLD" }
+_go() {
+    _OLD=`echo $PWD`
+    cd "$1"
+}
+_gone() {
+    cd "$_OLD"
+}
 
 REBENCH="`command -v rebench`"
 if [ -z "$REBENCH" ]; then
@@ -58,7 +61,7 @@ if [ ! -x "$PROGDIR/gambit/bin/gsc" ]; then
 fi
 
 if  [ ! -x "$PROGDIR/larceny/larceny" ]; then
-    $ECHO "installing Gambit"
+    $ECHO "installing Larceny"
     _go "$PROGDIR/src"
     if uname | grep -qi 'Darwin'; then
         LARCENY="larceny-0.97-bin-native-ia32-linux86"

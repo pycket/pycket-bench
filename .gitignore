@@ -1,7 +1,12 @@
 output/
+src/
 CrossBenchmarks/dish/*.rkt
 CrossBenchmarks/dish/foo
 *.json
+
+gambit
+larceny
+
 
 *.py[cod]
 
@@ -15,7 +20,6 @@ dist
 build
 eggs
 parts
-bin
 var
 sdist
 develop-eggs

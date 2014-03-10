@@ -24,7 +24,7 @@ Run a single benchmark
  * **Racket**
 
         cd CrossBenchmarks/dish
-        racket -e -e '(require racket/fixnum racket/flonum racket/unsafe/ops)' -r ctak-nothing.rkt
+        racket -e '(require racket/fixnum racket/flonum racket/unsafe/ops)' -r ctak-nothing.rkt
 
  * **Pycket binary**
 

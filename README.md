@@ -17,3 +17,23 @@ Run the benchmarks statistically rigorously
     sudo rebench -d -v rebench.conf
 
 _Note:_ Uses `sudo` because `rebench` without `-N` uses `nice`
+
+Run a single benchmark
+----------------------
+
+ * **Racket**
+
+        cd CrossBenchmarks/dish
+        racket -e -e '(require racket/fixnum racket/flonum racket/unsafe/ops)' -r ctak-nothing.rkt
+
+ * **Pycket binary**
+
+        cd CrossBenchmarks/dish
+        ../../pycket/pycket-c ctak-nothing.rkt
+
+ * **Pycket hosted**
+
+        cd CrossBenchmarks/dish
+        PYTHONPATH=$PYPY pypy ../../pycket/targetpycket.py ctak-nothing.rkt
+
+

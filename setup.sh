@@ -15,26 +15,17 @@ else
   FETCH="$ECHO Please download "
 fi
 
-set +e
-type pushd 2>/dev/null >/dev/null
-if [ 0 -ne "$?" ]; then
-    _OLD=""
-    pushd() {
-        _OLD=`echo $PWD`
-        cd "$1"
-    }
-    popd() {
-        cd "$_OLD"
-    }
-fi
-set -e
+
+
+_go() { _OLD=`echo $PWD`; cd "$1" }
+_gone { cd "$_OLD" }
 
 REBENCH="`command -v rebench`"
 if [ -z "$REBENCH" ]; then
     $ECHO "installing ReBench"
-    pushd $PROGDIR >/dev/null 2>/dev/null
+    _go $PROGDIR
     pip install -r requirements.txt
-    popd >/dev/null 2>/dev/null
+    _gone
 fi
 
 RACKET="`command -v racket`"
@@ -47,7 +38,7 @@ $ECHO "ignoring  bigloo"
 
 if [ ! -x "$PROGDIR/gambit/bin/gsc" ]; then
     $ECHO "installing Gambit"
-    pushd "$PROGDIR/src" >/dev/null 2>/dev/null
+    _go "$PROGDIR/src"
     GAMBIT="gambc-v4_7_2"
     $FETCH "http://www.iro.umontreal.ca/~gambit/download/gambit/v4.7/source/$GAMBIT.tgz"
     tar -xzf "$GAMBIT.tgz"
@@ -63,12 +54,12 @@ if [ ! -x "$PROGDIR/gambit/bin/gsc" ]; then
     fi
     make -j
     make install
-    popd >/dev/null 2>/dev/null
+    _gone
 fi
 
 if  [ ! -x "$PROGDIR/larceny/larceny" ]; then
     $ECHO "installing Gambit"
-    pushd "$PROGDIR/src" >/dev/null 2>/dev/null
+    _go "$PROGDIR/src"
     if uname | grep -qi 'Darwin'; then
         LARCENY="larceny-0.97-bin-native-ia32-linux86"
     else
@@ -77,22 +68,22 @@ if  [ ! -x "$PROGDIR/larceny/larceny" ]; then
     $FETCH "http://www.larcenists.org/LarcenyReleases/$LARCENY.tar.gz"
     tar -xzf "$LARCENY.tar.gz"
     ln -s $PROGDIR/src/$LARCENY $PROGDIR/larceny
-    popd >/dev/null 2>/dev/null
+    _gone
 fi
 
 if [ ! -f "$PROGDIR/pycket/targetpycket.py" ]; then
     $ECHO "fetching Pycket"
-    pushd $PROGDIR >/dev/null 2>/dev/null
+    _go $PROGDIR
     git submodule init
     git submodule update
-    popd >/dev/null 2>/dev/null
+    _gone
 fi
 
 if ls -1 "$PROGDIR/CrossBenchmarks/dish" | grep -q rkt; then
     :
 else
     $ECHO "Cooking benchmarks"
-    pushd $PROGDIR/CrossBenchmarks/src  >/dev/null 2>/dev/null
+    _go $PROGDIR/CrossBenchmarks/src
     sh cook_files.sh
-    popd >/dev/null 2>/dev/null
+    _gone
 fi

@@ -18,7 +18,7 @@ fi
 
 
 _go() { _OLD=`echo $PWD`; cd "$1" }
-_gone { cd "$_OLD" }
+_gone() { cd "$_OLD" }
 
 REBENCH="`command -v rebench`"
 if [ -z "$REBENCH" ]; then

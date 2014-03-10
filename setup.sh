@@ -64,9 +64,9 @@ if  [ ! -x "$PROGDIR/larceny/larceny" ]; then
     $ECHO "installing Larceny"
     _go "$PROGDIR/src"
     if uname | grep -qi 'Darwin'; then
-        LARCENY="larceny-0.97-bin-native-ia32-linux86"
-    else
         LARCENY="larceny-0.97-bin-native-ia32-macosx"
+    else
+        LARCENY="larceny-0.97-bin-native-ia32-linux86"
     fi
     $FETCH "http://www.larcenists.org/LarcenyReleases/$LARCENY.tar.gz"
     tar -xzf "$LARCENY.tar.gz"

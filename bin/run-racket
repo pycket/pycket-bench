@@ -7,7 +7,7 @@ if [ ! -z "$ZSH_VERSION" ]; then
 fi
 
 RACKET="${RACKET:-env racket}"
-
+RACKET_PACKAGES="racket/fixnum racket/flonum racket/unsafe/ops racket/mpair compatibility/mlist"
 if [ $# -lt 2 ]; then
     echo "No."
     exit -1
@@ -18,7 +18,10 @@ shift
 BENCHMARK=$1
 shift
 
+if egrep -q 'set-c[ad]r!' src/${BENCHMARK}.scm ; then
+    EXTRA_ARG="--mcons"
+fi
 
 exec $RACKET \
-     ${RACKET_ARGS} -e "(require racket/fixnum racket/flonum racket/unsafe/ops)" \
-     "$@" -r benchmark.rkt $VARIABLE $BENCHMARK
+     ${RACKET_ARGS} -e "(require $RACKET_PACKAGES)" \
+     "$@" -r benchmark.rkt $EXTRA_ARG $VARIABLE $BENCHMARK

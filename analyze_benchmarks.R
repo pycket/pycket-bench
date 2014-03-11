@@ -21,13 +21,13 @@ loadfonts()
 
 # ---- cmd line ----
 
-if (FALSE) { 
+if (FALSE) {
   setwd("~/dev/pypy/pycket-bench")
 }
 
 if (length(commandArgs(trailingOnly=TRUE)) > 0) {
   tsv_name = commandArgs(trailingOnly=TRUE)[1]
-} else {  
+} else {
   # tsv_name <- "output/20140307-cache-envs.tsv"
   tsv_name <- "output/current.tsv"
 }

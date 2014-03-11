@@ -1,8 +1,14 @@
 ;#lang racket
-(load "misc/definitions-racket.rkt")
+(require racket/vector)
+(define args (current-command-line-arguments))
+(if (and (> (vector-length args) 0) (string=? (vector-ref args 0) "--mcons"))
+    (begin
+      (set! args (vector-drop args 1))
+      (load "misc/definitions-racket-mcons.rkt"))
+    (load "misc/definitions-racket.rkt"))
 
 (define (make-benchmark)
-  (let ([arguments  (current-command-line-arguments)]
+  (let ([arguments  args]
         [iterations #f])
     (define (arg-nr n)
       (vector-ref arguments n))

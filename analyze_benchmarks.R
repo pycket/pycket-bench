@@ -51,6 +51,9 @@ blacklist <- c('gcold', 'graphs', 'mazefun', 'nucleic', 'parsing', 'string', 'su
 
 table.only <- c('ctak','fibc', 'paraffins')
 
+# in inches
+figure.width <- 7
+figure.height <- 2.5
 
 
 
@@ -132,15 +135,16 @@ write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetNam
 
 
 # Normalized bargraph 1
-pdf(paste0(input.basename, "-norm-shade.pdf"), height=4.3, width=7)
+pdf(paste0(input.basename, "-norm-shade.pdf"), height=figure.height, width=figure.width)
 barplot(acast(bench.summary.graph, vm ~ benchmark, value.var="mean.norm", drop=TRUE),
         beside=TRUE,
         col=c("darkgreen","darkblue"), 
         density = c(30,10), 
         legend.text = TRUE,
-        ylab = "Runtime normalized to Racket",
+        ylab = "Runtime (normalized)",
         ylim = c(0, 3.5),
-        args.legend = list(x = "topleft"), las=2
+        #args.legend = list(x = "topleft"), 
+        las=2
 )
 dev.off()
 
@@ -151,17 +155,20 @@ ggplot(data=bench.summary.graph, aes(
   fill=vm,
 )) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
-#   geom_errorbar(aes(ymin=cnfIntLow, ymax = cnfIntHigh),  position=dodge,color=I("black")) +
-  xlab("Benchmark") + ylab("Runtime") +
+  #   geom_errorbar(aes(ymin=cnfIntLow, ymax = cnfIntHigh),  position=dodge,color=I("black")) +
+  #   xlab("Benchmark") + 
+  ylab("Runtime") +
   theme_bw(base_size=9, base_family="Helvetica") +  
   theme(
     rect = element_rect(),
-    axis.title.x = element_text(face="bold", size=11),
-    axis.text.x  = element_text(size=9), #angle=45, vjust=0.2, 
+    axis.title.x =  element_blank(),
+    #     axis.title.x = element_text(face="bold", size=11),
+    #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2, 
+    axis.text.x  = element_text(size=9, angle=45, vjust=.6), 
     axis.title.y = element_text(face="bold", size=11),
     axis.text.y  = element_text(size=9), #angle=45, hjust=0.2, vjust=0.5, 
-    legend.position=c(0.15, .90), 
-    plot.margin = unit(c(0,3,0,-1),"mm"),
+    legend.position=c(0.15, .80), 
+    plot.margin = unit(c(0,3,0,0),"mm"),
     legend.text = element_text(size=8),
     legend.title = element_text(size=8, face="bold"),
     legend.background = element_rect(fill="gray90", size=0), 
@@ -169,20 +176,24 @@ ggplot(data=bench.summary.graph, aes(
     legend.key=element_rect(fill="white"),
     legend.key.size=unit(5,"mm")
   ) +
-  scale_fill_discrete(name = "Virtual Machine") +
+  scale_y_continuous(breaks=seq(0,3.4,.5), expand=c(0,0)) +
+  scale_fill_grey(name = "Virtual Machine") +
   facet_null()
-ggsave(paste0(input.basename, "-norm-col.pdf"), width=7, height=4.3, units=c("in"), colormodel='rgb')
+ggsave(paste0(input.basename, "-norm-col.pdf"), width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
 
 
 # LaTeX table
-out <- latex(bench.summary.table.ltx, file=paste0(input.basename, "-extremes.tex"),
-      label="tbl:extremes",caption="Extreme runtimes",
-      ctable=TRUE, 
-      #booktabs=TRUE,
-      where="htbp", size="footnotesize",
-      #n.cgroup=rep(2, length(bench.summary.table.ltx)/2), 
-      colheads=rep(c('mean', 'error'), length(bench.summary.table.ltx)/2),
-      col.just=rep(c('r','@{ \\(\\pm\\)}r'), length(bench.summary.table.ltx)/2),
-      cgroup=levels(as.factor(bench.summary.table$vm)), 
-      cdec=rep(c(1,2), length(bench.summary.table.ltx)/2))
-
+(function() {
+  len <- length(bench.summary.table.ltx)/2
+  out <- latex(bench.summary.table.ltx, 
+               file=paste0(input.basename, "-extremes.tex"),
+               rowlabel="Benchmark",
+               label="tbl:extremes",caption="Extreme runtimes",
+               #ctable=TRUE, 
+               booktabs=TRUE,
+               where="htbp", size="footnotesize", #center="centering",
+               colheads=rep(c('mean', 'error'), len),
+               col.just=rep(c('r','@{ \\ensuremath{\\pm}}r'), len),
+               cgroup=levels(as.factor(bench.summary.table$vm)), 
+               cdec=rep(c(1,2), len))
+})()  

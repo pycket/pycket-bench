@@ -20,5 +20,5 @@ shift
 
 
 exec $RACKET \
-     ${RACKET_ARGS:=-e "(require racket/fixnum racket/flonum racket/unsafe/ops)"} \
+     ${RACKET_ARGS} -e "(require racket/fixnum racket/flonum racket/unsafe/ops)" \
      "$@" -r benchmark.rkt $VARIABLE $BENCHMARK

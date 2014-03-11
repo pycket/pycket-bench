@@ -26,7 +26,7 @@
              [restlist  (if (specialized?) (cdddr arglist) (cddr arglist))])
         restlist))
     (define (go)
-      (load (string-append "misc/specialize-" (benchmark-specialization) "-racket.rkt"))
+      (load (string-append "misc/specialize-racket-" (benchmark-specialization) ".rkt"))
       (benchmark-iterations!)
       ;(when (iterations) laters. ; (string->symbol (cadr (syntax->datum (expand f))))
       (load (string-append "src/" (benchmark-name) ".scm"))

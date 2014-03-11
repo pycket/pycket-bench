@@ -23,17 +23,22 @@ Run a single benchmark
 
  * **Racket**
 
-        cd CrossBenchmarks/dish
-        racket -e '(require racket/fixnum racket/flonum racket/unsafe/ops)' -r ctak-nothing.rkt
+        cd CrossBenchmarks
+        ../bin/run-racket -nothing ctak
 
  * **Pycket binary**
 
-        cd CrossBenchmarks/dish
-        ../../pycket/pycket-c ctak-nothing.rkt
+        cd CrossBenchmarks
+        ../bin/run-pycket -nothin ctak
 
  * **Pycket hosted**
 
-        cd CrossBenchmarks/dish
-        PYTHONPATH=$PYPY pypy ../../pycket/targetpycket.py ctak-nothing.rkt
+        cd CrossBenchmarks
+        PYTHONPATH=$PYPY pypy ../../pycket/targetpycket.py dish/ctak-nothing.rkt
+
+ * **Gambit**
+
+        cd CrossBenchmarks
+        ../bin/run-gambit -nothin ctak
 
 

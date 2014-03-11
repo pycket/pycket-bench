@@ -1,0 +1,32 @@
+#! /bin/sh
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+if [ ! -z "$ZSH_VERSION" ]; then
+  setopt shwordsplit
+fi
+
+BENCHDIR="$(dirname $PROGDIR)"
+GAMBITDIR="$BENCHDIR/gambit"
+GAMBIT="${GAMBIT:-$GAMBITDIR/bin/gsc}"
+
+if [ $# -lt 2 ]; then
+    echo "No."
+    exit -1
+fi
+
+VARIABLE=$1
+shift
+BENCHMARK=$1
+shift
+
+OUT="gambit/${BENCHMARK}${VARIABLE}.exe"
+
+GAMBIT_PRELUDE="${GAMBIT_PRELUDE:-misc/definitions-gambit.scm misc/iterations.rkt}"
+GAMBIT_SPECIALIZE="misc/specialize-gambit$VARIABLE.scm"
+
+$GAMBIT ${GAMBIT_ARGS:=-exe -cc-options "-D___SINGLE_HOST -O3"} -o $OUT \
+        ${GAMBIT_PRELUDE} ${GAMBIT_SPECIALIZE} \
+        src/${BENCHMARK}.scm \
+        misc/main.scm 2>&1 >/dev/null
+exec $OUT

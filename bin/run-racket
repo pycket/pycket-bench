@@ -1,0 +1,24 @@
+#! /bin/sh
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+if [ ! -z "$ZSH_VERSION" ]; then
+  setopt shwordsplit
+fi
+
+RACKET="${RACKET:-env racket}"
+
+if [ $# -lt 2 ]; then
+    echo "No."
+    exit -1
+fi
+
+VARIABLE=$1
+shift
+BENCHMARK=$1
+shift
+
+
+exec $RACKET \
+     ${RACKET_ARGS:=-e "(require racket/fixnum racket/flonum racket/unsafe/ops)"} \
+     "$@" -r benchmark.rkt $VARIABLE $BENCHMARK

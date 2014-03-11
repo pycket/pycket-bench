@@ -2,10 +2,11 @@ output/
 src/
 CrossBenchmarks/dish/*.rkt
 CrossBenchmarks/dish/foo
+CrossBenchmarks/gambit/
 *.json
 
-gambit
-larceny
+/gambit
+/larceny
 
 
 *.py[cod]

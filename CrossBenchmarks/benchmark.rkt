@@ -1,5 +1,5 @@
 ;#lang racket
-(load "misc/definitions.rkt")
+(load "misc/definitions-racket.rkt")
 
 (define (make-benchmark)
   (let ([arguments  (current-command-line-arguments)]
@@ -26,7 +26,7 @@
              [restlist  (if (specialized?) (cdddr arglist) (cddr arglist))])
         restlist))
     (define (go)
-      (load (string-append "misc/specialize-" (benchmark-specialization) ".rkt"))
+      (load (string-append "misc/specialize-" (benchmark-specialization) "-racket.rkt"))
       (benchmark-iterations!)
       ;(when (iterations) laters. ; (string->symbol (cadr (syntax->datum (expand f))))
       (load (string-append "src/" (benchmark-name) ".scm"))

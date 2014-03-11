@@ -1,0 +1,23 @@
+#! /bin/sh
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+if [ ! -z "$ZSH_VERSION" ]; then
+  setopt shwordsplit
+fi
+
+BENCHDIR="$(dirname $PROGDIR)"
+PYCKETDIR="$BENCHDIR/pycket"
+PYCKET="${PYCKET:-$PYCKETDIR/pycket-c}"
+
+if [ $# -lt 2 ]; then
+    echo "No."
+    exit -1
+fi
+
+VARIABLE=$1
+shift
+BENCHMARK=$1
+shift
+
+exec $PYCKET --jit off "$@" "dish/$BENCHMARK$VARIABLE.rkt"

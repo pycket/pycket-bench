@@ -25,7 +25,7 @@ OUT="gambit/${BENCHMARK}${VARIABLE}.exe"
 GAMBIT_PRELUDE="${GAMBIT_PRELUDE:-misc/definitions-gambit.scm misc/iterations.rkt}"
 GAMBIT_SPECIALIZE="misc/specialize-gambit$VARIABLE.scm"
 
-$GAMBIT -exe -cc-options "${GAMBIT_CC:=-D___SINGLE_HOST -O3}" -o $OUT \
+$GAMBIT "$@" -exe -cc-options "${GAMBIT_CC:=-D___SINGLE_HOST -O3}" -o $OUT \
         ${GAMBIT_PRELUDE} ${GAMBIT_SPECIALIZE} \
         src/${BENCHMARK}.scm \
         misc/main.scm 2>&1 >/dev/null

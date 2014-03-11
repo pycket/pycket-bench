@@ -46,3 +46,7 @@
 
 ;-----------------------------------------------------------------------------
 (declare (standard-bindings) (block))
+
+(##define-macro (def-macro form . body)
+  `(##define-macro ,form (let () ,@body)))
+

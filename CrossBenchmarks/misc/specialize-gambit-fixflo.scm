@@ -1,6 +1,4 @@
-(##define-macro (def-macro form . body)
-  `(##define-macro ,form (let () ,@body)))
-
+;
 ; Specialize fixnum and flonum arithmetic.
 
 ;; This code should be used when f64vectors are available.

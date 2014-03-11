@@ -1,7 +1,5 @@
+;
 (declare (not safe))
-
-(##define-macro (def-macro form . body)
-  `(##define-macro ,form (let () ,@body)))
 
 ; Specialize fixnum and flonum arithmetic.
 

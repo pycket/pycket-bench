@@ -1,6 +1,3 @@
-(declare (mostly-generic))
-(##define-macro (def-macro form . body)
-  `(##define-macro ,form (let () ,@body)))
 
 ; Don't specialize fixnum and flonum arithmetic.
 

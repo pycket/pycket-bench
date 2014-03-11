@@ -41,16 +41,21 @@ input.basename = file_path_sans_ext(tsv_name)
 bench <- read.delim(tsv_name, comment.char = "#", header=FALSE,
                     col.names=c('timestamp', 'value', 'unit', 'criterion', 'benchmark', 'vm', 'suite', 'extra_args', 'warump', 'cores', 'input_size', 'variable_values'))
 
-bench$vm <- sapply(bench$vm, function (x) 
+bench$vm <- sapply(bench$vm, function (x)
   if (x=='RRacket') 'Racket' else paste0("",x))
 
 # These are currently not run on pycket
-blacklist <- c('gcold', 'graphs', 'mazefun', 'nucleic', 'parsing', 'string', 'sum1', 'wc')
+blacklist <- c('browse', 'conform', 'dderiv', 'destruc', 'lattice', 'matrix',
+               'maze', 'pi', 'peval', 'scheme', 'tfib', 'trav1', 'trav2',
+               'gcold', 'graphs', 'mazefun', 'nucleic', 'parsing', 'string',
+               'sum1', 'wc',
+               'gcbench'
+               )
 
 # There are too big differences to plot. thus, table only
 
-table.only <- c('ctak','fibc', 'paraffins')
-
+#table.only <- c('ctak','fibc', 'paraffins')
+table.only <- c('ctak','fibc')
 # in inches
 figure.width <- 7
 figure.height <- 2.5
@@ -90,7 +95,7 @@ bench <- bench[c('criterion','vm','benchmark','value')]
 bench.tot <- bench[bench$criterion == 'total',]
 bench.cpu <- bench[bench$criterion == "cpu",]
 
-bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise, 
+bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
                        mean=mean(value),
                        median=median(value),
                        stdev=sd(value),
@@ -102,7 +107,7 @@ bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
 bench.summary <- normalizeTo(bench.summary, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
 bench.tot.graph <- bench.tot[!(bench.tot$benchmark %in% table.only),]
-bench.summary.graph <- ddply(bench.tot.graph, .(benchmark,vm), summarise, 
+bench.summary.graph <- ddply(bench.tot.graph, .(benchmark,vm), summarise,
                         mean=mean(value),
                         median=median(value),
                         stdev=sd(value),
@@ -113,7 +118,7 @@ bench.summary.graph <- ddply(bench.tot.graph, .(benchmark,vm), summarise,
 bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
 bench.tot.table <- subset(bench.tot, (benchmark %in% table.only))
-bench.summary.table <- ddply(bench.tot.table, .(benchmark,vm), summarise, 
+bench.summary.table <- ddply(bench.tot.table, .(benchmark,vm), summarise,
                         mean=mean(value),
                         median=median(value),
                         stdev=sd(value),
@@ -138,45 +143,45 @@ write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetNam
 pdf(paste0(input.basename, "-norm-shade.pdf"), height=figure.height, width=figure.width)
 barplot(acast(bench.summary.graph, vm ~ benchmark, value.var="mean.norm", drop=TRUE),
         beside=TRUE,
-        col=c("darkgreen","darkblue"), 
-        density = c(30,10), 
+        col=c("darkgreen","darkblue"),
+        density = c(30,10),
         legend.text = TRUE,
         ylab = "Runtime (normalized)",
         ylim = c(0, 3.5),
-        #args.legend = list(x = "topleft"), 
+        #args.legend = list(x = "topleft"),
         las=2
 )
 dev.off()
 
 # Normalized bargraph 2
 dodge <- position_dodge(width=.8)
-ggplot(data=bench.summary.graph, aes(
-  x=benchmark,y=mean.norm,group=interaction(benchmark,vm),
-  fill=vm,
-)) +
+ymax <- round_any(max(bench.summary.graph$mean.norm), 0.5, ceiling)
+ggplot(data=bench.summary.graph,
+       aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
+) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
   #   geom_errorbar(aes(ymin=cnfIntLow, ymax = cnfIntHigh),  position=dodge,color=I("black")) +
-  #   xlab("Benchmark") + 
-  ylab("Runtime") +
-  theme_bw(base_size=9, base_family="Helvetica") +  
+  #   xlab("Benchmark") +
+  ylab("Relative Runtime") +
+  theme_bw(base_size=9, base_family="Helvetica") +
   theme(
     rect = element_rect(),
     axis.title.x =  element_blank(),
     #     axis.title.x = element_text(face="bold", size=11),
-    #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2, 
-    axis.text.x  = element_text(size=9, angle=45, vjust=.6), 
+    #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2,
+    axis.text.x  = element_text(size=9, angle=45, hjust=1),
     axis.title.y = element_text(face="bold", size=11),
-    axis.text.y  = element_text(size=9), #angle=45, hjust=0.2, vjust=0.5, 
-    legend.position=c(0.15, .80), 
-    plot.margin = unit(c(0,3,0,0),"mm"),
+    axis.text.y  = element_text(size=9), #angle=45, hjust=0.2, vjust=0.5,
+    legend.position=c(0.15, .75),
+    plot.margin = unit(c(2,3,-2,-1),"mm"),
     legend.text = element_text(size=8),
     legend.title = element_text(size=8, face="bold"),
-    legend.background = element_rect(fill="gray90", size=0), 
+    legend.background = element_rect(fill="gray90", size=0),
     legend.margin = unit(0, "cm"),
     legend.key=element_rect(fill="white"),
     legend.key.size=unit(5,"mm")
   ) +
-  scale_y_continuous(breaks=seq(0,3.4,.5), expand=c(0,0)) +
+  scale_y_continuous(breaks=seq(0,ymax,.5), limits=c(0,ymax),expand=c(0,0)) +
   scale_fill_grey(name = "Virtual Machine") +
   facet_null()
 ggsave(paste0(input.basename, "-norm-col.pdf"), width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
@@ -185,15 +190,15 @@ ggsave(paste0(input.basename, "-norm-col.pdf"), width=figure.width, height=figur
 # LaTeX table
 (function() {
   len <- length(bench.summary.table.ltx)/2
-  out <- latex(bench.summary.table.ltx, 
+  out <- latex(bench.summary.table.ltx,
                file=paste0(input.basename, "-extremes.tex"),
                rowlabel="Benchmark",
                label="tbl:extremes",caption="Extreme runtimes",
-               #ctable=TRUE, 
+               #ctable=TRUE,
                booktabs=TRUE,
                where="htbp", size="footnotesize", #center="centering",
                colheads=rep(c('mean', 'error'), len),
                col.just=rep(c('r','@{ \\ensuremath{\\pm}}r'), len),
-               cgroup=levels(as.factor(bench.summary.table$vm)), 
+               cgroup=levels(as.factor(bench.summary.table$vm)),
                cdec=rep(c(1,2), len))
-})()  
+})()

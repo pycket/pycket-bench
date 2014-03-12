@@ -8,7 +8,6 @@ pkgs = c(
   "Hmisc",
   "ggplot2",
   "tools",
-  "extrafont",
   "xlsx"
 )
 
@@ -17,6 +16,13 @@ use <- function(pkg) {
   library(pkg,character.only=TRUE)
 }
 sapply(pkgs, use)
+if (!require(extrafont)) {
+  install.packages("devtools")
+  library(devtools)
+  install_github("Rttf2pt1", "wch")
+  install_github("extrafont", "wch")
+}
+library(extrafont)
 loadfonts()
 
 # ---- cmd line ----
@@ -45,12 +51,21 @@ bench$vm <- sapply(bench$vm, function (x)
   if (x=='RRacket') 'Racket' else paste0("",x))
 
 # These are currently not run on pycket
-blacklist <- c('browse', 'conform', 'dderiv', 'destruc', 'lattice', 'matrix',
-               'maze', 'pi', 'peval', 'scheme', 'tfib', 'trav1', 'trav2',
-               'gcold', 'graphs', 'mazefun', 'nucleic', 'parsing', 'string',
-               'sum1', 'wc',
-               'gcbench'
-               )
+blacklist <- c('browse'
+               , 'conform'
+               , 'dderiv'
+               , 'destruc'
+               , 'graphs'
+               , 'lattice'
+               , 'matrix'
+               , 'maze'
+               , 'peval'
+               , 'ray'
+               , 'scheme'
+               , 'tfib'
+               , 'trav1'
+               , 'trav2'
+)
 
 # There are too big differences to plot. thus, table only
 

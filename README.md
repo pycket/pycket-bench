@@ -41,4 +41,13 @@ Run a single benchmark
         cd CrossBenchmarks
         ../bin/run-gambit -nothin ctak
 
+Analyze benchmarks
+------------------
 
+    ./analyze_benchmarks.R [output/your.tsv]
+
+or 
+
+    Rscript ./analyze_benchmarks.R [output/your.tsv]
+
+If no argument is given, it defaults to `output/current.tsv`, which could be a convenient symlink.

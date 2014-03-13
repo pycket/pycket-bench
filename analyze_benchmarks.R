@@ -69,8 +69,8 @@ blacklist <- c('browse'
 
 # There are too big differences to plot. thus, table only
 
-#table.only <- c('ctak','fibc', 'paraffins')
 table.only <- c('ctak','fibc')
+#table.only <- c('ctak')
 # in inches
 figure.width <- 7
 figure.height <- 2.5
@@ -121,8 +121,9 @@ bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
 
 bench.summary <- normalizeTo(bench.summary, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
-bench.tot.graph <- bench.tot[!(bench.tot$benchmark %in% table.only),]
-bench.summary.graph <- ddply(bench.tot.graph, .(benchmark,vm), summarise,
+#bench.tot.graph <- bench.tot[!(bench.tot$benchmark %in% table.only),]
+bench.summary.graph <- ddply(bench.tot, .(benchmark,vm), summarise,
+                        overall=FALSE,
                         mean=mean(value),
                         median=median(value),
                         stdev=sd(value),
@@ -130,9 +131,25 @@ bench.summary.graph <- ddply(bench.tot.graph, .(benchmark,vm), summarise,
                         cnfIntHigh = mean(value) + (confInterval095Error(value)),
                         cnfIntLow = mean(value) - (confInterval095Error(value))
 )
+bench.summary.graph <- bench.summary.graph[!(bench.summary.graph$benchmark %in% table.only),]
+
+bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean')], id.vars=c('vm')), .(vm),
+                               plyr::summarize, 
+                               overall=TRUE,
+                               benchmark='geometric\nmean',
+                               mean=exp(mean(log(value))),
+                               median=1,
+                               stdev=1,
+                               err095=1,
+                               cnfIntHigh=1,
+                               cnfIntLow=1
+)
+bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
 bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
+
 bench.tot.table <- subset(bench.tot, (benchmark %in% table.only))
+
 bench.summary.table <- ddply(bench.tot.table, .(benchmark,vm), summarise,
                         mean=mean(value),
                         median=median(value),
@@ -170,8 +187,10 @@ dev.off()
 
 # Normalized bargraph 2
 dodge <- position_dodge(width=.8)
+# ymax <- round_any(max(1/bench.summary.graph$mean.norm), 0.5, ceiling)
 ymax <- round_any(max(bench.summary.graph$mean.norm), 0.5, ceiling)
 ggplot(data=bench.summary.graph,
+#        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
@@ -188,7 +207,7 @@ ggplot(data=bench.summary.graph,
     axis.title.y = element_text(face="bold", size=11),
     axis.text.y  = element_text(size=9), #angle=45, hjust=0.2, vjust=0.5,
     legend.position=c(0.15, .75),
-    plot.margin = unit(c(2,3,-2,-1),"mm"),
+    plot.margin = unit(c(-3.2,3,-2,-1),"mm"),
     legend.text = element_text(size=8),
     legend.title = element_text(size=8, face="bold"),
     legend.background = element_rect(fill="gray90", size=0),
@@ -198,7 +217,8 @@ ggplot(data=bench.summary.graph,
   ) +
   scale_y_continuous(breaks=seq(0,ymax,.5), limits=c(0,ymax),expand=c(0,0)) +
   scale_fill_grey(name = "Virtual Machine") +
-  facet_null()
+  #facet_null()
+  facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
 ggsave(paste0(input.basename, "-norm-col.pdf"), width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
 
 

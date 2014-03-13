@@ -3,6 +3,7 @@ src/
 CrossBenchmarks/dish/*.rkt
 CrossBenchmarks/dish/foo
 CrossBenchmarks/gambit/
+CrossBenchmarks/larceny/
 *.json
 
 /gambit

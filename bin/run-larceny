@@ -1,0 +1,40 @@
+#! /bin/sh
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+export LANG=C
+if [ ! -z "$ZSH_VERSION" ]; then
+  setopt shwordsplit
+fi
+
+BENCHDIR="$(dirname $PROGDIR)"
+LARCENYDIR="$BENCHDIR/larceny"
+LARCENY="${LARCENY:-$LARCENYDIR/larceny}"
+
+if [ $# -lt 2 ]; then
+    echo "No."
+    exit -1
+fi
+
+VARIABLE=$1
+shift
+BENCHMARK=$1
+shift
+
+OUT="larceny/$BENCHMARK.fasl"
+
+$LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF
+(begin
+  (load "misc/specialize-larceny$VARIABLE.scm")
+  (compile-file "src/$BENCHMARK.scm" "$OUT"))
+EOF
+
+exec $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF \
+    2>&1 | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ time/ {printf "RESULT-total: %f\nRESULT-cpu: %f\n", $3, $6 } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } {print}'
+(begin
+  (load "misc/definitions-larceny.scm")
+  (load "misc/iterations.rkt")
+  (load "misc/specialize-larceny$VARIABLE.scm")
+  (load "$OUT")
+  (main))
+EOF

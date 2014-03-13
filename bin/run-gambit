@@ -29,5 +29,5 @@ GAMBIT_SPECIALIZE="misc/specialize-gambit$VARIABLE.scm"
 cat ${GAMBIT_PRELUDE} ${GAMBIT_SPECIALIZE} src/${BENCHMARK}.scm misc/main.scm > ${SRC}
 
 
-$GAMBIT "$@" -exe -cc-options "${GAMBIT_CC:=-D___SINGLE_HOST -O3}" -o $OUT $SRC
+$GAMBIT "$@" -exe -cc-options "${GAMBIT_CC:=-D___SINGLE_HOST}" -o $OUT $SRC
 exec $OUT

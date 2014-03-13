@@ -52,6 +52,9 @@ bench$vm <- sapply(bench$vm, function (x)
 
 # These are currently not run on pycket
 blacklist <- c('browse'
+               , 'cat'
+               , 'slatex'
+               , 'dynamic'
                , 'conform'
                , 'dderiv'
                , 'destruc'
@@ -62,6 +65,7 @@ blacklist <- c('browse'
                , 'peval'
                , 'ray'
                , 'scheme'
+               , 'tail'
                , 'tfib'
                , 'trav1'
                , 'trav2'
@@ -69,7 +73,7 @@ blacklist <- c('browse'
 
 # There are too big differences to plot. thus, table only
 
-table.only <- c('ctak','fibc')
+table.only <- c('ctak','fibc', 'pi')
 #table.only <- c('ctak')
 # in inches
 figure.width <- 7
@@ -100,8 +104,21 @@ normalize_value_bootstrap_confidence = function(x, y, R=1000) {
     total <- c(x,y)
     id <- as.factor(c(rep("x",length(x)),rep("y",length(y))))
 
-    b <- boot(total, div, strata=id, R=R, extraid=id)
-    boot.ci(b)$normal
+    b <- boot(total, div_mean_x_y, strata=id, R=R, extraid=id)
+    norm <- suppressWarnings(boot.ci(b)$normal)
+    dimnames(norm) <- list(NULL,c("conf", "upper", "lower"))
+    norm
+}
+
+bootstrapTo <- function(df, supergroup, group, val, var) {
+  cmp <- df[(df[[group]] == val),]
+  doIt <- function(X) {
+    ident <- (X[[supergroup]])[[1]]
+    subs <- cmp[(cmp[[supergroup]] == ident),]
+    comparee <- subs[[var]]
+    normalize_value_bootstrap_confidence(X[[var]], comparee)
+  }
+  ddply(df, c(supergroup,group), doIt)  
 }
 
 normalizeTo <- function(df, supergroup, group, val, var, vars=c(var)) {
@@ -123,10 +140,13 @@ normalizeTo <- function(df, supergroup, group, val, var, vars=c(var)) {
 
 bench <- bench[!(bench$benchmark %in% blacklist),,drop=TRUE]
 bench <- bench[c('criterion','vm','benchmark','value')]
-bench.tot <- bench[bench$criterion == 'total',]
-bench.cpu <- bench[bench$criterion == "cpu",]
+bench.tot <- bench[bench$criterion == 'total',,drop=TRUE]
+bench.cpu <- bench[bench$criterion == "cpu",,drop=TRUE]
+
+bench.err <- bootstrapTo(bench.tot, 'benchmark', 'vm', 'Racket', 'value')
 
 bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
+                       overall=FALSE,
                        mean=mean(value),
                        median=median(value),
                        stdev=sd(value),
@@ -134,34 +154,30 @@ bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
                        cnfIntHigh = mean(value) + (confInterval095Error(value)),
                        cnfIntLow = mean(value) - (confInterval095Error(value))
 )
-
-bench.summary <- normalizeTo(bench.summary, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
-
-#bench.tot.graph <- bench.tot[!(bench.tot$benchmark %in% table.only),]
-bench.summary.graph <- ddply(bench.tot, .(benchmark,vm), summarise,
-                        overall=FALSE,
-                        mean=mean(value),
-                        median=median(value),
-                        stdev=sd(value),
-                        err095=confInterval095Error(value),
-                        cnfIntHigh = mean(value) + (confInterval095Error(value)),
-                        cnfIntLow = mean(value) - (confInterval095Error(value))
+bench.summary <- merge(
+  normalizeTo(bench.summary, 'benchmark', 'vm', 'Racket', 'mean'),
+  bench.err
 )
-bench.summary.graph <- bench.summary.graph[!(bench.summary.graph$benchmark %in% table.only),]
 
-bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean')], id.vars=c('vm')), .(vm),
+bench.summary.graph <- bench.summary[!(bench.summary$benchmark %in% table.only),]
+
+bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id.vars=c('vm')), .(vm),
                                plyr::summarize, 
                                overall=TRUE,
                                benchmark='geometric\nmean',
-                               mean=exp(mean(log(value))),
+                               mean=1,
+                               mean.norm=exp(mean(log(value))),
                                median=1,
                                stdev=1,
                                err095=1,
                                cnfIntHigh=1,
-                               cnfIntLow=1
+                               cnfIntLow=1,
+                               conf=1,
+                               upper=exp(mean(log(value))),
+                               lower=exp(mean(log(value)))
 )
 bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
-bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
+#bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
 
 bench.tot.table <- subset(bench.tot, (benchmark %in% table.only))
@@ -210,22 +226,22 @@ ggplot(data=bench.summary.graph,
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
-  #   geom_errorbar(aes(ymin=cnfIntLow, ymax = cnfIntHigh),  position=dodge,color=I("black")) +
+  geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge,color=I("black")) +
   #   xlab("Benchmark") +
   ylab("Relative Runtime") +
-  theme_bw(base_size=9, base_family="Helvetica") +
+  theme_bw(base_size=8, base_family="Helvetica") +
   theme(
     rect = element_rect(),
     axis.title.x =  element_blank(),
-    #     axis.title.x = element_text(face="bold", size=11),
+    #     axis.title.x = element_text(face="bold", size=9),
     #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2,
-    axis.text.x  = element_text(size=9, angle=45, hjust=1),
-    axis.title.y = element_text(face="bold", size=11),
-    axis.text.y  = element_text(size=9), #angle=45, hjust=0.2, vjust=0.5,
+    axis.text.x  = element_text(size=8, angle=45, hjust=1),
+    axis.title.y = element_text(face="bold", size=8),
+    axis.text.y  = element_text(size=8), #angle=45, hjust=0.2, vjust=0.5,
     legend.position=c(0.15, .75),
-    plot.margin = unit(c(-3.2,3,-2,-1),"mm"),
-    legend.text = element_text(size=8),
-    legend.title = element_text(size=8, face="bold"),
+    plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
+    legend.text = element_text(size=7),
+    legend.title = element_text(size=7, face="bold"),
     legend.background = element_rect(fill="gray90", size=0),
     legend.margin = unit(0, "cm"),
     legend.key=element_rect(fill="white"),
@@ -244,9 +260,10 @@ ggsave(paste0(input.basename, "-norm-col.pdf"), width=figure.width, height=figur
   out <- latex(bench.summary.table.ltx,
                file=paste0(input.basename, "-extremes.tex"),
                rowlabel="Benchmark",
-               label="tbl:extremes",caption="Extreme runtimes",
+               #label="tbl:extremes",caption="Extreme runtimes",
                #ctable=TRUE,
                booktabs=TRUE,
+               table.env=FALSE, center="none"
                where="htbp", size="footnotesize", #center="centering",
                colheads=rep(c('mean', 'error'), len),
                col.just=rep(c('r','@{ \\ensuremath{\\pm}}r'), len),

@@ -4,7 +4,7 @@ pkgs = c(
   "reshape2",
   "plyr",
   #"beanplot",
-  #"boot",
+  "boot",
   "Hmisc",
   "ggplot2",
   "tools",
@@ -86,6 +86,22 @@ confInterval095Error <- function (samples) {
     qnorm(0.975) * sd(samples) / sqrt(length(samples))
   else
     qt(0.975, df=length(samples)-1) * sd(samples) / sqrt(length(samples))
+}
+
+div_mean_x_y = function(data, indices, extraid) {
+    indexx = indices[extraid == "x"]
+    indexy = indices[extraid == "y"]
+    mean(data[indexx]) / mean(data[indexy])
+}
+
+normalize_value_bootstrap_confidence = function(x, y, R=1000) {
+    # x and y need to be *vectors* of all the values
+    # the result is the confidence interval of mean(x) / mean(y)
+    total <- c(x,y)
+    id <- as.factor(c(rep("x",length(x)),rep("y",length(y))))
+
+    b <- boot(total, div, strata=id, R=R, extraid=id)
+    boot.ci(b)$normal
 }
 
 normalizeTo <- function(df, supergroup, group, val, var, vars=c(var)) {

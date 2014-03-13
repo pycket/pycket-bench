@@ -182,22 +182,12 @@ bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id
 bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
 #bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
+bench.summary.sel <- dcast(melt(bench.summary[c('benchmark','vm','mean','err095')], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
+bench.summary.ltx <- bench.summary.sel[2:length(bench.summary.sel)]
+rownames(bench.summary.ltx) <- bench.summary.sel$benchmark
+colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
 
-bench.tot.table <- subset(bench.tot, (benchmark %in% table.only))
-
-bench.summary.table <- ddply(bench.tot.table, .(benchmark,vm), summarise,
-                        mean=mean(value),
-                        median=median(value),
-                        stdev=sd(value),
-                        err095=confInterval095Error(value),
-                        cnfIntHigh = mean(value) + (confInterval095Error(value)),
-                        cnfIntLow = mean(value) - (confInterval095Error(value))
-)
-
-bench.summary.table.sel <- dcast(melt(bench.summary.table[c('benchmark','vm','mean','err095')], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
-bench.summary.table.ltx <- bench.summary.table.sel[2:length(bench.summary.table.sel)]
-rownames(bench.summary.table.ltx) <- bench.summary.table.sel$benchmark
-colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
+bench.summary.table.ltx <- bench.summary.ltx[rownames(bench.summary.ltx) %in% table.only,]
 
 # ----- Outputting -----
 
@@ -273,5 +263,19 @@ embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
                colheads=rep(c('mean', 'error'), len),
                col.just=rep(c('r','@{ \\ensuremath{\\pm}}r'), len),
                cgroup=levels(as.factor(bench.summary.table$vm)),
+               cdec=rep(c(1,2), len))
+})()
+# LaTeX table, all
+(function() {
+  len <- length(bench.summary.ltx)/2
+  out <- latex(bench.summary.ltx,
+               file=paste0(input.basename, "-all.tex"),
+               rowlabel="Benchmark",
+               booktabs=TRUE,
+               table.env=FALSE, center="none",
+               size="footnotesize", #center="centering",
+               colheads=rep(c('mean', 'error'), len),
+               col.just=rep(c('r','@{ \\ensuremath{\\pm}}r'), len),
+               cgroup=levels(as.factor(bench.summary$vm)),
                cdec=rep(c(1,2), len))
 })()

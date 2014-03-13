@@ -23,7 +23,10 @@ if (!require(extrafont)) {
   install_github("extrafont", "wch")
 }
 library(extrafont)
-loadfonts()
+loadfonts(quiet=TRUE)
+if (length(fonts()) == 0) {
+  font_import(prompt=FALSE)
+}
 
 # ---- cmd line ----
 
@@ -173,8 +176,8 @@ bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id
                                cnfIntHigh=1,
                                cnfIntLow=1,
                                conf=1,
-                               upper=exp(mean(log(value))),
-                               lower=exp(mean(log(value)))
+                               upper=NA,#exp(mean(log(value))),
+                               lower=NA#exp(mean(log(value)))
 )
 bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
 #bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
@@ -202,20 +205,20 @@ colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), f
 write.xlsx(bench.tot, paste0(input.basename, ".xlsx"), append=FALSE, sheetName="bench")
 write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetName="summary")
 
-
-# Normalized bargraph 1
-pdf(paste0(input.basename, "-norm-shade.pdf"), height=figure.height, width=figure.width)
-barplot(acast(bench.summary.graph, vm ~ benchmark, value.var="mean.norm", drop=TRUE),
-        beside=TRUE,
-        col=c("darkgreen","darkblue"),
-        density = c(30,10),
-        legend.text = TRUE,
-        ylab = "Runtime (normalized)",
-        ylim = c(0, 3.5),
-        #args.legend = list(x = "topleft"),
-        las=2
-)
-dev.off()
+# 
+# # Normalized bargraph 1
+# pdf(paste0(input.basename, "-norm-shade.pdf"), height=figure.height, width=figure.width)
+# barplot(acast(bench.summary.graph, vm ~ benchmark, value.var="mean.norm", drop=TRUE),
+#         beside=TRUE,
+#         col=c("darkgreen","darkblue"),
+#         density = c(30,10),
+#         legend.text = TRUE,
+#         ylab = "Runtime (normalized)",
+#         ylim = c(0, 3.5),
+#         #args.legend = list(x = "topleft"),
+#         las=2
+# )
+# dev.off()
 
 # Normalized bargraph 2
 dodge <- position_dodge(width=.8)
@@ -251,7 +254,9 @@ ggplot(data=bench.summary.graph,
   scale_fill_grey(name = "Virtual Machine") +
   #facet_null()
   facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
-ggsave(paste0(input.basename, "-norm-col.pdf"), width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
+gg.file <- paste0(input.basename, "-norm-col.pdf")
+ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
+embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
 
 
 # LaTeX table

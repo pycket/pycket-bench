@@ -226,7 +226,7 @@ ggplot(data=bench.summary.graph,
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
-  geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge,color=I("black")) +
+  geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33) +
   #   xlab("Benchmark") +
   ylab("Relative Runtime") +
   theme_bw(base_size=8, base_family="Helvetica") +
@@ -263,7 +263,7 @@ ggsave(paste0(input.basename, "-norm-col.pdf"), width=figure.width, height=figur
                #label="tbl:extremes",caption="Extreme runtimes",
                #ctable=TRUE,
                booktabs=TRUE,
-               table.env=FALSE, center="none"
+               table.env=FALSE, center="none",
                where="htbp", size="footnotesize", #center="centering",
                colheads=rep(c('mean', 'error'), len),
                col.just=rep(c('r','@{ \\ensuremath{\\pm}}r'), len),

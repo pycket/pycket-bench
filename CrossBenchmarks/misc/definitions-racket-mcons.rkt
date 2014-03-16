@@ -9,7 +9,7 @@
        (expr true-branch)
        (else false-branch)))))
 ;------------------------------------------------------------------------------
-(require (prefix-in r5: r5rs))
+;(require (prefix-in r5: r5rs))
 (define-syntax list (make-rename-transformer #'mlist))
 (define-syntax set-car! (make-rename-transformer #'set-mcar!))
 (define-syntax set-cdr! (make-rename-transformer #'set-mcdr!))
@@ -125,7 +125,7 @@
 ; customized timer
 ; in ReBench TestVMPerformance format
 (define-syntax time
-  (lambda (stx)
+  (r:lambda (stx)
     (syntax-case stx ()
       [(_ expr1 expr ...)
        (syntax/loc

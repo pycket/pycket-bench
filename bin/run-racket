@@ -22,6 +22,6 @@ if egrep -q 'set-c[ad]r!' src/${BENCHMARK}.scm ; then
     EXTRA_ARG="--mcons"
 fi
 
-exec $RACKET -n -l "racket/base" -e "(require (for-syntax racket/base))" \
+exec $RACKET -n -l "racket/base" -e "(require (for-syntax racket/base) (prefix-in r5: r5rs) (prefix-in mz: mzscheme))" \
      ${RACKET_ARGS} -e "(require $RACKET_PACKAGES)" \
      "$@" -r benchmark.rkt $EXTRA_ARG $VARIABLE $BENCHMARK

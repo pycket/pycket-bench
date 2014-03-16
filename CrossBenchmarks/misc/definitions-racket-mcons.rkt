@@ -8,6 +8,37 @@
      (cond
        (expr true-branch)
        (else false-branch)))))
+
+(define (-list->mlist l)
+  (cond [(null? l) l]
+        [else (mcons (car l) (-list->mlist (cdr l)))]))
+(define list->mlist -list->mlist)
+
+  (define-syntax (r5:lambda stx)
+    ;; Convert rest-arg list to mlist, and use r5rs:body:
+    (syntax-case stx ()
+      [(_ (id ...) . body)
+       (syntax/loc stx (#%plain-lambda (id ...) . body))]
+      [(_ (id ... . rest) . body)
+       (syntax/loc stx
+         (#%plain-lambda (id ... . rest)
+                         (let ([rest (-list->mlist rest)])
+                           (begin . body))))]))
+
+  (define-syntax (r5:define stx)
+    ;; Use r5rs:lambda
+    (syntax-case stx ()
+      [(_ (id . args) . body)
+       (with-syntax ([proc
+                      (syntax/loc stx
+                        (r5:lambda args . body))])
+         (syntax/loc stx
+           (define id proc)))]
+      [(_ . rest)
+       (syntax/loc stx
+         (define . rest))]))
+
+
 ;------------------------------------------------------------------------------
 ;(require (prefix-in r5: r5rs))
 (define-syntax list (make-rename-transformer #'mlist))
@@ -39,8 +70,6 @@
 (define-syntax quote (make-rename-transformer #'r5:quote))
 (define-syntax quasiquote (make-rename-transformer #'r5:quasiquote))
 (define-syntax unquote (make-rename-transformer #'r5:unquote))
-(define-syntax lambda (make-rename-transformer #'r5:lambda))
-(define-syntax define (make-rename-transformer #'r5:define))
 (define-syntax (cadr stx)
   (syntax-case stx ()
     [(i e) #'(#%app i e)]
@@ -125,7 +154,7 @@
 ; customized timer
 ; in ReBench TestVMPerformance format
 (define-syntax time
-  (r:lambda (stx)
+  (#%plain-lambda (stx)
     (syntax-case stx ()
       [(_ expr1 expr ...)
        (syntax/loc
@@ -133,7 +162,7 @@
          (let-values ([(v cpu user gc) (time-apply (lambda () expr1 expr ...) null)])
            (printf "RESULT-cpu: ~a.0\nRESULT-total: ~a.0\nRESULT-gc: ~a.0\n"
                    cpu user gc)
-           (r5:apply values (list->mlist v))))])))
+           (r5:apply values (-list->mlist v))))])))
 ;------------------------------------------------------------------------------
 (define (run-bench name count ok? run)
   (let loop ((i 0) (result (r5:list 'undefined)))

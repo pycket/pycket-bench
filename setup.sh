@@ -7,9 +7,9 @@ if [ ! -z "$ZSH_VERSION" ]; then
   setopt shwordsplit
 fi
 ECHO="/usr/bin/printf %b\\n"
-if type wget >/dev/null 2>/dev/null; then
+if command -v wget >/dev/null 2>/dev/null; then
   FETCH="wget --quiet"
-elif type curl >/dev/null 2>/dev/null; then
+elif command -v curl >/dev/null 2>/dev/null; then
   FETCH="curl -s -S -O"
 else
   FETCH="$ECHO Please download "
@@ -49,7 +49,7 @@ if [ ! -x "$PROGDIR/gambit/bin/gsc" ]; then
     if uname | grep -qi 'Darwin'; then
         if [ -z "$GCC" ]; then
             $ECHO "Please provide viable GCC, clang won't do here" 1>&2
-            exit -1
+            exit 1
         fi
         CC=$GCC ./configure --prefix=$PROGDIR/gambit --enable-single-host --disable-debug
     else

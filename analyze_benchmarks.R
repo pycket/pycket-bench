@@ -108,7 +108,7 @@ normalize_value_bootstrap_confidence = function(x, y, R=1000) {
     id <- as.factor(c(rep("x",length(x)),rep("y",length(y))))
 
     b <- boot(total, div_mean_x_y, strata=id, R=R, extraid=id)
-    norm <- suppressWarnings(boot.ci(b)$normal)
+    norm <- boot.ci(b, type=c("norm"))$normal
     dimnames(norm) <- list(NULL,c("conf", "upper", "lower"))
     norm
 }
@@ -254,16 +254,19 @@ embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
   len <- length(bench.summary.table.ltx)/2
   out <- latex(bench.summary.table.ltx,
                file=paste0(input.basename, "-extremes.tex"),
-               rowlabel="Benchmark",
+               rowlabel="",
                #label="tbl:extremes",caption="Extreme runtimes",
-               #ctable=TRUE,
                booktabs=TRUE,
+               #ctable=TRUE,
+               cgroupTexCmd="mdseries",
+               rgroupTexCmd="mdseries",
                table.env=FALSE, center="none",
                where="htbp", size="footnotesize", #center="centering",
-               colheads=rep(c('mean', 'error'), len),
-               col.just=rep(c('r','@{ \\ensuremath{\\pm}}r'), len),
-               cgroup=levels(as.factor(bench.summary.table$vm)),
-               cdec=rep(c(1,2), len))
+               #colheads=rep(c('mean', 'error'), len),
+               colheads=rep('',len*2),
+               col.just=rep(c('r','@{\\scriptsize\\,\\ensuremath{\\pm}}>{\\scriptsize}r'), len),
+               cgroup=levels(as.factor(bench.summary$vm)),
+               cdec=rep(0, len*2))
 })()
 # LaTeX table, all
 (function() {
@@ -275,7 +278,7 @@ embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
                table.env=FALSE, center="none",
                size="footnotesize", #center="centering",
                colheads=rep(c('mean', 'error'), len),
-               col.just=rep(c('r','@{ \\ensuremath{\\pm}}r'), len),
+               col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
                cgroup=levels(as.factor(bench.summary$vm)),
-               cdec=rep(c(1,2), len))
+               cdec=rep(0, len*2))
 })()

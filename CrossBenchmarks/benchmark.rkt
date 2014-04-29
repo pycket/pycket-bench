@@ -1,4 +1,3 @@
-#lang racket
 (require racket/vector)
 (define args (current-command-line-arguments))
 (if (and (> (vector-length args) 0) (string=? (vector-ref args 0) "--mcons"))

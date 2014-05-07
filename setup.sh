@@ -27,7 +27,7 @@ REBENCH="`command -v rebench`"
 if [ -z "$REBENCH" ]; then
     $ECHO "installing ReBench"
     _go $PROGDIR
-    pip install -r requirements.txt
+    pip install --user -r requirements.txt
     _gone
 fi
 
@@ -70,7 +70,7 @@ if  [ ! -x "$PROGDIR/larceny/larceny" ]; then
     fi
     $FETCH "http://www.larcenists.org/LarcenyReleases/$LARCENY.tar.gz"
     tar -xzf "$LARCENY.tar.gz"
-    ln -s $PROGDIR/src/$LARCENY $PROGDIR/larceny
+    ln -fs $PROGDIR/src/$LARCENY $PROGDIR/larceny
     _gone
 fi
 

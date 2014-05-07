@@ -88,7 +88,7 @@ _Note:_ Uses `sudo` because `rebench` without `-N` uses `nice`
  * **Pycket binary**
 
         cd CrossBenchmarks
-        ../bin/run-pycket -nothin ctak
+        ../bin/run-pycket -nothing ctak
 
  * **Pycket hosted**
 
@@ -98,12 +98,12 @@ _Note:_ Uses `sudo` because `rebench` without `-N` uses `nice`
  * **Gambit**
 
         cd CrossBenchmarks
-        ../bin/run-gambit -nothin ctak
+        ../bin/run-gambit -nothing ctak
 
  * **Larceny**
 
         cd CrossBenchmarks
-        ../bin/run-larceny -nothin ctak
+        ../bin/run-larceny -nothing ctak
 
 Analyze benchmarks
 ------------------

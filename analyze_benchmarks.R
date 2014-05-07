@@ -50,8 +50,11 @@ input.basename = file_path_sans_ext(tsv_name)
 bench <- read.delim(tsv_name, comment.char = "#", header=FALSE,
                     col.names=c('timestamp', 'value', 'unit', 'criterion', 'benchmark', 'vm', 'suite', 'extra_args', 'warump', 'cores', 'input_size', 'variable_values'))
 
+
 bench$vm <- sapply(bench$vm, function (x)
   if (x=='RRacket') 'Racket' else paste0("",x))
+
+
 
 # These are currently not run on pycket
 blacklist <- c('browse'
@@ -162,7 +165,10 @@ bench.summary <- merge(
   bench.err
 )
 
+
 bench.summary.graph <- bench.summary[!(bench.summary$benchmark %in% table.only),]
+# ignore nojit
+bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != 'PycketNoJit',,drop=TRUE]
 
 bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id.vars=c('vm')), .(vm),
                                plyr::summarize, 
@@ -187,7 +193,12 @@ bench.summary.ltx <- bench.summary.sel[2:length(bench.summary.sel)]
 rownames(bench.summary.ltx) <- bench.summary.sel$benchmark
 colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
 
-bench.summary.table.ltx <- bench.summary.ltx[rownames(bench.summary.ltx) %in% table.only,]
+bench.summary.table <- bench.summary[bench.summary$vm != 'PycketNoJit',,drop=TRUE]
+bench.summary.table.sel <- dcast(melt(bench.summary.table[c('benchmark','vm','mean','err095')], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
+bench.summary.table.ltx <- bench.summary.table.sel[2:length(bench.summary.table.sel)]
+rownames(bench.summary.table.ltx) <- bench.summary.table.sel$benchmark
+colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
+bench.summary.table.ltx <- bench.summary.table.ltx[rownames(bench.summary.table.ltx) %in% table.only,]
 
 # ----- Outputting -----
 
@@ -265,7 +276,7 @@ embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
                #colheads=rep(c('mean', 'error'), len),
                colheads=rep('',len*2),
                col.just=rep(c('r','@{\\scriptsize\\,\\ensuremath{\\pm}}>{\\scriptsize}r'), len),
-               cgroup=levels(as.factor(bench.summary$vm)),
+               cgroup=levels(as.factor(bench.summary.table$vm)),
                cdec=rep(0, len*2))
 })()
 # LaTeX table, all

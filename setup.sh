@@ -43,7 +43,7 @@ if [ ! -x "$PROGDIR/bigloo/bin/bigloo" ]; then
     BIGLOO="bigloo4.2a"
     BIGLOO_GET="$BIGLOO-alpha24Jun14"
     $FETCH "ftp://ftp-sop.inria.fr/indes/fp/Bigloo/$BIGLOO_GET.tar.gz"
-    tar -xzf "$BIGLOO.tar.gz"
+    tar -xzf "$BIGLOO_GET.tar.gz"
     cd $BIGLOO
     mkdir -p $PROGDIR/bigloo
     if uname | grep -qi 'Darwin'; then

@@ -37,7 +37,18 @@ if [ -z "$RACKET" ]; then
     exit 1
 fi
 
-$ECHO "ignoring  bigloo"
+if [ ! -x "$PROGDIR/bigloo/bin/bigloo" ]; then
+    $ECHO "installing Bigloo"
+    _go "$PROGDIR/src"
+    BIGLOO="bigloo4.1a-2"
+    $FETCH "ftp://ftp-sop.inria.fr/indes/fp/Bigloo/$BIGLOO.tar.gz"
+    tar -xzf "$BIGLOO.tar.gz"
+    cd $BIGLOO
+    ./configure --prefix=$PROGDIR/bigloo
+    make -j
+    make insall
+    _gone
+fi
 
 if [ ! -x "$PROGDIR/gambit/bin/gsc" ]; then
     $ECHO "installing Gambit"

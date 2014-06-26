@@ -40,13 +40,21 @@ fi
 if [ ! -x "$PROGDIR/bigloo/bin/bigloo" ]; then
     $ECHO "installing Bigloo"
     _go "$PROGDIR/src"
-    BIGLOO="bigloo4.1a-2"
-    $FETCH "ftp://ftp-sop.inria.fr/indes/fp/Bigloo/$BIGLOO.tar.gz"
+    BIGLOO="bigloo4.2a"
+    BIGLOO_GET="$BIGLOO-alpha24Jun14"
+    $FETCH "ftp://ftp-sop.inria.fr/indes/fp/Bigloo/$BIGLOO_GET.tar.gz"
     tar -xzf "$BIGLOO.tar.gz"
     cd $BIGLOO
-    ./configure --prefix=$PROGDIR/bigloo
+    mkdir -p $PROGDIR/bigloo
+    if uname | grep -qi 'Darwin'; then
+        mkdir -p $PROGDIR/bigloo/lib
+        ln -s $PROGDIR/bigloo/lib $PROGDIR/bigloo/Frameworks
+        ./configure --prefix=$PROGDIR/bigloo --disable-flac
+    else
+      ./configure --prefix=$PROGDIR/bigloo
+    fi
     make -j
-    make insall
+    make install
     _gone
 fi
 

@@ -38,7 +38,7 @@ fi
 
 
 rm -f $OUT
-$BIGLOO "$@" $BIGLOO_CALLCC ${BIGLOO_OPT:=-eval "(set! *strip* #f)" -native -main 'bigloo-main' -Obench} \
+$BIGLOO "$@" $BIGLOO_CALLCC -eval '(set! *strip* #f)' -native -main "bigloo-main" -Obench \
   -copt "${BIGLOO_CFLAGS:=-Wno-parentheses-equality -Wno-unused-value -Wpointer-arith -Wswitch -Wtrigraphs -DBGL_BOOTCONFIG}" \
   -o $OUT $SRC
 exec $OUT

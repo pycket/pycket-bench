@@ -1,0 +1,44 @@
+#! /bin/sh
+
+set +e
+
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+if [ ! -z "$ZSH_VERSION" ]; then
+  setopt shwordsplit
+fi
+
+BENCHDIR="$(dirname $PROGDIR)"
+BIGLOODIR="$BENCHDIR/bigloo"
+BIGLOO="${BIGLOO:-$BIGLOODIR/bin/bigloo}"
+
+if [ $# -lt 2 ]; then
+    echo "No."
+    exit -1
+fi
+
+VARIABLE=$1
+shift
+BENCHMARK=$1
+shift
+
+SRC="bigloo/${BENCHMARK}${VARIABLE}.scm"
+OUT="bigloo/${BENCHMARK}${VARIABLE}.exe"
+
+BIGLOO_PRELUDE="${BIGLOO_PRELUDE:-misc/definitions-bigloo.scm misc/iterations.rkt}"
+BIGLOO_SPECIALIZE="misc/specialize-bigloo$VARIABLE.scm"
+
+cat ${BIGLOO_PRELUDE} ${BIGLOO_SPECIALIZE} src/${BENCHMARK}.scm > ${SRC}
+
+if grep -q 'call-with-current-continuation' src/${BENCHMARK}.scm; then
+  BIGLOO_CALLCC="-call/cc"
+fi
+
+
+
+rm -f $OUT
+$BIGLOO "$@" $BIGLOO_CALLCC ${BIGLOO_OPT:=-eval "(set! *strip* #f)" -native -main 'bigloo-main' -Obench} \
+  -copt "${BIGLOO_CFLAGS:=-Wno-parentheses-equality -Wno-unused-value -Wpointer-arith -Wswitch -Wtrigraphs -DBGL_BOOTCONFIG}" \
+  -o $OUT $SRC
+exec $OUT

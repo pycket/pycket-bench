@@ -83,7 +83,7 @@ table.only <- c('ctak','fibc', 'pi')
 #table.only <- c('ctak')
 # in inches
 figure.width <- 7
-figure.height <- 2.5
+figure.height <- 2.8
 
 
 
@@ -253,6 +253,43 @@ ggplot(data=bench.summary.graph,
   ) +
   scale_y_continuous(breaks=seq(0,ymax,.5), limits=c(0,ymax),expand=c(0,0)) +
   scale_fill_grey(name = "Virtual Machine") +
+  #facet_null()
+  facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
+gg.file <- paste0(input.basename, "-norm.pdf")
+ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
+embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
+
+#
+# and now color
+#
+ggplot(data=bench.summary.graph,
+#        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
+       aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
+) +
+  geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
+  geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33) +
+  #   xlab("Benchmark") +
+  ylab("Relative Runtime") +
+  theme_bw(base_size=8, base_family="Helvetica") +
+  theme(
+    rect = element_rect(),
+    axis.title.x =  element_blank(),
+    #     axis.title.x = element_text(face="bold", size=9),
+    #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2,
+    axis.text.x  = element_text(size=8, angle=45, hjust=1),
+    axis.title.y = element_text(face="bold", size=8),
+    axis.text.y  = element_text(size=8), #angle=45, hjust=0.2, vjust=0.5,
+    legend.position=c(0.15, .75),
+    plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
+    legend.text = element_text(size=7),
+    legend.title = element_text(size=7, face="bold"),
+    legend.background = element_rect(fill="gray90", size=0),
+    legend.margin = unit(0, "cm"),
+    legend.key=element_rect(fill="white"),
+    legend.key.size=unit(5,"mm")
+  ) +
+  scale_y_continuous(breaks=seq(0,ymax,.5), limits=c(0,ymax),expand=c(0,0)) +
+  scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1") +
   #facet_null()
   facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
 gg.file <- paste0(input.basename, "-norm-col.pdf")

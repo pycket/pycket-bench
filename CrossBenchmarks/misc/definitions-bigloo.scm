@@ -2,14 +2,14 @@
 
 ;------------------------------------------------------------------------------
 ; customized timer
-; in ReBench MultivariateVMPerformance format
+; in ReBench TestVMPerformance format
 (define-macro (timer . es)
   `(let ()
       (multiple-value-bind (res rtime stime utime)
           (time (lambda () ,@es))
-          (print "0:RESULT-total: " (* 1.0 rtime) "\n"
-                 "0:RESULT-cpu: " (* 1.0 (+ stime utime)) "\n"
-                 "0:RESULT-gc: 0.0\n")
+          (print "RESULT-cpu: " (* 1.0 (+ stime utime)) "\n"
+                 "RESULT-gc: 0.0\n"
+                 "RESULT-total: " (* 1.0 rtime) "\n")
         res)))
 
 ;------------------------------------------------------------------------------

@@ -18,8 +18,8 @@
        (syntax/loc
            stx
          (let-values ([(v cpu user gc) (time-apply (lambda () expr1 expr ...) null)])
-           (printf "0:RESULT-cpu: ~a.0\n0:RESULT-total: ~a.0\n0:RESULT-gc: ~a.0\n"
-                   cpu user gc)
+           (printf "RESULT-cpu: ~a.0\nRESULT-gc: ~a.0\nRESULT-total: ~a.0\n"
+                   cpu gc user)
            (apply values v)))])))
 ;------------------------------------------------------------------------------
 (define (run-bench name count ok? run)

@@ -30,7 +30,7 @@ $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF
 EOF
 
 exec $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF \
-    2>&1 | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ time/ {printf "0:RESULT-total: %f\n0:RESULT-cpu: %f\n", $3, $6 } /^Elapsed\ GC\ time/ { printf "0:RESULT-gc: %f\n", $4 } {print}'
+    2>&1 | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } /^Elapsed\ time/ {printf "RESULT-cpu: %f\nRESULT-total: %f\n", $6, $3 } {print}'
 (begin
   (load "misc/definitions-larceny.scm")
   (load "misc/iterations.rkt")

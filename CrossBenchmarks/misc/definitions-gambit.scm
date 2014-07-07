@@ -11,9 +11,9 @@
                 (r* (real-time))
                 (d (number->string (* (- t* t) 1000)))
                 (rd (number->string (* (- r* r) 1000))))
-           (display (string-append "0:RESULT-cpu: " d
-                                   "\n0:RESULT-total: " rd
-                                   "\n0:RESULT-gc: 0.0\n"))
+           (display (string-append "RESULT-cpu: " d "\n"
+                                   "RESULT-gc: 0.0" "\n"
+                                   "RESULT-total: " rd "\n"))
            (apply values vals))))))
 ;------------------------------------------------------------------------------
 

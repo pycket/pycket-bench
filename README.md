@@ -64,19 +64,34 @@ Running Benchmarks
 
 Running any of this commands produces a file `output/pycket.data`, which is a [TSV file][tsv] containing the benchmark results.
 
-### Run the benchmarks quickly
-
-    rebench -N -q -d -v rebench.conf
-
-### Run the benchmarks normally but not re-niced
-
-    rebench -N -d -v rebench.conf
 
 ### Run the benchmarks statistically rigorously
 
     sudo rebench -d -v rebench.conf
 
 _Note:_ Uses `sudo` because `rebench` without `-N` uses `nice`
+
+### Run the benchmarks normally but not re-niced
+
+Use this when using `sudo` is not an option, but beware that increased context switches may distord the results.
+
+    rebench -N -d -v rebench.conf
+
+### Run the benchmarks quickly
+
+These results should only serve as a rough estimation and are not statistically rigorous.
+
+
+    rebench -N -q -d -v rebench.conf
+
+
+### Run the benchmarks very quickly 
+
+This runs only Pycket and Racket and writes to `output/fast.data` (also a TSV file). These results should only serve as a rough estimation and are not statistically rigorous.
+
+    rebench -N -d -v rebench.conf FastBenchmark
+   
+
 
 ### Run a single benchmark
 

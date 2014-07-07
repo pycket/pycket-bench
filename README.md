@@ -13,7 +13,7 @@ Preparation
  * [pycket][pycket], obviously, and [Racket][racket]
  * a [PyPy][pypy] checkout for `rpython`
  * [ReBench][rebench] for carrying out benchmarks
- * [Gambit][gambit] and [Larceny][larceny] for comparison
+ * [Gambit][gambit], [Larceny][larceny], and [Bigloo][bigloo] for comparison
  * Optionally: [R][R] to analyze the results
  
 and their transitive dependencies, notably
@@ -24,7 +24,7 @@ and their transitive dependencies, notably
 
 ### Installation
 
-You can use the provided `setup.sh` to install ReBench, get Pycket and compile Gambit and Larceny:
+You can use the provided `setup.sh` to install ReBench, get Pycket and compile Gambit, Larceny, and Bigloo:
 
     sh ./setup.sh
     
@@ -119,6 +119,11 @@ This runs only Pycket and Racket and writes to `output/fast.data` (also a TSV fi
 
         cd CrossBenchmarks
         ../bin/run-larceny -nothing ctak
+        
+ * **Bigloo**
+ 
+        cd CrossBenchmarks
+        ../bin/run-bigloo -nothing ctak
 
 Analyze benchmarks
 ------------------
@@ -136,6 +141,7 @@ If no argument is given, it defaults to `output/current.tsv`, which could be a c
 [rebench]: https://github.com/smarr/ReBench
 [gambit]: http://gambitscheme.org/
 [larceny]: https://github.com/larcenists/larceny/
+[bigloo]: http://www-sop.inria.fr/indes/fp/Bigloo/
 [racket]: http://racket-lang.org/
 [R]: http://www.r-project.org/
 [homebrew]: http://brew.sh/

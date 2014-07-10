@@ -9,34 +9,34 @@
        (expr true-branch)
        (else false-branch)))))
 
-(define (-list->mlist l)
-  (cond [(null? l) l]
-        [else (mcons (car l) (-list->mlist (cdr l)))]))
-(define list->mlist -list->mlist)
+;; (define (-list->mlist l)
+;;   (cond [(null? l) l]
+;;         [else (mcons (car l) (-list->mlist (cdr l)))]))
+;; (define list->mlist -list->mlist)
 
-  (define-syntax (r5:lambda stx)
-    ;; Convert rest-arg list to mlist, and use r5rs:body:
-    (syntax-case stx ()
-      [(_ (id ...) . body)
-       (syntax/loc stx (#%plain-lambda (id ...) . body))]
-      [(_ (id ... . rest) . body)
-       (syntax/loc stx
-         (#%plain-lambda (id ... . rest)
-                         (let ([rest (-list->mlist rest)])
-                           (begin . body))))]))
+  ;; (define-syntax (r5:lambda stx)
+  ;;   ;; Convert rest-arg list to mlist, and use r5rs:body:
+  ;;   (syntax-case stx ()
+  ;;     [(_ (id ...) . body)
+  ;;      (syntax/loc stx (#%plain-lambda (id ...) . body))]
+  ;;     [(_ (id ... . rest) . body)
+  ;;      (syntax/loc stx
+  ;;        (#%plain-lambda (id ... . rest)
+  ;;                        (let ([rest (-list->mlist rest)])
+  ;;                          (begin . body))))]))
 
-  (define-syntax (r5:define stx)
-    ;; Use r5rs:lambda
-    (syntax-case stx ()
-      [(_ (id . args) . body)
-       (with-syntax ([proc
-                      (syntax/loc stx
-                        (r5:lambda args . body))])
-         (syntax/loc stx
-           (define id proc)))]
-      [(_ . rest)
-       (syntax/loc stx
-         (define . rest))]))
+  ;; (define-syntax (r5:define stx)
+  ;;   ;; Use r5rs:lambda
+  ;;   (syntax-case stx ()
+  ;;     [(_ (id . args) . body)
+  ;;      (with-syntax ([proc
+  ;;                     (syntax/loc stx
+  ;;                       (r5:lambda args . body))])
+  ;;        (syntax/loc stx
+  ;;          (define id proc)))]
+  ;;     [(_ . rest)
+  ;;      (syntax/loc stx
+  ;;        (define . rest))]))
 
 
 ;------------------------------------------------------------------------------
@@ -49,21 +49,21 @@
 (define-syntax cons (make-rename-transformer #'mcons))
 (define-syntax length (make-rename-transformer #'mlength))
 (define-syntax pair? (make-rename-transformer #'mpair?))
-(define-syntax map (make-rename-transformer #'mmap))
+;; (define-syntax map (make-rename-transformer #'mmap))
 (define-syntax apply (make-rename-transformer #'r5:apply))
-(define-syntax for-each (make-rename-transformer #'mfor-each))
+;; (define-syntax for-each (make-rename-transformer #'mfor-each))
 (define-syntax string->list (make-rename-transformer #'r5:string->list))
 (define-syntax list->string (make-rename-transformer #'r5:list->string))
 (define-syntax vector->list (make-rename-transformer #'r5:vector->list))
 (define-syntax list->vector (make-rename-transformer #'r5:list->vector))
 (define-syntax list? (make-rename-transformer #'mlist?))
-(define-syntax append (make-rename-transformer #'mappend))
-(define-syntax reverse (make-rename-transformer #'mreverse))
+;; (define-syntax append (make-rename-transformer #'mappend))
+;; (define-syntax reverse (make-rename-transformer #'mreverse))
 (define-syntax list-tail (make-rename-transformer #'mlist-tail))
 (define-syntax list-ref (make-rename-transformer #'mlist-ref))
-(define-syntax memq (make-rename-transformer #'mmemq))
+;; (define-syntax memq (make-rename-transformer #'mmemq))
 (define-syntax memv (make-rename-transformer #'mmemv))
-(define-syntax member (make-rename-transformer #'mmember))
+;; (define-syntax member (make-rename-transformer #'mmember))
 (define-syntax assq (make-rename-transformer #'massq))
 (define-syntax assv (make-rename-transformer #'massv))
 (define-syntax assoc (make-rename-transformer #'massoc))
@@ -74,18 +74,18 @@
   (syntax-case stx ()
     [(i e) #'(#%app i e)]
     [_ #'(lambda (e) (car (cdr e)))]))
-(define-syntax (caar stx)
-  (syntax-case stx ()
-    [(i e) #'(#%app i e)]
-    [_ #'(lambda (e) (car (car e)))]))
+;; (define-syntax (caar stx)
+;;   (syntax-case stx ()
+;;     [(i e) #'(#%app i e)]
+;;     [_ #'(lambda (e) (car (car e)))]))
 (define-syntax (cddr stx)
   (syntax-case stx ()
     [(i e) #'(#%app i e)]
     [_ #'(lambda (e) (cdr (cdr e)))]))
-(define-syntax (cdar stx)
-  (syntax-case stx ()
-    [(i e) #'(#%app i e)]
-    [_ #'(lambda (e) (cdr (car e)))]))
+;; (define-syntax (cdar stx)
+;;   (syntax-case stx ()
+;;     [(i e) #'(#%app i e)]
+;;     [_ #'(lambda (e) (cdr (car e)))]))
 (define-syntax (cadar stx)
   (syntax-case stx ()
     [(i e) #'(#%app i e)]
@@ -162,12 +162,13 @@
          (let-values ([(v cpu user gc) (time-apply (lambda () expr1 expr ...) null)])
            (printf "RESULT-cpu: ~a.0\nRESULT-gc: ~a.0\nRESULT-total: ~a.0\n"
                    cpu gc user)
-           (r5:apply values (-list->mlist v))))])))
+;           (r5:apply values (-list->mlist v))))])))
+           (r5:apply values (list->mlist v))))])))
 ;------------------------------------------------------------------------------
 (define (run-bench name count ok? run)
   (let loop ((i 0) (result (r5:list 'undefined)))
     (if (< i count)
-      (begin (printf "loop: ~a\n" i) (loop (+ i 1) (run)))
+      (loop (+ i 1) (run))
       result)))
 
 (r5:define (run-benchmark name count ok? run-maker . args)

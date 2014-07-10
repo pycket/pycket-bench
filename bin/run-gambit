@@ -23,10 +23,10 @@ shift
 SRC="gambit/${BENCHMARK}${VARIABLE}.scm"
 OUT="gambit/${BENCHMARK}${VARIABLE}.exe"
 
-GAMBIT_PRELUDE="${GAMBIT_PRELUDE:-misc/definitions-gambit.scm misc/iterations.rkt}"
-GAMBIT_SPECIALIZE="misc/specialize-gambit$VARIABLE.scm"
+GAMBIT_PRELUDE="${GAMBIT_PRELUDE:-configuration/definitions-gambit.scm configuration/iterations.rkt}"
+GAMBIT_SPECIALIZE="configuration/specialize-gambit$VARIABLE.scm"
 
-cat ${GAMBIT_PRELUDE} ${GAMBIT_SPECIALIZE} src/${BENCHMARK}.scm misc/main.scm > ${SRC}
+cat ${GAMBIT_PRELUDE} ${GAMBIT_SPECIALIZE} src/${BENCHMARK}.scm configuration/main.scm > ${SRC}
 
 
 $GAMBIT "$@" -exe -cc-options "${GAMBIT_CC:=-D___SINGLE_HOST}" -o $OUT $SRC

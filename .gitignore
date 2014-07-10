@@ -1,11 +1,13 @@
 output/
 src/
-CrossBenchmarks/dish/*.rkt
-CrossBenchmarks/dish/foo
 CrossBenchmarks/gambit/
 CrossBenchmarks/larceny/
 CrossBenchmarks/bigloo/
+CrossBenchmarks/pycket/
+CrossBenchmarks/racket/
 CrossBenchmarks/z*
+CrossBenchmarks/spheres.pgm
+CrossBenchmarks/foo
 *.json
 
 /gambit
@@ -47,4 +49,3 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
-CrossBenchmarks/spheres.pgm

@@ -95,11 +95,6 @@ This runs only Pycket and Racket and writes to `output/fast.data` (also a TSV fi
 
 ### Run a single benchmark
 
- * **Racket**
-
-        cd CrossBenchmarks
-        ../bin/run-racket -nothing ctak
-
  * **Pycket binary**
 
         cd CrossBenchmarks
@@ -108,7 +103,12 @@ This runs only Pycket and Racket and writes to `output/fast.data` (also a TSV fi
  * **Pycket hosted**
 
         cd CrossBenchmarks
-        PYTHONPATH=$PYPY pypy ../../pycket/targetpycket.py dish/ctak-nothing.rkt
+        PYCKET=targetpycket.py PYTHONPATH=$PYPY ../bin/run-pycket -nothing ctak
+
+ * **Racket**
+
+        cd CrossBenchmarks
+        ../bin/run-racket -nothing ctak
 
  * **Gambit**
 

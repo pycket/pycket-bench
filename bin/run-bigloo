@@ -26,8 +26,8 @@ shift
 SRC="bigloo/${BENCHMARK}${VARIABLE}.scm"
 OUT="bigloo/${BENCHMARK}${VARIABLE}.exe"
 
-BIGLOO_PRELUDE="${BIGLOO_PRELUDE:-misc/definitions-bigloo.scm misc/iterations.rkt}"
-BIGLOO_SPECIALIZE="misc/specialize-bigloo$VARIABLE.scm"
+BIGLOO_PRELUDE="${BIGLOO_PRELUDE:-configuration/definitions-bigloo.scm configuration/iterations.rkt}"
+BIGLOO_SPECIALIZE="configuration/specialize-bigloo$VARIABLE.scm"
 
 cat ${BIGLOO_PRELUDE} ${BIGLOO_SPECIALIZE} src/${BENCHMARK}.scm > ${SRC}
 

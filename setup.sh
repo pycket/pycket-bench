@@ -100,12 +100,3 @@ if [ ! -f "$PROGDIR/pycket/targetpycket.py" ]; then
     git submodule update
     _gone
 fi
-
-if ls -1 "$PROGDIR/CrossBenchmarks/dish" | grep -q rkt; then
-    :
-else
-    $ECHO "Cooking benchmarks"
-    _go $PROGDIR/CrossBenchmarks/src
-    sh cook_files.sh
-    _gone
-fi

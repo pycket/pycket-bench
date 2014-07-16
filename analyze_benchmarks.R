@@ -54,7 +54,10 @@ bench <- read.delim(tsv_name, comment.char = "#", header=FALSE,
 bench$vm <- sapply(bench$vm, function (x)
   if (x=='RRacket') 'Racket' else paste0("",x))
 
+# rigorous bench
+rigorous <- 'Gambit' %in% bench$vm
 
+reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 # These are currently not run on pycket
 blacklist <- c('browse'
@@ -79,9 +82,13 @@ blacklist <- c('browse'
 
 # There are too big differences to plot. thus, table only
 
-table.only <- c('ctak','fibc', 'pi')
-#table.only <- c('ctak')
-# in inches
+if (rigorous) {  
+  table.only <- c('ctak','fibc', 'pi')
+  #table.only <- c('ctak')
+  # in inches
+} else {
+  table.only <- c()
+}
 figure.width <- 7
 figure.height <- 2.8
 
@@ -149,26 +156,36 @@ bench <- bench[c('criterion','vm','benchmark','value')]
 bench.tot <- bench[bench$criterion == 'total',,drop=TRUE]
 bench.cpu <- bench[bench$criterion == "cpu",,drop=TRUE]
 
-bench.err <- bootstrapTo(bench.tot, 'benchmark', 'vm', 'Racket', 'value')
+if (rigorous) {
 
-bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
-                       overall=FALSE,
-                       mean=mean(value),
-                       median=median(value),
-                       stdev=sd(value),
-                       err095=confInterval095Error(value),
-                       cnfIntHigh = mean(value) + (confInterval095Error(value)),
-                       cnfIntLow = mean(value) - (confInterval095Error(value))
-)
-bench.summary <- merge(
-  normalizeTo(bench.summary, 'benchmark', 'vm', 'Racket', 'mean'),
-  bench.err
-)
+  bench.err <- bootstrapTo(bench.tot, 'benchmark', 'vm', 'Racket', 'value')
+
+  bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
+                         overall=FALSE,
+                         mean=mean(value),
+                         median=median(value),
+                         stdev=sd(value),
+                         err095=confInterval095Error(value),
+                         cnfIntHigh = mean(value) + (confInterval095Error(value)),
+                         cnfIntLow = mean(value) - (confInterval095Error(value))
+  )
+  bench.summary <- merge(
+    normalizeTo(bench.summary, 'benchmark', 'vm', reference.vm, 'mean'),
+    bench.err
+  )
+} else {
+  bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
+                         overall=FALSE,
+                         mean=mean(value),
+                         median=median(value)
+  )
+  bench.summary <- normalizeTo(bench.summary, 'benchmark', 'vm', reference.vm, 'mean')
+}
 
 
 bench.summary.graph <- bench.summary[!(bench.summary$benchmark %in% table.only),]
 # ignore nojit
-bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != 'PycketNoJit',,drop=TRUE]
+#bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != 'PycketNoJit',,drop=TRUE]
 
 bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id.vars=c('vm')), .(vm),
                                plyr::summarize, 
@@ -176,25 +193,24 @@ bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id
                                benchmark='geometric\nmean',
                                mean=1,
                                mean.norm=exp(mean(log(value))),
-                               median=1,
-                               stdev=1,
-                               err095=1,
-                               cnfIntHigh=1,
-                               cnfIntLow=1,
-                               conf=1,
-                               upper=NA,#exp(mean(log(value))),
-                               lower=NA#exp(mean(log(value)))
+                               median=1
 )
+if (rigorous) {
+  bench.summary.overall <- merge(bench.summary.overall, data.frame(stdev=1, err095=1, cnfIntHigh=1,
+                                                                   cnfIntLow=1, conf=1, upper=NA, lower=NA))
+
+}
 bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
 #bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
-bench.summary.sel <- dcast(melt(bench.summary[c('benchmark','vm','mean','err095')], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
+sel.col = if (rigorous) {c('benchmark','vm','mean','err095')} else {c('benchmark','vm','mean')}
+bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
 bench.summary.ltx <- bench.summary.sel[2:length(bench.summary.sel)]
 rownames(bench.summary.ltx) <- bench.summary.sel$benchmark
 colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
 
 bench.summary.table <- bench.summary[bench.summary$vm != 'PycketNoJit',,drop=TRUE]
-bench.summary.table.sel <- dcast(melt(bench.summary.table[c('benchmark','vm','mean','err095')], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
+bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
 bench.summary.table.ltx <- bench.summary.table.sel[2:length(bench.summary.table.sel)]
 rownames(bench.summary.table.ltx) <- bench.summary.table.sel$benchmark
 colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
@@ -225,12 +241,11 @@ write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetNam
 dodge <- position_dodge(width=.8)
 # ymax <- round_any(max(1/bench.summary.graph$mean.norm), 0.5, ceiling)
 ymax <- round_any(max(bench.summary.graph$mean.norm), 0.5, ceiling)
-ggplot(data=bench.summary.graph,
+p <- ggplot(data=bench.summary.graph,
 #        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
-  geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33) +
   #   xlab("Benchmark") +
   ylab("Relative Runtime") +
   theme_bw(base_size=8, base_family="Helvetica") +
@@ -255,6 +270,12 @@ ggplot(data=bench.summary.graph,
   scale_fill_grey(name = "Virtual Machine") +
   #facet_null()
   facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
+if (rigorous) {
+  p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
+}
+
+p
+
 gg.file <- paste0(input.basename, "-norm.pdf")
 ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
 embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
@@ -262,12 +283,11 @@ embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
 #
 # and now color
 #
-ggplot(data=bench.summary.graph,
+p <- ggplot(data=bench.summary.graph,
 #        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
-  geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33) +
   #   xlab("Benchmark") +
   ylab("Relative Runtime") +
   theme_bw(base_size=8, base_family="Helvetica") +
@@ -292,6 +312,10 @@ ggplot(data=bench.summary.graph,
   scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1") +
   #facet_null()
   facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
+if (rigorous) {
+  p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
+}
+p
 gg.file <- paste0(input.basename, "-norm-col.pdf")
 ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
 embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")

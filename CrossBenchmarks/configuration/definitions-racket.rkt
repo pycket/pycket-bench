@@ -1,22 +1,3 @@
-;------------------------------------------------------------------------------
-;one-armed if.
-(define-syntax if
-  (syntax-rules ()
-    ((if expr true-branch)
-     (when expr true-branch))
-    ((if expr true-branch false-branch)
-     (cond
-       (expr true-branch)
-       (else false-branch)))))
-;------------------------------------------------------------------------------
-; customized timer
-; in ReBench TestVMPerformance format
-(define-syntax-rule (time expr1 expr ...)
-  (let-values ([(v cpu user gc) (time-apply (lambda () expr1 expr ...) null)])
-    (printf "RESULT-cpu: ~a.0\nRESULT-gc: ~a.0\nRESULT-total: ~a.0\n"
-            cpu gc user)
-    (apply values v)))
-;------------------------------------------------------------------------------
 (define (run-bench name count ok? run)
   (let loop ((i 0) (result (list 'undefined)))
     (if (< i count)

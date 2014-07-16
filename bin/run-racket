@@ -7,7 +7,7 @@ if [ ! -z "$ZSH_VERSION" ]; then
 fi
 
 RACKET="${RACKET:-env racket}"
-RACKET_PRELUDE="(require (prefix-in r5: r5rs) (prefix-in mz: mzscheme))"
+RACKET_PRELUDE=""
 if [ $# -lt 2 ]; then
     echo "No."
     exit -1
@@ -22,15 +22,15 @@ BENCH_FILE="${BENCHMARK}.scm"
 OUT="racket/${BENCHMARK}${VARIABLE}.rkt"
 
 if egrep -q 'set-c[ad]r!' "src/$BENCH_FILE" ; then
-    MCONS="-mcons"
-    RACKET_PRELUDE="$RACKET_PRELUDE (require racket/mpair compatibility/mlist)"
+    MCONS="/mcons"
+    RACKET_PRELUDE=""
 else
     MCONS=""
 fi
 
-printf "`cat configuration/pycket.tmpl`\n" "racket" \
+printf "`cat configuration/pycket.tmpl`\n" "pycket/mcons" \
        "$RACKET_PRELUDE" \
-        "racket" "$MCONS" "racket" "$VARIABLE" \
+        "pycket" "" "pycket" "$VARIABLE" \
        "$BENCH_FILE" > "$OUT";
 
 exec $RACKET ${RACKET_ARGS} "$@" "$OUT" $EXTRA_ARG

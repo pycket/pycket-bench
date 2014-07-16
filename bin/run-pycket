@@ -27,15 +27,15 @@ BENCH_FILE="${BENCHMARK}.scm"
 OUT="pycket/${BENCHMARK}${VARIABLE}.rkt"
 
 if egrep -q 'set-c[ad]r!' "src/$BENCH_FILE" ; then
-    MCONS="-mcons";
-    PYCKET_PRELUDE="(require racket/mpair compatibility/mlist)"
+    MCONS="/mcons";
+    PYCKET_PRELUDE=""
 else
     MCONS=""
 fi
 
-printf "`cat configuration/pycket.tmpl`\n" "pycket #:stdlib" \
+printf "`cat configuration/pycket.tmpl`\n" "pycket$MCONS" \
        "$PYCKET_PRELUDE" \
-        "pycket" "$MCONS" "pycket" "$VARIABLE" \
+        "pycket" "" "pycket" "$VARIABLE" \
        "$BENCH_FILE" > "$OUT";
 
 exec $PYCKET_BIN "$@" "$OUT" $EXTRA_ARG

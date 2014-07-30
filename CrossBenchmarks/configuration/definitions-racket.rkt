@@ -20,6 +20,6 @@
   (apply error #f args))
 
 (define (call-with-output-file/truncate filename proc)
-  (mz:call-with-output-file filename proc 'binary 'truncate))
+  (k:call-with-output-file filename proc 'binary 'truncate))
 
 ;------------------------------------------------------------------------------

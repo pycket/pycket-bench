@@ -10,7 +10,8 @@ BENCHDIR="$(dirname $PROGDIR)"
 PYCKETDIR="$BENCHDIR/pycket"
 PYCKET="${PYCKET:-pycket-c}"
 PYCKET_BIN="${PYCKET_BIN:-$PYCKETDIR/$PYCKET}"
-PYCKET_PRELUDE=""
+# sorry, sam
+PYCKET_PRELUDE="(require racket/private/map)"
 
 if [ $# -lt 2 ]; then
     echo "No."
@@ -28,7 +29,6 @@ OUT="pycket/${BENCHMARK}${VARIABLE}.rkt"
 
 if egrep -q 'set-c[ad]r!' "src/$BENCH_FILE" ; then
     MCONS="/mcons";
-    PYCKET_PRELUDE=""
 else
     MCONS=""
 fi

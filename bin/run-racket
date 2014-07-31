@@ -23,7 +23,6 @@ OUT="racket/${BENCHMARK}${VARIABLE}.rkt"
 
 if egrep -q 'set-c[ad]r!' "src/$BENCH_FILE" ; then
     MCONS="/mcons"
-    RACKET_PRELUDE=""
 else
     MCONS=""
 fi

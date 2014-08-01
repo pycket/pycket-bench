@@ -62,22 +62,32 @@ reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 # These are currently not run on pycket
 blacklist <- c('browse'
                , 'cat'
-               , 'slatex'
                , 'dynamic'
                , 'conform'
                , 'dderiv'
                , 'destruc'
+               , 'gcold'
                , 'graphs'
                , 'lattice'
                , 'matrix'
                , 'maze'
+               , 'mazefun'
+               , 'nucleic'
+               , 'parsing'
                , 'peval'
                , 'ray'
                , 'scheme'
+               , 'slatex'
+               , 'sum1'
                , 'tail'
                , 'tfib'
                , 'trav1'
                , 'trav2'
+               , 'wc'
+# because some doe not work anymore
+  ,'earley'
+  ,'deriv'
+  ,'puzzle'
 )
 
 # There are too big differences to plot. thus, table only
@@ -139,7 +149,7 @@ normalizeTo <- function(df, supergroup, group, val, var, vars=c(var)) {
   sg <- droplevels(df[[supergroup]])
   indexes <- which(df[[group]] == val)
   norm.factor <- (df[[var]])[indexes]
-  names(norm.factor) <- sg[indexes]
+  names(norm.factor) <- droplevels(sg[indexes])
   for (normvar in vars) {
     divis <- norm.factor[ sg ]
     res <- df[[normvar]]/divis
@@ -151,16 +161,16 @@ normalizeTo <- function(df, supergroup, group, val, var, vars=c(var)) {
 # --- shaping data
 
 
-bench <- bench[!(bench$benchmark %in% blacklist),,drop=TRUE]
+bench <- droplevels(bench[!(bench$benchmark %in% blacklist),,drop=TRUE])
 bench <- bench[c('criterion','vm','benchmark','value')]
-bench.tot <- bench[bench$criterion == 'total',,drop=TRUE]
-bench.cpu <- bench[bench$criterion == "cpu",,drop=TRUE]
+bench.tot <- droplevels(bench[bench$criterion == 'total',,drop=TRUE])
+bench.cpu <- droplevels(bench[bench$criterion == "cpu",,drop=TRUE])
 
 if (rigorous) {
 
   bench.err <- bootstrapTo(bench.tot, 'benchmark', 'vm', 'Racket', 'value')
 
-  bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
+  bench.summary <- ddply(bench.tot, .(benchmark,vm), plyr::summarize, 
                          overall=FALSE,
                          mean=mean(value),
                          median=median(value),
@@ -174,7 +184,7 @@ if (rigorous) {
     bench.err
   )
 } else {
-  bench.summary <- ddply(bench.tot, .(benchmark,vm), summarise,
+  bench.summary <- ddply(bench.tot, .(benchmark,vm), plyr::summarize, 
                          overall=FALSE,
                          mean=mean(value),
                          median=median(value)

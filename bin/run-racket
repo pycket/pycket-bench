@@ -27,7 +27,7 @@ else
     MCONS=""
 fi
 
-printf "`cat configuration/pycket.tmpl`\n" "pycket/mcons" \
+printf "`cat configuration/pycket.tmpl`\n" "pycket$MCONS" \
        "$RACKET_PRELUDE" \
         "pycket" "" "pycket" "$VARIABLE" \
        "$BENCH_FILE" > "$OUT";

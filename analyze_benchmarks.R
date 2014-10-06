@@ -84,10 +84,6 @@ blacklist <- c('browse'
                , 'trav1'
                , 'trav2'
                , 'wc'
-# because some doe not work anymore
-  ,'earley'
-  ,'deriv'
-  ,'puzzle'
 )
 
 # There are too big differences to plot. thus, table only

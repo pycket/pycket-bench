@@ -18,18 +18,25 @@ shift
 BENCHMARK=$1
 shift
 
-BENCH_FILE="${BENCHMARK}.scm"
-OUT="racket/${BENCHMARK}${VARIABLE}.rkt"
 
-if egrep -q 'set-c[ad]r!' "src/$BENCH_FILE" ; then
-    MCONS="/mcons"
+if [ "$VARIABLE" = "PURE" ]; then
+    OUT="src/${BENCHMARK}.rkt"
 else
-    MCONS=""
+    BENCH_FILE="${BENCHMARK}.scm"
+    OUT="racket/${BENCHMARK}${VARIABLE}.rkt"
+
+    if egrep -q 'set-c[ad]r!' "src/$BENCH_FILE" ; then
+        MCONS="/mcons"
+    else
+        MCONS=""
+    fi
+
+    printf "`cat configuration/pycket.tmpl`\n" "pycket$MCONS" \
+           "$RACKET_PRELUDE" \
+            "pycket" "" "pycket" "$VARIABLE" \
+           "$BENCH_FILE" > "$OUT";
 fi
 
-printf "`cat configuration/pycket.tmpl`\n" "pycket$MCONS" \
-       "$RACKET_PRELUDE" \
-        "pycket" "" "pycket" "$VARIABLE" \
-       "$BENCH_FILE" > "$OUT";
+raco make "$OUT"
 
-exec $RACKET ${RACKET_ARGS} "$@" "$OUT" $EXTRA_ARG
+exec $RACKET ${RACKET_ARGS} "$OUT" "$@"

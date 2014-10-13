@@ -3,9 +3,7 @@
 #lang racket/base
 (require "time-run.rktl")
 
-(require (only-in mzlib/list sort)
-         (only-in mzlib/string real->decimal-string)
-         racket/flonum)
+(require racket/flonum)
 
 (define (to-str n) (real->decimal-string n 6))
 

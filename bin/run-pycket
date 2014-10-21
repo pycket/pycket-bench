@@ -26,21 +26,17 @@ shift
 if [ "$VARIABLE" = "PURE" ]; then
     OUT="src/${BENCHMARK}.rkt"
 else
-    BENCH_FILE="${BENCHMARK}.scm"
-    OUT="pycket/${BENCHMARK}${VARIABLE}.rkt"
+    OUT="racket/${BENCHMARK}${VARIABLE}.rkt"
 
-    if egrep -q 'set-c[ad]r!' "src/$BENCH_FILE" ; then
-        MCONS="/mcons";
-        MCONSDEF="-mcons"
+    if egrep -q 'set-c[ad]r!' "src/${BENCHMARK}.scm" ; then
+        RFRS=" r5rs"
     else
-        MCONS=""
-        MCONSDEF=""
+        RFRS=""
     fi
 
-    printf "`cat configuration/pycket.tmpl`\n" "pycket$MCONS" \
-           "$PYCKET_PRELUDE" \
-            "pycket" "$MCONSDEF" "pycket" "$VARIABLE" \
-           "$BENCH_FILE" > "$OUT";
+    printf "(module %s \"../wrap.rkt\"%s %s)\n" \
+           "${BENCHMARK}" "${RFRS}" "${VARIABLE:1}" \
+           > "$OUT";
 fi
 
 exec $PYCKET_BIN "$OUT" "$@"

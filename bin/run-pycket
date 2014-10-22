@@ -34,7 +34,7 @@ else
         RFRS=""
     fi
 
-    printf "(module %s \"../wrap.rkt\"%s %s)\n" \
+    printf "(module %s pycket/wrap%s %s)\n" \
            "${BENCHMARK}" "${RFRS}" "${VARIABLE:1}" \
            > "$OUT";
 fi

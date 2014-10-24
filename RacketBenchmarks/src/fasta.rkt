@@ -1,6 +1,6 @@
 #lang racket/base
 (require "time-run.rktl")
-
+(provide generate) ;for gen-inputs
 ;; The Computer Language Benchmarks Game
 ;; http://shootout.alioth.debian.org/
 ;;
@@ -125,10 +125,10 @@
 
 ;; ----------------------------------------
 
-(define (bench n)
+(define (generate n)
   (repeat-fasta ">ONE Homo sapiens alu\n" (* n 2) +alu+)
   (random-fasta ">THREE Homo sapiens frequency\n" (* n 5) HOMOSAPIEN
                 (random-fasta ">TWO IUB ambiguity codes\n" (* n 3) IUB 42))
   (void))
 
-(time-run bench)
+(time-run generate)

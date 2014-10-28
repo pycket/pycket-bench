@@ -1,0 +1,10 @@
+(library (%s)
+  (export main)
+  (import (except (vicare) square))
+
+  (include "configuration/definitions-vicare.scm")
+  (include "configuration/iterations.rkt")
+  (include "configuration/specialize-vicare%s.scm")
+  (begin
+    (include "src/%s.scm"))
+)

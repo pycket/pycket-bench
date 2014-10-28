@@ -93,6 +93,42 @@ if  [ ! -x "$PROGDIR/larceny/larceny" ]; then
     _gone
 fi
 
+if [ ! -x "$PROGDIR/vicare/bin/vicare" ]; then
+    $ECHO "installing Vicare"
+    _go "$PROGDIR/src"
+    $FETCH https://github.com/marcomaggi/vicare/archive/devel.zip
+    mv devel.zip vicare.zip
+    unzip vicare.zip
+    cd vicare
+    LIBTOOLIZE=glibtoolize sh autogen.sh
+    mkdir -p build
+    cd build
+    if uname | grep -qi 'Darwin'; then
+        ../configure
+            -disable-posix\
+            --disable-glibc\
+            --disable-linux\
+            --without-pthread\
+            --without-libffi\
+            --without-readline\
+            --without-cre2 \
+            --enable-maintainer-mode --prefix=$PROGDIR/vicare
+    else
+        ../configure
+            -disable-posix\
+            --disable-glibc\
+            --disable-linux\
+            --without-pthread\
+            --without-libffi\
+            --without-readline\
+            --without-cre2 \
+            --enable-maintainer-mode --prefix=$PROGDIR/vicare
+    fi
+    make -j
+    make install
+    _gone
+fi
+
 if [ ! -f "$PROGDIR/pycket/targetpycket.py" ]; then
     $ECHO "fetching Pycket"
     _go $PROGDIR

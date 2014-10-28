@@ -22,4 +22,7 @@
 (define (call-with-output-file/truncate filename proc)
  (call-with-output-file filename proc #:mode 'binary #:exists 'truncate))
 
+(define (open-output-file/truncate filename)
+  (open-output-file filename #:mode 'binary #:exists 'truncate))
+
 ;------------------------------------------------------------------------------

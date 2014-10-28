@@ -25,7 +25,7 @@
 
 (define (go)
   (set! inport (open-input-file "../data/bib"))
-  (set! outport (open-output-file "foo"))
+  (set! outport (open-output-file/truncate "foo"))
   (tail-r inport)
   (close-input-port inport))
 

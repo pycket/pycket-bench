@@ -40,5 +40,9 @@
   (truncate-file filename 0)
   (call-with-output-file filename proc))
 
+(define (open-output-file/truncate filename)
+  (truncate-file filename 0)
+  (open-output-file filename))
+
 (define (bigloo-main argv)
     (apply main argv))

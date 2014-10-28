@@ -30,6 +30,9 @@
 (define (call-with-output-file/truncate filename proc)
   (call-with-output-file filename proc))
 
+(define (open-output-file/truncate filename)
+  (open-output-file filename))
+
 ; Bitwise operations on exact integers.
 ; From the draft reference implementation of R6RS generic arithmetic.
 

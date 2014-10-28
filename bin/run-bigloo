@@ -29,16 +29,24 @@ OUT="bigloo/${BENCHMARK}${VARIABLE}.exe"
 BIGLOO_PRELUDE="${BIGLOO_PRELUDE:-configuration/definitions-bigloo.scm configuration/iterations.rkt}"
 BIGLOO_SPECIALIZE="configuration/specialize-bigloo$VARIABLE.scm"
 
+
 cat ${BIGLOO_PRELUDE} ${BIGLOO_SPECIALIZE} src/${BENCHMARK}.scm > ${SRC}
 
 if grep -q 'call-with-current-continuation' src/${BENCHMARK}.scm; then
   BIGLOO_CALLCC="-call/cc"
 fi
 
+BIGLOO_CFLAGS="${BIGLOO_CFLAGS:--Wno-parentheses-equality -Wno-unused-value -Wpointer-arith -Wswitch -Wtrigraphs -DBGL_BOOTCONFIG}"
 
+if uname -s | grep -qi 'Darwin'; then
+    BIGLOO_LDFLAGS="-ldopt -Wl,-stack_size,0x40000000,-stack_addr,0xf0000000"
+else
+    ulimit -s 1048576
+fi
 
 rm -f $OUT
 $BIGLOO "$@" $BIGLOO_CALLCC -eval '(set! *strip* #f)' -native -main "bigloo-main" -Obench \
-  -copt "${BIGLOO_CFLAGS:=-Wno-parentheses-equality -Wno-unused-value -Wpointer-arith -Wswitch -Wtrigraphs -DBGL_BOOTCONFIG}" \
+  -copt "${BIGLOO_CFLAGS}" ${BIGLOO_LDFLAGS} \
   -o $OUT $SRC
 exec $OUT
+

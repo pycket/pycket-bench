@@ -40,6 +40,14 @@ Then you should proceed to translate `pycket`:
     cd pycket
     $PYPYDIR/rpython/bin/rpython -Ojit targetpycket.py
 
+
+The Racket-specific benchmarks need some pretty huge input files.
+These are generated via the `setup.sh` script, or by running
+
+    cd $PYCKET_BENCH_DIR
+    cd RacketBenchmarks
+    racket gen-inputs.rkt
+
 You are now set to go benchmarking.
 
 ### ReBench

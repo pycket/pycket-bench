@@ -100,3 +100,10 @@ if [ ! -f "$PROGDIR/pycket/targetpycket.py" ]; then
     git submodule update
     _gone
 fi
+
+if [ ! -f "$PROGDIR/RacketBenchmarks/fasta-1000000"]; then
+    $ECHO "generating input files for some Racket benchmarks"
+    _go "$PROGDIR/RacketBenchmarks"
+    racket gen-intputs.rkt
+    _gone
+fi

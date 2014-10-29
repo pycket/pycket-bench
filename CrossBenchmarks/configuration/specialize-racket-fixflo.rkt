@@ -24,13 +24,15 @@
   (filtered-out
    (lambda (name) (regexp-replace #rx"^fx" name ""))
    (except-out (all-from-out racket/fixnum)
-               fx->fl fl->fx fxnot))
-  (all-defined-out))
+               fx->fl fl->fx fxnot fxand
+               fxvector fxvector? fxvector-set! fxvector-ref fxvector-length))
+  (all-defined-out)
+  zero? odd? even? /)
 ; Specialize fixnum and flonum arithmetic.
 
 (define-syntax FLOATvector-const
   (syntax-rules ()
-    ((FLOATvector-const x ...) '#(x ...))))
+    ((FLOATvector-const x ...) (flvector x ...))))
 
 (define-syntax nuc-const
   (syntax-rules ()

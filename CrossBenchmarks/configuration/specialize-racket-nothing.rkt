@@ -1,6 +1,9 @@
 #lang racket/base
 
-(provide (all-defined-out))
+(provide (all-defined-out)
+         positive? negative? zero?
+         quotient modulo remainder odd? even? min max
+         > < >= <= = / - + *)
 
 ; Don't specialize fixnum and flonum arithmetic.
 

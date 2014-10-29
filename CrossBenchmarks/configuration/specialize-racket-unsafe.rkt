@@ -23,13 +23,16 @@
   (filtered-out
    (lambda (name)
      (or
-      (and (regexp-match? #rx"^unsafe-fx]" name)
+      (and (regexp-match? #rx"^unsafe-fx" name)
            (regexp-replace #rx"^unsafe-fx" name ""))
       (and (regexp-match? #rx"^unsafe-fl" name)
            (regexp-replace #rx"^unsafe-fl" name "FLOAT"))))
    (except-out (all-from-out racket/unsafe/ops)
-               unsafe-fx->fl unsafe-fl->fx unsafe-fxnot))
-  (all-defined-out))
+               unsafe-fxvector-set!
+               unsafe-fxvector-ref unsafe-fxvector-length
+               unsafe-fx->fl unsafe-fl->fx unsafe-fxnot unsafe-fxand))
+  (all-defined-out)
+  zero? odd? even? /)
 
 (define-syntax FLOATvector-const
   (syntax-rules ()

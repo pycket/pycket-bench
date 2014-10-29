@@ -36,7 +36,7 @@ if grep -q 'call-with-current-continuation' src/${BENCHMARK}.scm; then
   BIGLOO_CALLCC="-call/cc"
 fi
 
-if [ "${VAIRABLE}" = "-unsafe" ]; then
+if [ "${VARIABLE}" = "-unsafe" ]; then
     BIGLOO_UNSAFE="${VARIABLE}"
 fi
 

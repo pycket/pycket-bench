@@ -36,6 +36,10 @@ if grep -q 'call-with-current-continuation' src/${BENCHMARK}.scm; then
   BIGLOO_CALLCC="-call/cc"
 fi
 
+if [ "${VAIRABLE}" = "-unsafe" ]; then
+    BIGLOO_UNSAFE="${VARIABLE}"
+fi
+
 BIGLOO_CFLAGS="${BIGLOO_CFLAGS:--Wno-parentheses-equality -Wno-unused-value -Wpointer-arith -Wswitch -Wtrigraphs -DBGL_BOOTCONFIG}"
 
 if uname -s | grep -qi 'Darwin'; then
@@ -44,8 +48,9 @@ else
     ulimit -s 1048576
 fi
 
+
 rm -f $OUT
-$BIGLOO "$@" $BIGLOO_CALLCC -eval '(set! *strip* #f)' -native -main "bigloo-main" -Obench \
+$BIGLOO "$@" $BIGLOO_UNSAFE $BIGLOO_CALLCC -eval '(set! *strip* #f)' -native -main "bigloo-main" -Obench \
   -copt "${BIGLOO_CFLAGS}" ${BIGLOO_LDFLAGS} \
   -o $OUT $SRC
 exec $OUT

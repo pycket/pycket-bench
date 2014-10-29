@@ -1,4 +1,6 @@
-(begin
+#lang racket/base
+
+(provide (all-defined-out))
 
 ; Don't specialize fixnum and flonum arithmetic.
 
@@ -172,4 +174,3 @@
 (define-syntax GENERICexpt
   (syntax-rules ()
     ((GENERICexpt x y) (expt x y))))
-)

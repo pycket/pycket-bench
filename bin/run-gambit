@@ -9,6 +9,7 @@ fi
 BENCHDIR="$(dirname $PROGDIR)"
 GAMBITDIR="$BENCHDIR/gambit"
 GAMBIT="${GAMBIT:-$GAMBITDIR/bin/gsc}"
+GAMBIT_CC="${GAMBIT_CC:=-D___SINGLE_HOST -O2}"
 
 if [ $# -lt 2 ]; then
     echo "No."
@@ -29,5 +30,5 @@ GAMBIT_SPECIALIZE="configuration/specialize-gambit$VARIABLE.scm"
 cat ${GAMBIT_PRELUDE} ${GAMBIT_SPECIALIZE} src/${BENCHMARK}.scm configuration/main.scm > ${SRC}
 
 
-$GAMBIT "$@" -exe -cc-options "${GAMBIT_CC:=-D___SINGLE_HOST}" -o $OUT $SRC
+$GAMBIT "$@" -exe -cc-options "${GAMBIT_CC}" -o $OUT $SRC
 exec $OUT

@@ -49,7 +49,7 @@
 
 
 ;-----------------------------------------------------------------------------
-(declare (standard-bindings) (block))
+(declare (standard-bindings) (block) (inlining-limit 0))
 
 (##define-macro (def-macro form . body)
   `(##define-macro ,form (let () ,@body)))

@@ -6,8 +6,6 @@
 #lang racket/base
 (require "time-run.rktl")
 
-(require (only-in mzlib/string real->decimal-string))
-
 (define IM 139968)
 (define IA   3877)
 (define IC  29573)

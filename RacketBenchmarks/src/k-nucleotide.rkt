@@ -21,8 +21,8 @@
   (let* ([content (hash-map table (lambda (k v) (cons k (unbox v))))]
          [total (exact->inexact (apply + (map cdr content)))])
     (for ([a (sort content > #:key cdr)])
-      (printf "~a ~a\n" 
-              (car a) 
+      (printf "~a ~a\n"
+              (car a)
               (real->decimal-string (* 100 (/ (cdr a) total)) 3)))))
 
 (define (write-one-freq table key)
@@ -36,22 +36,19 @@
                         (vector-ref args 0))]
          [file      (open-input-file file-name)]
          [out       (open-output-string)])
-    (copy-port file out)
-    (open-input-string (get-output-string out))))
+    ;; Skip to ">THREE ..."
+    (let loop ((line (read-line file)))
+      (unless (string=? line ">THREE Homo sapiens frequency")
+        (loop (read-line file))))
+    ;(regexp-match #rx#"(?m:^>THREE.*$)" file)
+    (let ([s (open-output-string)])
+      ;; Copy everything but newlines to s:
+      (for ([l (in-bytes-lines file)])
+        (write-bytes l s))
+      ;; Extract the string from s:
+      (string-upcase (get-output-string s)))))
 
-(define (bench in)
-
-  (define dna
-    (let ()
-      ;; Skip to ">THREE ..."
-      (regexp-match #rx#"(?m:^>THREE.*$)" in)
-      (let ([s (open-output-string)])
-        ;; Copy everything but newlines to s:
-        (for ([l (in-bytes-lines in)])
-          (write-bytes l s))
-        ;; Extract the string from s:
-        (string-upcase (get-output-string s)))))
-
+(define (bench dna)
 
   ;; 1-nucleotide counts:
   (write-freqs (all-counts 1 dna))
@@ -62,7 +59,7 @@
   (newline)
 
   ;; Specific sequences:
-  (for ([seq '("GGT" "GGTA" "GGTATT" "GGTATTTTAATT" "GGTATTTTAATTTATAGT")]) 
+  (for ([seq '("GGT" "GGTA" "GGTATT" "GGTATTTTAATT" "GGTATTTTAATTTATAGT")])
     (write-one-freq (all-counts (string-length seq) dna)
                     (string->symbol seq))))
 

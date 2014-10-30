@@ -28,6 +28,8 @@ if (length(fonts()) == 0) {
   font_import(prompt=FALSE)
 }
 
+pdf.embed.options <- "-dEmbedAllFonts=true -dPDFSETTINGS=/prepress -dCompatibilityLevel=1.4 -dSubsetFonts=true -dHaveTrueTypeFonts=true"
+
 # ---- cmd line ----
 
 if (FALSE) {
@@ -53,45 +55,29 @@ bench <- read.delim(tsv_name, comment.char = "#", header=FALSE,
 
 bench$vm <- sapply(bench$vm, function (x)
   if (x=='RRacket') 'Racket' else paste0("",x))
-
-# rigorous bench
-rigorous <- 'Gambit' %in% bench$vm
+                                
+bench <- droplevels(bench[bench$vm != 'PycketNoJit',,drop=TRUE])
+bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
+if (length(factor(bench$vm)) > 2) {
+  bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "Gambit", "Bigloo"))
+} else {
+  bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket"))  
+}
 
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 # These are currently not run on pycket
-blacklist <- c('browse'
-               , 'cat'
-               , 'dynamic'
-               , 'conform'
-               , 'dderiv'
-               , 'destruc'
-               , 'gcold'
-               , 'lattice'
-               , 'matrix'
-               , 'maze'
-               , 'parsing'
-               , 'peval'
-               , 'ray'
-               , 'scheme'
-               , 'slatex'
-               , 'sum1'
-               , 'tail'
-               , 'tfib'
-               , 'trav1'
-               , 'trav2'
-               , 'wc'
-)
+blacklist <- c()
 
 # There are too big differences to plot. thus, table only
-
-if (rigorous) {  
-  table.only <- c('ctak','fibc', 'pi')
+if ('ctak' %in% bench$benchmark) {  
+  table.only <- c('ctak','fibc', 'pi', 'nucleic', 'dynamic', 'cat', 'maze', 'slatex', 'matrix')
   #table.only <- c('ctak')
-  # in inches
 } else {
   table.only <- c()
 }
+
+# in inches
 figure.width <- 7
 figure.height <- 2.8
 
@@ -155,15 +141,51 @@ normalizeTo <- function(df, supergroup, group, val, var, vars=c(var)) {
 
 
 bench <- droplevels(bench[!(bench$benchmark %in% blacklist),,drop=TRUE])
-bench <- bench[c('criterion','vm','benchmark','value')]
+bench <- bench[c('criterion','vm','benchmark','value', 'variable_values')]
+
+bench.corr = data.frame()
+for (var in levels(bench$variable_values)) {
+  for (crit in levels(bench$criterion)) {
+    for (vm in levels(bench$vm)) {  
+      for (benchmark in levels(bench$benchmark)) {
+        if (1 > nrow(bench[(
+          bench$variable_values == var &
+            bench$criterion == crit & 
+            bench$vm == vm &
+            bench$benchmark == benchmark
+          ),,])) {
+          .x <- data.frame(criterion=crit,vm=vm,benchmark=benchmark,value=NA,variable_values=var)
+          bench.corr <- rbind(bench.corr, .x)
+        }
+      }
+    }
+  }
+}
+
+bench <- rbind(bench, bench.corr)
+
 bench.tot <- droplevels(bench[bench$criterion == 'total',,drop=TRUE])
 bench.cpu <- droplevels(bench[bench$criterion == "cpu",,drop=TRUE])
 
-if (rigorous) {
+num.vms <- length(levels(factor(bench.tot$vm)))
+num.runs <- length(bench.tot$benchmark)
+num.benches <- length(levels(bench.tot$benchmark))
+num.vars <- length(levels(factor(bench.tot$variable_values)))
 
+rigorous <- (num.runs / num.vms) > (num.benches * num.vars)
+multi.variate <- num.vars > 1
+
+if (multi.variate) {
+  group.by <- as.quoted(c("variable_values","benchmark","vm"))
+} else {
+  group.by <- as.quoted(c("benchmark","vm"))
+}
+
+if (rigorous) {
+  #fixme: mv
   bench.err <- bootstrapTo(bench.tot, 'benchmark', 'vm', 'Racket', 'value')
 
-  bench.summary <- ddply(bench.tot, .(benchmark,vm), plyr::summarize, 
+  bench.summary <- ddply(bench.tot, group.by, plyr::summarize, 
                          overall=FALSE,
                          mean=mean(value),
                          median=median(value),
@@ -177,47 +199,65 @@ if (rigorous) {
     bench.err
   )
 } else {
-  bench.summary <- ddply(bench.tot, .(benchmark,vm), plyr::summarize, 
+  bench.summary <- ddply(bench.tot, group.by, plyr::summarize, 
                          overall=FALSE,
                          mean=mean(value),
                          median=median(value)
   )
-  bench.summary <- normalizeTo(bench.summary, 'benchmark', 'vm', reference.vm, 'mean')
+  if (multi.variate) {
+    df <- data.frame()
+    for (var.val in levels(factor(bench.summary$variable_values))) {
+      b <- droplevels(bench.summary[bench.summary$variable_values == var.val,,drop=TRUE])
+      df <- rbind(df, normalizeTo(b, 'benchmark', 'vm', reference.vm, 'mean'))
+    }
+    bench.summary <- df
+  } else {
+    bench.summary <- normalizeTo(bench.summary, 'benchmark', 'vm', reference.vm, 'mean')
+  }
 }
 
 
-bench.summary.graph <- bench.summary[!(bench.summary$benchmark %in% table.only),]
+bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
 # ignore nojit
 #bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != 'PycketNoJit',,drop=TRUE]
 
-bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id.vars=c('vm')), .(vm),
-                               plyr::summarize, 
-                               overall=TRUE,
-                               benchmark='geometric\nmean',
-                               mean=1,
-                               mean.norm=exp(mean(log(value))),
-                               median=1
-)
-if (rigorous) {
-  bench.summary.overall <- merge(bench.summary.overall, data.frame(stdev=1, err095=1, cnfIntHigh=1,
-                                                                   cnfIntLow=1, conf=1, upper=NA, lower=NA))
-
-}
-bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
+# bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id.vars=c('vm')), .(vm),
+#                                plyr::summarize, 
+#                                overall=TRUE,
+#                                benchmark='geometric\nmean',
+#                                mean=1,
+#                                mean.norm=exp(mean(log(value))),
+#                                median=1
+# )
+# if (rigorous) {
+#   bench.summary.overall <- merge(bench.summary.overall, data.frame(stdev=1, err095=1, cnfIntHigh=1,
+#                                                                    cnfIntLow=1, conf=1, upper=NA, lower=NA))
+# 
+# }
+# bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
 #bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
-sel.col = if (rigorous) {c('benchmark','vm','mean','err095')} else {c('benchmark','vm','mean')}
-bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
-bench.summary.ltx <- bench.summary.sel[2:length(bench.summary.sel)]
-rownames(bench.summary.ltx) <- bench.summary.sel$benchmark
-colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
+sel.col = if (rigorous) { if (multi.variate) { c('variable_values','benchmark','vm','mean','err095') } else { c('benchmark','vm','mean','err095') }  } else 
+                        { if (multi.variate) { c('variable_values','benchmark','vm','mean') } else { c('benchmark','vm','mean')} }
+if (multi.variate) {
+  bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('variable_values','benchmark','vm')), variable_values + benchmark ~ vm + variable)
+} else {
+  bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
+  bench.summary.ltx <- bench.summary.sel[2:length(bench.summary.sel)]
+  rownames(bench.summary.ltx) <- bench.summary.sel$benchmark
+  colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
+}
 
-bench.summary.table <- bench.summary[bench.summary$vm != 'PycketNoJit',,drop=TRUE]
-bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
-bench.summary.table.ltx <- bench.summary.table.sel[2:length(bench.summary.table.sel)]
-rownames(bench.summary.table.ltx) <- bench.summary.table.sel$benchmark
-colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
-bench.summary.table.ltx <- bench.summary.table.ltx[rownames(bench.summary.table.ltx) %in% table.only,]
+bench.summary.table <- droplevels(bench.summary[bench.summary$vm != 'PycketNoJit',,drop=TRUE])
+if (multi.variate) {
+  bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('variable_values','benchmark','vm')), variable_values + benchmark ~ vm + variable)  
+} else {
+  bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
+  bench.summary.table.ltx <- bench.summary.table.sel[2:length(bench.summary.table.sel)]
+  rownames(bench.summary.table.ltx) <- bench.summary.table.sel$benchmark
+  colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
+  bench.summary.table.ltx <- bench.summary.table.ltx[rownames(bench.summary.table.ltx) %in% table.only,]
+}
 
 # ----- Outputting -----
 
@@ -240,15 +280,16 @@ write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetNam
 # )
 # dev.off()
 
-# Normalized bargraph 2
+# Normalized bargraph
 dodge <- position_dodge(width=.8)
-# ymax <- round_any(max(1/bench.summary.graph$mean.norm), 0.5, ceiling)
-ymax <- round_any(max(bench.summary.graph$mean.norm), 0.5, ceiling)
+#ymax <- round_any(max(1/bench.summary.graph$mean.norm,  na.rm=TRUE), 0.5, ceiling)
+ymax <- round_any(max(bench.summary.graph$mean.norm, na.rm=TRUE), 0.5, ceiling)
 p <- ggplot(data=bench.summary.graph,
 #        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
-  geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
+  geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm))+
+  geom_point(position=dodge,aes(y=0.2, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
   #   xlab("Benchmark") +
   ylab("Relative Runtime") +
   theme_bw(base_size=8, base_family="Helvetica") +
@@ -261,7 +302,7 @@ p <- ggplot(data=bench.summary.graph,
     axis.title.y = element_text(face="bold", size=8),
     axis.text.y  = element_text(size=8), #angle=45, hjust=0.2, vjust=0.5,
     legend.position=c(0.15, .75),
-    plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
+    #plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
     legend.text = element_text(size=7),
     legend.title = element_text(size=7, face="bold"),
     legend.background = element_rect(fill="gray90", size=0),
@@ -269,10 +310,16 @@ p <- ggplot(data=bench.summary.graph,
     legend.key=element_rect(fill="white"),
     legend.key.size=unit(5,"mm")
   ) +
-  scale_y_continuous(breaks=seq(0,ymax,.5), limits=c(0,ymax),expand=c(0,0)) +
-  scale_fill_grey(name = "Virtual Machine") +
-  #facet_null()
-  facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
+  scale_y_continuous(breaks=seq(0,ymax,1), limits=c(0,ymax),expand=c(0,0)) +
+  #scale_fill_grey(name = "Virtual Machine")
+  scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1") +
+  scale_shape(name = "Virtual Machine", solid = FALSE)
+if (multi.variate) {
+  p <- p + facet_grid(variable_values ~ .)#, scales="free", space="free",labeller=label_bquote(""))
+} else {
+  p <- p + facet_null()
+  #p <- p + facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
+}
 if (rigorous) {
   p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
 }
@@ -280,9 +327,12 @@ if (rigorous) {
 p
 
 gg.file <- paste0(input.basename, "-norm.pdf")
-ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
-embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
+#ggsave(gg.file, width=figure.width, height=figure.height*num.vars, units=c("in"), colormodel='rgb')
+ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb')
+embed_fonts(gg.file, options=pdf.embed.options)
 
+
+if (FALSE) {
 #
 # and now color
 #
@@ -321,8 +371,9 @@ if (rigorous) {
 p
 gg.file <- paste0(input.basename, "-norm-col.pdf")
 ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
-embed_fonts(gg.file, options="-dPDFSETTINGS=/prepress")
+embed_fonts(gg.file, options=pdf.embed.options)
 
+}
 
 # LaTeX table
 (function() {

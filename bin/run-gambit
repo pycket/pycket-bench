@@ -11,6 +11,12 @@ GAMBITDIR="$BENCHDIR/gambit"
 GAMBIT="${GAMBIT:-$GAMBITDIR/bin/gsc}"
 GAMBIT_CC="${GAMBIT_CC:=-D___SINGLE_HOST -O2}"
 
+if uname -s | grep -qi 'Darwin'; then
+    GAMBIT_LD="${GAMBIT_LD:--Wl,-stack_size,0x40000000,-stack_addr,0xf0000000}"
+else
+    ulimit -s 1048576
+fi
+
 if [ $# -lt 2 ]; then
     echo "No."
     exit -1
@@ -30,5 +36,5 @@ GAMBIT_SPECIALIZE="configuration/specialize-gambit$VARIABLE.scm"
 cat ${GAMBIT_PRELUDE} ${GAMBIT_SPECIALIZE} src/${BENCHMARK}.scm configuration/main.scm > ${SRC}
 
 
-$GAMBIT "$@" -exe -cc-options "${GAMBIT_CC}" -o $OUT $SRC
+$GAMBIT "$@" -exe -cc-options "${GAMBIT_CC}" -ld-options "${GAMBIT_LD}" -o $OUT $SRC
 exec $OUT

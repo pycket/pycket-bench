@@ -1,3 +1,6 @@
 [submodule "pycket"]
 	path = pycket
 	url = https://github.com/samth/pycket.git
+[submodule "ChaperoneBenchmarks"]
+	path = ChaperoneBenchmarks
+	url = https://github.com/sabauma/pycket-benchmarks.git

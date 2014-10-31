@@ -103,9 +103,9 @@ if [ ! -f "$PROGDIR/pycket/targetpycket.py" ]; then
     _gone
 fi
 
-if [ ! -f "$PROGDIR/RacketBenchmarks/fasta-1000000" ]; then
+if [ ! -f "$PROGDIR/ShootoutBenchmarks/fasta-1000000" ]; then
     $ECHO "generating input files for some Racket benchmarks"
-    _go "$PROGDIR/RacketBenchmarks"
-    racket gen-intputs.rkt
+    _go "$PROGDIR/ShootoutBenchmarks"
+    racket gen-inputs.rkt
     _gone
 fi

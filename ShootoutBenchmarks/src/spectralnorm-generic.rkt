@@ -4,7 +4,6 @@
 ;; Translated from Mike Pall's Lua version.
 
 (require "time-run.rktl")
-(require racket/trace racket/contract)
 
 
 

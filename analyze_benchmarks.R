@@ -58,6 +58,7 @@ bench$vm <- sapply(bench$vm, function (x)
                                 
 bench <- droplevels(bench[bench$vm != 'PycketNoJit',,drop=TRUE])
 bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
+
 if (length(factor(bench$vm)) > 2) {
   bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "Gambit", "Bigloo"))
 } else {
@@ -67,11 +68,11 @@ if (length(factor(bench$vm)) > 2) {
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 # These are currently not run on pycket
-blacklist <- c()
+blacklist <- c('sum1', 'wc', 'cat')
 
 # There are too big differences to plot. thus, table only
 if ('ctak' %in% bench$benchmark) {  
-  table.only <- c('ctak','fibc', 'pi', 'nucleic', 'dynamic', 'cat', 'maze', 'slatex', 'matrix')
+  table.only <- c('ctak','fibc', 'pi', 'nucleic', 'dynamic', 'maze', 'slatex', 'matrix')
   #table.only <- c('ctak')
 } else {
   table.only <- c()
@@ -81,12 +82,16 @@ if ('ctak' %in% bench$benchmark) {
 figure.width <- 7
 figure.height <- 2.8
 
+do.only.nothing <- TRUE
 
 
 
 
 
 # ------ functions -----
+`%ni%` = Negate(`%in%`) 
+
+
 confInterval095Error <- function (samples) {
   if (length(sample) < 30)
     qnorm(0.975) * sd(samples) / sqrt(length(samples))
@@ -115,10 +120,20 @@ normalize_value_bootstrap_confidence = function(x, y, R=1000) {
 bootstrapTo <- function(df, supergroup, group, val, var) {
   cmp <- df[(df[[group]] == val),]
   doIt <- function(X) {
+    .X <- X[(!is.na(X[[var]])),]
+    if (1 > nrow(.X)) {
+      return(as.matrix(data.frame(conf=NA, upper=NA, lower=NA)))
+    }
     ident <- (X[[supergroup]])[[1]]
     subs <- cmp[(cmp[[supergroup]] == ident),]
     comparee <- subs[[var]]
-    normalize_value_bootstrap_confidence(X[[var]], comparee)
+#     print(X[[group]][[1]])
+#     print(ident)
+#     print(is.na(comparee))
+    if (length(comparee[!is.na(comparee)]) != length(comparee)) {
+      return(as.matrix(data.frame(conf=NA, upper=NA, lower=NA)))
+    }
+    normalize_value_bootstrap_confidence(.X[[var]], comparee)
   }
   ddply(df, c(supergroup,group), doIt)  
 }
@@ -137,11 +152,34 @@ normalizeTo <- function(df, supergroup, group, val, var, vars=c(var)) {
   data
 }
 
+geomean <- function(X) {
+  value <- na.omit(X[X > 0])
+  exp(mean(log(value)))
+}
+
+
 # --- shaping data
+
+
+
 
 
 bench <- droplevels(bench[!(bench$benchmark %in% blacklist),,drop=TRUE])
 bench <- bench[c('criterion','vm','benchmark','value', 'variable_values')]
+
+num.vms <- length(levels(factor(bench$vm)))
+num.runs <- length(bench$benchmark)
+num.benches <- length(levels(bench$benchmark))
+num.vars <- length(levels(factor(bench$variable_values)))
+num.crit <- length(levels(bench$criterion))
+
+if (num.vars == 0) {
+  num.vars <- 1
+}
+rigorous <- num.runs > (num.vms * num.benches * num.vars * num.crit)
+multi.variate <- num.vars > 1
+
+
 
 bench.corr = data.frame()
 for (var in levels(bench$variable_values)) {
@@ -156,6 +194,18 @@ for (var in levels(bench$variable_values)) {
           ),,])) {
           .x <- data.frame(criterion=crit,vm=vm,benchmark=benchmark,value=NA,variable_values=var)
           bench.corr <- rbind(bench.corr, .x)
+          if (rigorous) {
+            bench.corr <- rbind(bench.corr, .x)
+            bench.corr <- rbind(bench.corr, .x)
+            bench.corr <- rbind(bench.corr, .x)
+            bench.corr <- rbind(bench.corr, .x)
+            bench.corr <- rbind(bench.corr, .x)
+            bench.corr <- rbind(bench.corr, .x)
+            bench.corr <- rbind(bench.corr, .x)            
+            bench.corr <- rbind(bench.corr, .x)
+            bench.corr <- rbind(bench.corr, .x)            
+            
+          }
         }
       }
     }
@@ -164,16 +214,11 @@ for (var in levels(bench$variable_values)) {
 
 bench <- rbind(bench, bench.corr)
 
+
+######################################################
+
 bench.tot <- droplevels(bench[bench$criterion == 'total',,drop=TRUE])
 bench.cpu <- droplevels(bench[bench$criterion == "cpu",,drop=TRUE])
-
-num.vms <- length(levels(factor(bench.tot$vm)))
-num.runs <- length(bench.tot$benchmark)
-num.benches <- length(levels(bench.tot$benchmark))
-num.vars <- length(levels(factor(bench.tot$variable_values)))
-
-rigorous <- (num.runs / num.vms) > (num.benches * num.vars)
-multi.variate <- num.vars > 1
 
 if (multi.variate) {
   group.by <- as.quoted(c("variable_values","benchmark","vm"))
@@ -182,9 +227,6 @@ if (multi.variate) {
 }
 
 if (rigorous) {
-  #fixme: mv
-  bench.err <- bootstrapTo(bench.tot, 'benchmark', 'vm', 'Racket', 'value')
-
   bench.summary <- ddply(bench.tot, group.by, plyr::summarize, 
                          overall=FALSE,
                          mean=mean(value),
@@ -194,10 +236,24 @@ if (rigorous) {
                          cnfIntHigh = mean(value) + (confInterval095Error(value)),
                          cnfIntLow = mean(value) - (confInterval095Error(value))
   )
-  bench.summary <- merge(
-    normalizeTo(bench.summary, 'benchmark', 'vm', reference.vm, 'mean'),
-    bench.err
-  )
+  if (multi.variate) {
+    df <- data.frame()
+    for (var.val in levels(factor(bench.summary$variable_values))) {
+      .sum <- droplevels(bench.summary[bench.summary$variable_values == var.val,,drop=TRUE])
+      .tot <- droplevels(bench.tot[bench.tot$variable_values == var.val,,drop=TRUE])
+      .err <- bootstrapTo(.tot, 'benchmark', 'vm', reference.vm, 'value')
+      .norm <- normalizeTo(.sum, 'benchmark', 'vm', reference.vm, 'mean')
+      .merge <- merge(.norm, .err)
+      df <- rbind(df, .merge)
+    }
+    bench.summary <- df
+  } else {
+    bench.err <- bootstrapTo(bench.tot, 'benchmark', 'vm', reference.vm, 'value')
+    bench.summary <- merge(
+      normalizeTo(bench.summary, 'benchmark', 'vm', reference.vm, 'mean'),
+      bench.err
+    )
+  }
 } else {
   bench.summary <- ddply(bench.tot, group.by, plyr::summarize, 
                          overall=FALSE,
@@ -221,26 +277,40 @@ bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% t
 # ignore nojit
 #bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != 'PycketNoJit',,drop=TRUE]
 
-# bench.summary.overall <- ddply(melt(bench.summary.graph[c('vm','mean.norm')], id.vars=c('vm')), .(vm),
-#                                plyr::summarize, 
-#                                overall=TRUE,
-#                                benchmark='geometric\nmean',
-#                                mean=1,
-#                                mean.norm=exp(mean(log(value))),
-#                                median=1
-# )
-# if (rigorous) {
-#   bench.summary.overall <- merge(bench.summary.overall, data.frame(stdev=1, err095=1, cnfIntHigh=1,
-#                                                                    cnfIntLow=1, conf=1, upper=NA, lower=NA))
-# 
-# }
-# bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
+if (multi.variate) {
+  .selection <- c('vm', 'variable_values','mean.norm')
+  .ids <- c('vm', 'variable_values')
+  .group.by <- as.quoted(c("vm","variable_values"))
+  
+} else {
+  .selection <- c('vm','mean.norm')
+  .ids <- c('vm')
+  .group.by <- as.quoted(c("vm"))
+}
+
+
+bench.summary.overall <- ddply(melt(bench.summary.graph[.selection], id.vars=.ids), .group.by,
+                               plyr::summarize, 
+                               overall=TRUE,
+                               benchmark='geometric\nmean',
+                               mean=1,
+                               mean.norm=geomean(value),
+                               median=1
+)
+if (rigorous) {
+  bench.summary.overall <- merge(bench.summary.overall, data.frame(stdev=1, err095=1, cnfIntHigh=1,
+                                                                   cnfIntLow=1, conf=1, upper=NA, lower=NA))
+}
+bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
 #bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
 sel.col = if (rigorous) { if (multi.variate) { c('variable_values','benchmark','vm','mean','err095') } else { c('benchmark','vm','mean','err095') }  } else 
                         { if (multi.variate) { c('variable_values','benchmark','vm','mean') } else { c('benchmark','vm','mean')} }
 if (multi.variate) {
-  bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('variable_values','benchmark','vm')), variable_values + benchmark ~ vm + variable)
+  bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('benchmark','variable_values','vm')), benchmark + variable_values ~ vm + variable)
+  bench.summary.ltx <- bench.summary.sel[3:length(bench.summary.sel)]
+  rownames(bench.summary.ltx) <- paste0(bench.summary.sel$benchmark, '\\textsubscript{', bench.summary.sel$variable_values, '}')
+  colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
 } else {
   bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
   bench.summary.ltx <- bench.summary.sel[2:length(bench.summary.sel)]
@@ -250,14 +320,19 @@ if (multi.variate) {
 
 bench.summary.table <- droplevels(bench.summary[bench.summary$vm != 'PycketNoJit',,drop=TRUE])
 if (multi.variate) {
-  bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('variable_values','benchmark','vm')), variable_values + benchmark ~ vm + variable)  
+  bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','variable_values','vm')), benchmark + variable_values ~ vm + variable)  
+  bench.summary.table.sel.flt <- bench.summary.table.sel[bench.summary.table.sel$benchmark %in% table.only,]
+  bench.summary.table.ltx <- bench.summary.table.sel.flt[3:length(bench.summary.table.sel.flt)]
+  rownames(bench.summary.table.ltx) <- paste0(bench.summary.table.sel.flt$benchmark, '\\textsubscript{', bench.summary.table.sel.flt$variable_values, '}')
+  colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
 } else {
   bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
+  bench.summary.table.sel <- bench.summary.table.sel[bench.summary.table.sel$benchmark %in% table.only,]
   bench.summary.table.ltx <- bench.summary.table.sel[2:length(bench.summary.table.sel)]
   rownames(bench.summary.table.ltx) <- bench.summary.table.sel$benchmark
   colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
-  bench.summary.table.ltx <- bench.summary.table.ltx[rownames(bench.summary.table.ltx) %in% table.only,]
 }
+
 
 # ----- Outputting -----
 
@@ -280,6 +355,10 @@ write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetNam
 # )
 # dev.off()
 
+if (multi.variate & do.only.nothing) {
+  bench.summary.graph <- droplevels(bench.summary.graph[bench.summary.graph$variable_values == 'nothing',,drop=TRUE])
+}
+
 # Normalized bargraph
 dodge <- position_dodge(width=.8)
 #ymax <- round_any(max(1/bench.summary.graph$mean.norm,  na.rm=TRUE), 0.5, ceiling)
@@ -289,7 +368,7 @@ p <- ggplot(data=bench.summary.graph,
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm))+
-  geom_point(position=dodge,aes(y=0.2, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
+  geom_point(position=dodge,aes(y=0.15, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
   #   xlab("Benchmark") +
   ylab("Relative Runtime") +
   theme_bw(base_size=8, base_family="Helvetica") +
@@ -314,14 +393,24 @@ p <- ggplot(data=bench.summary.graph,
   #scale_fill_grey(name = "Virtual Machine")
   scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1") +
   scale_shape(name = "Virtual Machine", solid = FALSE)
-if (multi.variate) {
-  p <- p + facet_grid(variable_values ~ .)#, scales="free", space="free",labeller=label_bquote(""))
-} else {
-  p <- p + facet_null()
-  #p <- p + facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
-}
 if (rigorous) {
   p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
+}
+
+if (multi.variate & !do.only.nothing) {
+  .labeller <- function(var, value) {
+    if (var == 'overall') {
+      label_bquote("")(var, value)
+    } else {
+      label_value(var, value)
+    }  
+  }
+#   p <- p + facet_grid(variable_values ~ .)#, scales="free", space="free",labeller=label_bquote(""))
+    p <- p + facet_grid(variable_values ~ overall, scales="free_x", space="free_x",labeller=.labeller)
+  
+} else {
+  #p <- p + facet_null()
+  p <- p + facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
 }
 
 p
@@ -378,6 +467,8 @@ embed_fonts(gg.file, options=pdf.embed.options)
 # LaTeX table
 (function() {
   len <- length(bench.summary.table.ltx)/2
+  .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
+  .just = c('@{}r', .just[2:length(.just)])
   out <- latex(bench.summary.table.ltx,
                file=paste0(input.basename, "-extremes.tex"),
                rowlabel="",
@@ -389,22 +480,28 @@ embed_fonts(gg.file, options=pdf.embed.options)
                table.env=FALSE, center="none",
                where="htbp", size="footnotesize", #center="centering",
                #colheads=rep(c('mean', 'error'), len),
-               colheads=rep('',len*2),
-               col.just=rep(c('r','@{\\scriptsize\\,\\ensuremath{\\pm}}>{\\scriptsize}r'), len),
+               colheads=rep(c('mean', ''),len),
+               col.just=.just,
+#                col.just=rep(c('r','@{\\scriptsize\\,\\ensuremath{\\pm}}>{\\scriptsize}r'), len),
                cgroup=levels(as.factor(bench.summary.table$vm)),
                cdec=rep(0, len*2))
 })()
 # LaTeX table, all
 (function() {
   len <- length(bench.summary.ltx)/2
+  .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
+  .just = c('@{}r', .just[2:length(.just)])
+  .long <- nrow(bench.summary.ltx) > 50
   out <- latex(bench.summary.ltx,
                file=paste0(input.basename, "-all.tex"),
                rowlabel="Benchmark",
                booktabs=TRUE,
-               table.env=FALSE, center="none",
-               size="footnotesize", #center="centering",
-               colheads=rep(c('mean', 'error'), len),
-               col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
+               table.env=(! .long), center="none",
+               longtable=.long,
+               size="small", #center="centering",
+               colheads=rep(c('mean', ''), len),
+               col.just=.just,
+               #col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
                cgroup=levels(as.factor(bench.summary$vm)),
                cdec=rep(0, len*2))
 })()

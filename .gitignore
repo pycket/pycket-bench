@@ -13,6 +13,8 @@ CrossBenchmarks/foo
 /gambit
 /larceny
 /bigloo
+/v8
+/spidermonkey
 
 *.py[cod]
 

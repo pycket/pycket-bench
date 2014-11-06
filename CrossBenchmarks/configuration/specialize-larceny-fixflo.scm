@@ -55,47 +55,33 @@
   (syntax-rules ()
     ((FLOAT= x y) (GENERIC= x y)))) ;fixme
 
-;(define-syntax FLOAT<
-;  (syntax-rules ()
-;    ((FLOAT< x y) (fl< x y))))
 (define-syntax FLOAT<
   (syntax-rules ()
     ((FLOAT< x y) (GENERIC< x y))))
 
 (define-syntax FLOAT<=
   (syntax-rules ()
-    ((FLOAT<= x y) (fl<= x y))))
+    ((FLOAT<= x y) (GENERIC<= x y))))
 
 (define-syntax FLOAT>
   (syntax-rules ()
-    ((FLOAT> x y) (fl> x y))))
+    ((FLOAT> x y) (GENERIC> x y))))
 
 (define-syntax FLOAT>=
   (syntax-rules ()
-    ((FLOAT>= x y) (fl>= x y))))
-
-;(define-syntax FLOATnegative?
-;  (syntax-rules ()
-;    ((FLOATnegative? x) (fl< x 0.0))))
+    ((FLOAT>= x y) (GENERIC>= x y))))
 
 (define-syntax FLOATnegative?
   (syntax-rules ()
     ((FLOATnegative? x) (GENERIC< x 0.0))))
 
-;(define-syntax FLOATpositive?
-;  (syntax-rules ()
-;    ((FLOATpositive? x) (fl< 0.0 x))))
 (define-syntax FLOATpositive?
   (syntax-rules ()
     ((FLOATpositive? x) (GENERIC< 0.0 x))))
 
-
-;(define-syntax FLOATzero?
-;  (syntax-rules ()
-;    ((FLOATzero? x) (fl= 0.0 x))))
 (define-syntax FLOATzero?
   (syntax-rules ()
-    ((FLOATzero? x) (= 0.0 x)))) ;fixme
+    ((FLOATzero? x) (GENERIC= 0.0 x)))) ;fixme
 
 (define-syntax FLOATabs
   (syntax-rules ()

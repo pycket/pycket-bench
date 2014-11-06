@@ -29,13 +29,11 @@
             (hash-set! dict r #t)
             (loop))))))
 
-  (fprintf (current-error-port) "~a\n"
-           (let loop ((acc '()))
-             (let ([w (read-bytes-line in)])
-               (if (eof-object? w)
-                   acc
-                   (if (hash-ref dict w (lambda () #f))
-                       (loop acc)
-                       (loop (cons w acc))))))))
+  (let loop ()
+    (let ([w (read-bytes-line in)])
+      (unless (eof-object? w)
+        (unless (hash-ref dict w (lambda () #f))
+          (printf "~a\n" w))
+        (loop)))))
 
 (time-run bench benchargs)

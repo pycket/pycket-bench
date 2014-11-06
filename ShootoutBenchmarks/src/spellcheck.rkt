@@ -29,11 +29,12 @@
             (hash-set! dict r #t)
             (loop))))))
 
-  (let loop ()
+  (let loop ((acc '()))
     (let ([w (read-bytes-line in)])
       (unless (eof-object? w)
-        (unless (hash-ref dict w (lambda () #f))
-          (printf "~a\n" w))
-        (loop)))))
+        (if (hash-ref dict w (lambda () #f))
+            ;(printf "~a\n" w))
+            (loop acc)
+            (loop (cons w acc)))))))
 
 (time-run bench benchargs)

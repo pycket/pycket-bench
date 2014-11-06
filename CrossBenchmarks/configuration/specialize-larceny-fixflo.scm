@@ -49,15 +49,18 @@
 
 (define-syntax FLOAT/
   (syntax-rules ()
-    ((FLOAT/ x ...) (/ x ...))))                ; FIXME
+    ((FLOAT/ x ...) (GENERIC/ x ...))))                ; FIXME
 
 (define-syntax FLOAT=
   (syntax-rules ()
-    ((FLOAT= x y) (fl= x y))))
+    ((FLOAT= x y) (GENERIC= x y)))) ;fixme
 
+;(define-syntax FLOAT<
+;  (syntax-rules ()
+;    ((FLOAT< x y) (fl< x y))))
 (define-syntax FLOAT<
   (syntax-rules ()
-    ((FLOAT< x y) (fl< x y))))
+    ((FLOAT< x y) (GENERIC< x y))))
 
 (define-syntax FLOAT<=
   (syntax-rules ()
@@ -71,17 +74,28 @@
   (syntax-rules ()
     ((FLOAT>= x y) (fl>= x y))))
 
+;(define-syntax FLOATnegative?
+;  (syntax-rules ()
+;    ((FLOATnegative? x) (fl< x 0.0))))
+
 (define-syntax FLOATnegative?
   (syntax-rules ()
-    ((FLOATnegative? x) (fl< x 0.0))))
+    ((FLOATnegative? x) (GENERIC< x 0.0))))
 
+;(define-syntax FLOATpositive?
+;  (syntax-rules ()
+;    ((FLOATpositive? x) (fl< 0.0 x))))
 (define-syntax FLOATpositive?
   (syntax-rules ()
-    ((FLOATpositive? x) (fl< 0.0 x))))
+    ((FLOATpositive? x) (GENERIC< 0.0 x))))
 
+
+;(define-syntax FLOATzero?
+;  (syntax-rules ()
+;    ((FLOATzero? x) (fl= 0.0 x))))
 (define-syntax FLOATzero?
   (syntax-rules ()
-    ((FLOATzero? x) (fl= 0.0 x))))
+    ((FLOATzero? x) (= 0.0 x)))) ;fixme
 
 (define-syntax FLOATabs
   (syntax-rules ()
@@ -157,9 +171,9 @@
 ;  (syntax-rules ()
 ;    ((remainder x ...) (remainder x ...))))     ; FIXME
 
-(define-syntax =
-  (syntax-rules ()
-    ((= x y) (fx= x y))))
+;(define-syntax =
+;  (syntax-rules ()
+;    ((= x y) (fx= x y))))
 
 (define-syntax <
   (syntax-rules ()

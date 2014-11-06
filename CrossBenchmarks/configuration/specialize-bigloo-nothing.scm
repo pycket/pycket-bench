@@ -170,3 +170,16 @@
 (define-syntax GENERICexpt
   (syntax-rules ()
     ((GENERICexpt x y) (expt x y))))
+
+
+(define-syntax bitwise-or
+  (syntax-rules ()
+    ((bitwise-or x y) (bit-or x y))))
+
+(define-syntax bitwise-and
+  (syntax-rules ()
+    ((bitwise-and x y) (bit-and x y))))
+
+(define-syntax bitwise-not
+  (syntax-rules ()
+    ((bitwise-not x) (bit-not x))))

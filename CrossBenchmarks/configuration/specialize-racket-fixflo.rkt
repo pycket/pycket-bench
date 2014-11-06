@@ -20,7 +20,8 @@
     [make-flvector FLOATmake-vector])
   (filtered-out
    (lambda (name) (regexp-replace #rx"^fl" name "FLOAT"))
-   (all-from-out racket/flonum))
+   (except-out (all-from-out racket/flonum)
+               fl+))
   (filtered-out
    (lambda (name) (regexp-replace #rx"^fx" name ""))
    (except-out (all-from-out racket/fixnum)
@@ -33,6 +34,12 @@
 (define-syntax FLOATvector-const
   (syntax-rules ()
     ((FLOATvector-const x ...) (flvector x ...))))
+
+(define-syntax FLOAT+
+  (syntax-rules ()
+    [(FLOAT+ x)   (fl+ x)]
+    [(FLOAT+ x y) (fl+ x y)]
+    [(FLOAT+ x y ...) (fl+ x (FLOAT+ y ...))]))
 
 (define-syntax nuc-const
   (syntax-rules ()

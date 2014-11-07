@@ -17,15 +17,18 @@
     [>         GENERIC>]
     [>=        GENERIC>=]
     [expt      GENERICexpt]
-    [make-flvector FLOATmake-vector])
+    [make-flvector FLOATmake-vector]
+    [FXfx+     +]
+    [FXfx-     -]
+    [FXfx*     *])
   (filtered-out
    (lambda (name) (regexp-replace #rx"^fl" name "FLOAT"))
    (except-out (all-from-out racket/flonum)
-               fl+))
+               fl+ fl- fl*))
   (filtered-out
    (lambda (name) (regexp-replace #rx"^fx" name ""))
    (except-out (all-from-out racket/fixnum)
-               fx->fl fl->fx fxnot fxand
+               fx->fl fl->fx fxnot fxand fx+ fx* fx-
                fxvector fxvector? fxvector-set! fxvector-ref fxvector-length))
   (all-defined-out)
   zero? odd? even? /)
@@ -37,9 +40,21 @@
 
 (define-syntax FLOAT+
   (syntax-rules ()
-    [(FLOAT+ x)   (fl+ x)]
+    [(FLOAT+ x)   x]
     [(FLOAT+ x y) (fl+ x y)]
     [(FLOAT+ x y ...) (fl+ x (FLOAT+ y ...))]))
+
+(define-syntax FLOAT-
+  (syntax-rules ()
+    [(FLOAT- x)   (fl- 0.0 x)]
+    [(FLOAT- x y) (fl- x y)]
+    [(FLOAT- x y ...) (fl- x (FLOAT- y ...))]))
+
+(define-syntax FLOAT*
+  (syntax-rules ()
+    [(FLOAT* x)   x]
+    [(FLOAT* x y) (fl* x y)]
+    [(FLOAT* x y ...) (fl* x (FLOAT* y ...))]))
 
 (define-syntax nuc-const
   (syntax-rules ()
@@ -61,6 +76,24 @@
   (syntax-rules ()
     ((FLOATinexact->exact x) (fl->exact-integer x))))
 
+
+(define-syntax FXfx+
+  (syntax-rules ()
+    [(FXfx+ x)   x]
+    [(FXfx+ x y) (fx+ x y)]
+    [(FXfx+ x y ...) (fx+ x (FXfx+ y ...))]))
+
+(define-syntax FXfx-
+  (syntax-rules ()
+    [(FXfx- x)   (fx- 0 x)]
+    [(FXfx- x y) (fx- x y)]
+    [(FXfx- x y ...) (fx- x (FXfx- y ...))]))
+
+(define-syntax FXfx*
+  (syntax-rules ()
+    [(FXfx* x)   x]
+    [(FXfx* x y) (fx* x y)]
+    [(FXfx* x y ...) (fx* x (FXfx* y ...))]))
 
 
 (define-syntax negative?

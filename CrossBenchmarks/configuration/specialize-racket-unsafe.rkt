@@ -19,7 +19,10 @@
     [expt      GENERICexpt]
     [make-flvector FLOATmake-vector]
     [flvector  FLOATvector]
-    [flvector? FLOATvector?])
+    [flvector? FLOATvector?]
+    [FXfx+     +]
+    [FXfx-     -]
+    [FXfx*     *])
   (filtered-out
    (lambda (name)
      (or
@@ -30,7 +33,9 @@
    (except-out (all-from-out racket/unsafe/ops)
                unsafe-fxvector-set!
                unsafe-fxvector-ref unsafe-fxvector-length
-               unsafe-fx->fl unsafe-fl->fx unsafe-fxnot unsafe-fxand))
+               unsafe-fx->fl unsafe-fl->fx unsafe-fxnot unsafe-fxand
+               unsafe-fl+ unsafe-fl- unsafe-fl*
+               unsafe-fx+ unsafe-fx- unsafe-fx*))
   (all-defined-out)
   zero? odd? even? /)
 
@@ -42,22 +47,60 @@
   (syntax-rules ()
     ((FLOATnuc-const x ...) '#(x ...))))
 
+(define-syntax FLOAT+
+  (syntax-rules ()
+    [(FLOAT+ x)   x]
+    [(FLOAT+ x y) (unsafe-fl+ x y)]
+    [(FLOAT+ x y ...) (unsafe-fl+ x (FLOAT+ y ...))]))
+
+(define-syntax FLOAT-
+  (syntax-rules ()
+    [(FLOAT- x)   (unsafe-fl- 0.0 x)]
+    [(FLOAT- x y) (unsafe-fl- x y)]
+    [(FLOAT- x y ...) (unsafe-fl- x (FLOAT- y ...))]))
+
+(define-syntax FLOAT*
+  (syntax-rules ()
+    [(FLOAT* x)   x]
+    [(FLOAT* x y) (unsafe-fl* x y)]
+    [(FLOAT* x y ...) (unsafe-fl* x (FLOAT* y ...))]))
+
 
 (define-syntax FLOATnegative?
   (syntax-rules ()
-    ((FLOATnegative? x) (unsafe-fl< 0 x))))
+    ((FLOATnegative? x) (unsafe-fl> 0.0 x))))
 
 (define-syntax FLOATpositive?
   (syntax-rules ()
-    ((FLOATpositive? x) (unsafe-fl> 0 x))))
+    ((FLOATpositive? x) (unsafe-fl< 0.0 x))))
 
 (define-syntax FLOATzero?
   (syntax-rules ()
-    ((FLOATzero? x) (unsafe-fl= 0 x))))
+    ((FLOATzero? x) (unsafe-fl= 0.0 x))))
 
 (define-syntax FLOATinexact->exact
   (syntax-rules ()
     ((FLOATinexact->exact x) (inexact->exact x))))
+
+
+(define-syntax FXfx+
+  (syntax-rules ()
+    [(FXfx+ x)   x]
+    [(FXfx+ x y) (unsafe-fx+ x y)]
+    [(FXfx+ x y ...) (unsafe-fx+ x (FXfx+ y ...))]))
+
+(define-syntax FXfx-
+  (syntax-rules ()
+    [(FXfx- x)   (unsafe-fx- 0 x)]
+    [(FXfx- x y) (unsafe-fx- x y)]
+    [(FXfx- x y ...) (unsafe-fx- x (FXfx- y ...))]))
+
+(define-syntax FXfx*
+  (syntax-rules ()
+    [(FXfx* x)   x]
+    [(FXfx* x y) (unsafe-fx* x y)]
+    [(FXfx* x y ...) (unsafe-fx* x (FXfx* y ...))]))
+
 
 (define-syntax negative?
   (syntax-rules ()

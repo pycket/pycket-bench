@@ -7,9 +7,9 @@
   `(let ()
       (multiple-value-bind (res rtime stime utime)
           (time (lambda () ,@es))
-          (print "RESULT-cpu: " (* 1.0 (+ stime utime)) "\n"
+          (print "RESULT-cpu: " (GENERIC* 1.0 (GENERIC+ stime utime)) "\n"
                  "RESULT-gc: 0.0\n"
-                 "RESULT-total: " (* 1.0 rtime) "\n")
+                 "RESULT-total: " (GENERIC* 1.0 rtime) "\n")
         res)))
 
 ;------------------------------------------------------------------------------
@@ -46,3 +46,9 @@
 
 (define (bigloo-main argv)
     (apply main argv))
+
+(define-macro (def-macro form . body)
+  `(define-macro ,form (let () ,@body)))
+
+;
+

@@ -1,212 +1,127 @@
-
 ;(define-syntax FLOATvector-const
 ;  (syntax-rules ()
 ;    ((FLOATvector-const x ...) '#f64(x ...))))
 
-(define-macro (FLOATvector-const . lst)
-  `',(list->f64vector lst))
+(def-macro (FLOATvector-const . lst)   `',(list->f64vector lst))
+(def-macro (FLOATvector? x)            `(f64vector? ,x))
+(def-macro (FLOATvector . lst)         `(f64vector ,@lst))
+(def-macro (FLOATmake-vector n . init) `(make-f64vector ,n ,@init))
+(def-macro (FLOATvector-ref v i)       `(f64vector-ref ,v ,i))
+(def-macro (FLOATvector-set! v i x)    `(f64vector-set! ,v ,i ,x))
+(def-macro (FLOATvector-length v)      `(f64vector-length ,v))
 
-(define-syntax FLOATvector?
-  (syntax-rules ()
-    ((FLOATvector? x) (f64vector? x))))
+(def-macro (nuc-const . lst)
+  `',(list->vector lst))
 
-(define-syntax FLOATvector
-  (syntax-rules ()
-    ((FLOATvector x ...) (f64vector x ...))))
+(def-macro (FLOAT+ . lst)
+  (cond ((null? lst)       `0.0)
+        ((null? (cdr lst)) (car lst))
+        (else              `(+fl ,(car lst) (FLOAT+ ,@(cdr lst))))))
 
-(define-syntax FLOATmake-vector
-  (syntax-rules ()
-    ((FLOATmake-vector n) (make-f64vector n 0.0))
-    ((FLOATmake-vector n init) (make-f64vector n init))))
+(def-macro (FLOAT- . lst)
+  (cond ((null? (cdr lst)) `(negfl ,(car lst)))
+        (else              `(-fl ,(car lst) (FLOAT+ ,@(cdr lst))))))
 
-(define-syntax FLOATvector-ref
-  (syntax-rules ()
-    ((FLOATvector-ref v i) (f64vector-ref v i))))
+(def-macro (FLOAT* . lst)
+  (cond ((null? lst)       `1.0)
+        ((null? (cdr lst)) (car lst))
+        (else              `(*fl ,(car lst) (FLOAT* ,@(cdr lst))))))
 
-(define-syntax FLOATvector-set!
-  (syntax-rules ()
-    ((FLOATvector-set! v i x) (f64vector-set! v i x))))
+(def-macro (FLOAT/ . lst)
+  (cond ((null? (cdr lst)) `(/fl 1.0 ,(car lst)))
+        (else              `(/fl ,(car lst) (FLOAT* ,@(cdr lst))))))
 
-(define-syntax FLOATvector-length
-  (syntax-rules ()
-    ((FLOATvector-length v) (f64vector-length v))))
-
-(define-syntax nuc-const
-  (syntax-rules ()
-    ((FLOATnuc-const x ...) '#(x ...))))
-
-(define-syntax FLOAT+
-  (syntax-rules ()
-    ((FLOAT+ x ...) (+fl x ...))))
-
-(define-syntax FLOAT-
-  (syntax-rules ()
-    ((FLOAT- x ...) (-fl x ...))))
-
-(define-syntax FLOAT*
-  (syntax-rules ()
-    ((FLOAT* x ...) (*fl x ...))))
-
-(define-syntax FLOAT/
-  (syntax-rules ()
-    ((FLOAT/ x ...) (/fl x ...))))
-
-(define-syntax FLOAT=
-  (syntax-rules ()
-    ((FLOAT= x y) (=fl x y))))
-
-(define-syntax FLOAT<
-  (syntax-rules ()
-    ((FLOAT< x y) (<fl x y))))
-
-(define-syntax FLOAT<=
-  (syntax-rules ()
-    ((FLOAT<= x y) (<=fl x y))))
-
-(define-syntax FLOAT>
-  (syntax-rules ()
-    ((FLOAT> x y) (>fl x y))))
-
-(define-syntax FLOAT>=
-  (syntax-rules ()
-    ((FLOAT>= x y) (>=fl x y))))
-
-(define-syntax FLOATnegative?
-  (syntax-rules ()
-    ((FLOATnegative? x) (negativefl? x))))
-
-(define-syntax FLOATpositive?
-  (syntax-rules ()
-    ((FLOATpositive? x) (positivefl? x))))
-
-(define-syntax FLOATzero?
-  (syntax-rules ()
-    ((FLOATzero? x) (zerofl? x))))
-
-(define-syntax FLOATabs
-  (syntax-rules ()
-    ((FLOATabs x) (absfl x))))
-
-(define-syntax FLOATsin
-  (syntax-rules ()
-    ((FLOATsin x) (sinfl x))))
-
-(define-syntax FLOATcos
-  (syntax-rules ()
-    ((FLOATcos x) (cosfl x))))
-
-(define-syntax FLOATatan
-  (syntax-rules ()
-    ((FLOATatan x) (atanfl x))))
-
-(define-syntax FLOATsqrt
-  (syntax-rules ()
-    ((FLOATsqrt x) (sqrtfl x))))
-
-(define-syntax FLOATmin
-  (syntax-rules ()
-    ((FLOATmin x y) (minfl x y))))
-
-(define-syntax FLOATmax
-  (syntax-rules ()
-    ((FLOATmax x y) (maxfl x y))))
-
-(define-syntax FLOATround
-  (syntax-rules ()
-    ((FLOATround x) (roundfl x))))
-
-(define-syntax FLOATinexact->exact
-  (syntax-rules ()
-    ((FLOATinexact->exact x) (inexact->exact x))))
+(def-macro (FLOAT= . lst)  `(=fl ,@lst))
+(def-macro (FLOAT< . lst)  `(<fl ,@lst))
+(def-macro (FLOAT<= . lst) `(<=fl ,@lst))
+(def-macro (FLOAT> . lst)  `(>fl ,@lst))
+(def-macro (FLOAT>= . lst) `(>=fl ,@lst))
+(def-macro (FLOATnegative? . lst) `(negativefl? ,@lst))
+(def-macro (FLOATpositive? . lst) `(positivefl? ,@lst))
+(def-macro (FLOATzero? . lst)     `(zerofl? ,@lst))
+(def-macro (FLOATabs . lst) `(abs ,@lst))
+(def-macro (FLOATsin . lst) `(sin ,@lst))
+(def-macro (FLOATcos . lst) `(cos ,@lst))
+(def-macro (FLOATatan . lst) `(atan ,@lst))
+(def-macro (FLOATsqrt . lst) `(sqrt ,@lst))
+(def-macro (FLOATmin . lst) `(minfl ,@lst))
+(def-macro (FLOATmax . lst) `(maxfl ,@lst))
+(def-macro (FLOATround . lst) `(roundfl ,@lst))
+(def-macro (FLOATinexact->exact . lst) `(inexact->exact ,@lst))
 
 ; Generic arithmetic.
-(define (GENERIC+ x y) (+ x y))
-(define (GENERIC- x y) (- x y))
-(define (GENERIC* x y) (* x y))
-(define (GENERIC/ x y) (/ x y))
-(define (GENERICquotient x y) (quotient x y))
-(define (GENERICremainder x y) (remainder x y))
-(define (GENERICmodulo x y) (modulo x y))
-(define (GENERIC= x y) (= x y))
-(define (GENERIC< x y) (< x y))
-(define (GENERIC<= x y) (<= x y))
-(define (GENERIC> x y) (> x y))
-(define (GENERIC>= x y) (>= x y))
-(define (GENERICexpt x y) (expt x y))
+;(define (GENERIC+ x y) (+ x y))
+;(define (GENERIC- x y) (- x y))
+;(define (GENERIC* x y) (* x y))
+;(define (GENERIC/ x y) (/ x y))
+;(define (GENERICquotient x y) (quotient x y))
+;(define (GENERICremainder x y) (remainder x y))
+;(define (GENERICmodulo x y) (modulo x y))
+;(define (GENERIC= x y) (= x y))
+;(define (GENERIC< x y) (< x y))
+;(define (GENERIC<= x y) (<= x y))
+;(define (GENERIC> x y) (> x y))
+;(define (GENERIC>= x y) (>= x y))
+;(define (GENERICexpt x y) (expt x y))
 
-(define-syntax +
-  (syntax-rules ()
-    ((+ x ...) (+fx x ...))))
+(define GENERIC+ (lambda (x y) x))
+(define GENERIC- (lambda (x y) x))
+(define GENERIC* (lambda (x y) x))
+(define GENERIC/ (lambda (x y) x))
+(define GENERICquotient (lambda (x y) x))
+(define GENERICremainder (lambda (x y) x))
+(define GENERICmodulo (lambda (x y) x))
+(define GENERIC= (lambda (x y) x))
+(define GENERIC< (lambda (x y) x))
+(define GENERIC<= (lambda (x y) x))
+(define GENERIC> (lambda (x y) x))
+(define GENERIC>= (lambda (x y) x))
+(define GENERICexpt (lambda (x y) x))
 
-(define-syntax -
-  (syntax-rules ()
-    ((- x ...) (-fx x ...))))
+(set! GENERIC+ +)
+(set! GENERIC- -)
+(set! GENERIC* *)
+(set! GENERIC/ /)
+(set! GENERICquotient quotient)
+(set! GENERICremainder remainder)
+(set! GENERICmodulo modulo)
+(set! GENERIC= =)
+(set! GENERIC< <)
+(set! GENERIC<= <=)
+(set! GENERIC> >)
+(set! GENERIC>= >=)
+(set! GENERICexpt expt)
 
-(define-syntax *
-  (syntax-rules ()
-    ((* x ...) (*fx x ...))))
 
-(define-syntax quotient
-  (syntax-rules ()
-    ((quotient x ...) (quotientfx x ...))))
 
-(define-syntax modulo
-  (syntax-rules ()
-    ((modulo x ...) (modulofx x ...))))
+(def-macro (+ . lst)
+  (cond ((null? lst)       `0)
+        ((null? (cdr lst)) (car lst))
+        (else              `(+fx ,(car lst) (+ ,@(cdr lst))))))
 
-(define-syntax remainder
-  (syntax-rules ()
-    ((remainder x ...) (remainderfx x ...))))
+(def-macro (- . lst)
+  (cond ((null? (cdr lst)) `(negfx ,(car lst)))
+        (else              `(-fx ,(car lst) (+ ,@(cdr lst))))))
 
-(define-syntax =
-  (syntax-rules ()
-    ((= x y) (=fx x y))))
+(def-macro (* . lst)
+  (cond ((null? lst)       `1)
+        ((null? (cdr lst)) (car lst))
+        (else              `(*fx ,(car lst) (* ,@(cdr lst))))))
 
-(define-syntax <
-  (syntax-rules ()
-    ((< x y) (<fx x y))))
 
-(define-syntax <=
-  (syntax-rules ()
-    ((<= x y) (<=fx x y))))
-
-(define-syntax >
-  (syntax-rules ()
-    ((> x y) (>fx x y))))
-
-(define-syntax >=
-  (syntax-rules ()
-    ((>= x y) (>=fx x y))))
-
-(define-syntax negative?
-  (syntax-rules ()
-    ((negative? x) (negativefx? x))))
-
-(define-syntax positive?
-  (syntax-rules ()
-    ((positive? x) (positivefx? x))))
-
-(define-syntax zero?
-  (syntax-rules ()
-    ((zero? x) (zerofx? x))))
-
-(define-syntax odd?
-  (syntax-rules ()
-    ((odd? x) (oddfx? x))))
-
-(define-syntax even?
-  (syntax-rules ()
-    ((even? x) (evenfx? x))))
-
-(define-syntax bitwise-or
-  (syntax-rules ()
-    ((bitwise-or x y) (bit-or x y))))
-
-(define-syntax bitwise-and
-  (syntax-rules ()
-    ((bitwise-and x y) (bit-and x y))))
-
-(define-syntax bitwise-not
-  (syntax-rules ()
-    ((bitwise-not x) (bit-not x))))
-
+(def-macro (quotient . lst) `(quotientfx ,@lst))
+(def-macro (modulo . lst) `(modulofx ,@lst))
+(def-macro (remainder . lst) `(remainderfx ,@lst))
+(def-macro (= . lst)  `(=fx ,@lst))
+(def-macro (< . lst)  `(<fx ,@lst))
+(def-macro (<= . lst) `(<=fx ,@lst))
+(def-macro (> . lst)  `(>fx ,@lst))
+(def-macro (>= . lst) `(>=fx ,@lst))
+(def-macro (negative? . lst) `(negativefx? ,@lst))
+(def-macro (positive? . lst) `(positivefx? ,@lst))
+(def-macro (zero? . lst) `(zerofx? ,@lst))
+(def-macro (odd? . lst) `(oddfx? ,@lst))
+(def-macro (even? . lst) `(evenfx? ,@lst))
+(def-macro (bitwise-or . lst) `(bit-or ,@lst))
+(def-macro (bitwise-and . lst) `(bit-and ,@lst))
+(def-macro (bitwise-not . lst) `(bit-not ,@lst))

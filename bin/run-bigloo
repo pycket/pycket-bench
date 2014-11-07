@@ -38,6 +38,10 @@ fi
 
 if [ "${VARIABLE}" = "-unsafe" ]; then
     BIGLOO_UNSAFE="${VARIABLE}"
+    BIGLOO_ARITH="-farithmetic -farithmetic-overflow"
+fi
+if [ "${VARIABLE}" = "-fixflo" ]; then
+    BIGLOO_ARITH="-farithmetic"
 fi
 
 BIGLOO_CFLAGS="${BIGLOO_CFLAGS:--Wno-parentheses-equality -Wno-unused-value -Wpointer-arith -Wswitch -Wtrigraphs -DBGL_BOOTCONFIG}"
@@ -50,7 +54,7 @@ fi
 
 
 rm -f $OUT
-$BIGLOO "$@" $BIGLOO_UNSAFE $BIGLOO_CALLCC -eval '(set! *strip* #f)' -native -main "bigloo-main" -Obench \
+$BIGLOO "$@" $BIGLOO_UNSAFE $BIGLOO_ARITH $BIGLOO_CALLCC -eval '(set! *strip* #f)' -native -main "bigloo-main" -Obench \
   -copt "${BIGLOO_CFLAGS}" ${BIGLOO_LDFLAGS} \
   -o $OUT $SRC
 exec $OUT

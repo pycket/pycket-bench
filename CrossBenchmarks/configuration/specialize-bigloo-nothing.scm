@@ -1,8 +1,8 @@
 ; Don't specialize fixnum and flonum arithmetic.
 
-(define-syntax FLOATvector-const
-  (syntax-rules ()
-    ((FLOATvector-const x ...) '#(x ...))))
+
+(define-macro (FLOATvector-const . lst)
+  `',(list->vector lst))
 
 (define-syntax FLOATvector?
   (syntax-rules ()

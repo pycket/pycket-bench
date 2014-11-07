@@ -40,6 +40,7 @@
 
 (define-syntax FLOAT+
   (syntax-rules ()
+    [(FLOAT+)     0.0]
     [(FLOAT+ x)   x]
     [(FLOAT+ x y) (fl+ x y)]
     [(FLOAT+ x y ...) (fl+ x (FLOAT+ y ...))]))
@@ -52,6 +53,7 @@
 
 (define-syntax FLOAT*
   (syntax-rules ()
+    [(FLOAT*)     1.0]
     [(FLOAT* x)   x]
     [(FLOAT* x y) (fl* x y)]
     [(FLOAT* x y ...) (fl* x (FLOAT* y ...))]))
@@ -79,6 +81,7 @@
 
 (define-syntax FXfx+
   (syntax-rules ()
+    [(FXfx+)     0]
     [(FXfx+ x)   x]
     [(FXfx+ x y) (fx+ x y)]
     [(FXfx+ x y ...) (fx+ x (FXfx+ y ...))]))
@@ -91,6 +94,7 @@
 
 (define-syntax FXfx*
   (syntax-rules ()
+    [(FXfx*)     0]
     [(FXfx* x)   x]
     [(FXfx* x y) (fx* x y)]
     [(FXfx* x y ...) (fx* x (FXfx* y ...))]))

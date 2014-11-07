@@ -7,9 +7,9 @@
   `(let ()
       (multiple-value-bind (res rtime stime utime)
           (time (lambda () ,@es))
-          (print "RESULT-cpu: " (GENERIC* 1.0 (GENERIC+ stime utime)) "\n"
+          (print "RESULT-cpu: " (exact->inexact (GENERIC+ stime utime)) "\n"
                  "RESULT-gc: 0.0\n"
-                 "RESULT-total: " (GENERIC* 1.0 rtime) "\n")
+                 "RESULT-total: " (exact->inexact rtime) "\n")
         res)))
 
 ;------------------------------------------------------------------------------

@@ -10,22 +10,34 @@
 (def-macro (FLOATvector-set! v i x)    `(f64vector-set! ,v ,i ,x))
 (def-macro (FLOATvector-length v)      `(f64vector-length ,v))
 
+
 (def-macro (nuc-const . lst)
-  `',(list->vector lst))
+  `',(list->vector
+       (map (lambda (x)
+              (if (vector? x)
+                (list->f64vector (vector->list x))
+                x))
+            lst)))
 
-(def-macro (FLOAT+ . lst)
-  (cond ((null? lst)       `0.0)
-        ((null? (cdr lst)) (car lst))
-        (else              `(+fl ,(car lst) (FLOAT+ ,@(cdr lst))))))
+(define-syntax FLOAT+
+  (syntax-rules ()
+    [(FLOAT+)     0.0]
+    [(FLOAT+ x)   x]
+    [(FLOAT+ x y) (+fl x y)]
+    [(FLOAT+ x y ...) (+fl x (FLOAT+ y ...))]))
 
-(def-macro (FLOAT- . lst)
-  (cond ((null? (cdr lst)) `(negfl ,(car lst)))
-        (else              `(-fl ,(car lst) (FLOAT+ ,@(cdr lst))))))
+(define-syntax FLOAT-
+  (syntax-rules ()
+    [(FLOAT- x)   (negfl x)]
+    [(FLOAT- x y) (-fl x y)]
+    [(FLOAT- x y ...) (-fl x (FLOAT- y ...))]))
 
-(def-macro (FLOAT* . lst)
-  (cond ((null? lst)       `1.0)
-        ((null? (cdr lst)) (car lst))
-        (else              `(*fl ,(car lst) (FLOAT* ,@(cdr lst))))))
+(define-syntax FLOAT*
+  (syntax-rules ()
+    [(FLOAT*)     1.0]
+    [(FLOAT* x)   x]
+    [(FLOAT* x y) (*fl x y)]
+    [(FLOAT* x y ...) (*fl x (FLOAT* y ...))]))
 
 (def-macro (FLOAT/ . lst)
   (cond ((null? (cdr lst)) `(/fl 1.0 ,(car lst)))
@@ -50,20 +62,6 @@
 (def-macro (FLOATinexact->exact . lst) `(inexact->exact ,@lst))
 
 ; Generic arithmetic.
-;(define (GENERIC+ x y) (+ x y))
-;(define (GENERIC- x y) (- x y))
-;(define (GENERIC* x y) (* x y))
-;(define (GENERIC/ x y) (/ x y))
-;(define (GENERICquotient x y) (quotient x y))
-;(define (GENERICremainder x y) (remainder x y))
-;(define (GENERICmodulo x y) (modulo x y))
-;(define (GENERIC= x y) (= x y))
-;(define (GENERIC< x y) (< x y))
-;(define (GENERIC<= x y) (<= x y))
-;(define (GENERIC> x y) (> x y))
-;(define (GENERIC>= x y) (>= x y))
-;(define (GENERICexpt x y) (expt x y))
-
 (define GENERIC+ (lambda (x y) x))
 (define GENERIC- (lambda (x y) x))
 (define GENERIC* (lambda (x y) x))
@@ -93,21 +91,25 @@
 (set! GENERICexpt expt)
 
 
+(define-syntax +
+  (syntax-rules ()
+    [(+)     0]
+    [(+ x)   x]
+    [(+ x y) (+fx x y)]
+    [(+ x y ...) (+fx x (+ y ...))]))
 
-(def-macro (+ . lst)
-  (cond ((null? lst)       `0)
-        ((null? (cdr lst)) (car lst))
-        (else              `(+fx ,(car lst) (+ ,@(cdr lst))))))
+(define-syntax -
+  (syntax-rules ()
+    [(- x)   (negfx x)]
+    [(- x y) (-fx x y)]
+    [(- x y ...) (-fx x (- y ...))]))
 
-(def-macro (- . lst)
-  (cond ((null? (cdr lst)) `(negfx ,(car lst)))
-        (else              `(-fx ,(car lst) (+ ,@(cdr lst))))))
-
-(def-macro (* . lst)
-  (cond ((null? lst)       `1)
-        ((null? (cdr lst)) (car lst))
-        (else              `(*fx ,(car lst) (* ,@(cdr lst))))))
-
+(define-syntax *
+  (syntax-rules ()
+    [(*)     1]
+    [(* x)   x]
+    [(* x y) (*fx x y)]
+    [(* x y ...) (*fx x (* y ...))]))
 
 (def-macro (quotient . lst) `(quotientfx ,@lst))
 (def-macro (modulo . lst) `(modulofx ,@lst))

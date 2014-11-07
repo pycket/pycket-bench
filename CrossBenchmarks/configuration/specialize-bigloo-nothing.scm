@@ -29,9 +29,8 @@
   (syntax-rules ()
     ((FLOATvector-length v) (vector-length v))))
 
-(define-syntax nuc-const
-  (syntax-rules ()
-    ((FLOATnuc-const x ...) '#(x ...))))
+(define-macro (nuc-const . lst)
+  `',(list->vector lst))
 
 (define-syntax FLOAT+
   (syntax-rules ()

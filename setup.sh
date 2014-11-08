@@ -135,7 +135,7 @@ if [ ! -x "$PROGDIR/v8/v8" ]; then
     fi
     make x64.release -j4
     ln -s shell out/x64.release/v8
-    ln -fs $PROGDIR/src/v8-git-mirror-$V8V/out/x64.release $PRODIR/v8
+    ln -fs $PROGDIR/src/v8-git-mirror-$V8V/out/x64.release $PROGDIR/v8
     _gone
 fi
 

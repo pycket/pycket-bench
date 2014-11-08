@@ -29,6 +29,8 @@ OUT="bigloo/${BENCHMARK}${VARIABLE}.exe"
 BIGLOO_PRELUDE="${BIGLOO_PRELUDE:-configuration/definitions-bigloo.scm configuration/iterations.rkt}"
 BIGLOO_SPECIALIZE="configuration/specialize-bigloo$VARIABLE.scm"
 
+if [ ! -f "$SRC" ]; then echo "ERROR: no such benchmark"; exit 1; fi
+
 
 cat ${BIGLOO_PRELUDE} ${BIGLOO_SPECIALIZE} src/${BENCHMARK}.scm > ${SRC}
 

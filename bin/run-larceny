@@ -21,16 +21,31 @@ shift
 BENCHMARK=$1
 shift
 
-OUT="larceny/$BENCHMARK.fasl"
+if [ "$VARIABLE" = "CHAP" ]; then EXT=sch; else EXT=scm; fi
 
-$LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF
+SRC="src/$BENCHMARK.$EXT"
+OUT="larceny/$BENCHMARK.fasl"
+if [ ! -d larceny ]; then mkdir -p larceny; fi
+
+if [ ! -f "$SRC" ]; then echo "ERROR: no such benchmark"; exit 1; fi
+
+if [ "$VARIABLE" = "CHAP" ]; then
+  $LARCENY -r6rs <<EOF
+(import (rnrs) (larceny compiler))
+(compile-file "$SRC" "$OUT")
+EOF
+  exec $LARCENY -r6rs -program $OUT \
+       2>&1 | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } /^Elapsed\ time/ {printf "RESULT-cpu: %f\nRESULT-total: %f\n", $6, $3 } {print}'
+else
+
+  $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF
 (begin
   (load "configuration/specialize-larceny$VARIABLE.scm")
-  (compile-file "src/$BENCHMARK.scm" "$OUT"))
+  (compile-file "$SRC" "$OUT"))
 EOF
 
-exec $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF \
-    2>&1 | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } /^Elapsed\ time/ {printf "RESULT-cpu: %f\nRESULT-total: %f\n", $6, $3 } {print}'
+  exec $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF \
+       2>&1 | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } /^Elapsed\ time/ {printf "RESULT-cpu: %f\nRESULT-total: %f\n", $6, $3 } {print}'
 (begin
   (load "configuration/definitions-larceny.scm")
   (load "configuration/iterations.rkt")
@@ -38,3 +53,4 @@ exec $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF \
   (load "$OUT")
   (main))
 EOF
+fi

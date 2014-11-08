@@ -1,0 +1,41 @@
+#! /bin/bash
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+if [ ! -z "$ZSH_VERSION" ]; then
+  setopt shwordsplit
+fi
+
+BENCHDIR="$(dirname $PROGDIR)"
+
+V8DIR="$BENCHDIR/v8"
+# Note, by default we take d8, it is properly initialized
+V8="${V8:-d8}"
+V8_BIN="${V8_BIN:-$V8DIR/$V8}"
+
+V8_ARGS=" --harmony_proxies"
+
+if [ $# -lt 2 ]; then
+    echo "No."
+    exit -1
+fi
+
+VARIABLE=$1
+shift
+BENCHMARK=$1
+shift
+
+if [ "$VARIABLE" != "CHAP" ]; then
+    echo "Can't do"
+    exit 1
+fi
+
+OUT="src/$BENCHMARK.js"
+
+if [ ! -f "$OUT" ]; then echo "ERROR: no such benchmark"; exit 1; fi
+
+if [ "${BENCHMARK}" = "church-contract" ]; then
+    V8_ARGS="$V8_ARGS --noincremental-marking"
+fi
+
+exec $V8_BIN $V8_ARGS "$@" "$OUT"

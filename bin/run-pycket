@@ -2,6 +2,7 @@
 PROGRAM=`echo $0 | sed 's%.*/%%'`
 PROGDIR="$(cd `dirname $0`; echo $PWD)"
 
+export LANG=C
 if [ ! -z "$ZSH_VERSION" ]; then
   setopt shwordsplit
 fi
@@ -23,7 +24,7 @@ shift
 BENCHMARK=$1
 shift
 
-if [ "$VARIABLE" = "PURE" ]; then
+if [ "$VARIABLE" = "PURE" -o "$VARIABLE" = "CHAP" ]; then
     OUT="src/${BENCHMARK}.rkt"
 else
     OUT="racket/${BENCHMARK}${VARIABLE}.rkt"
@@ -39,4 +40,12 @@ else
            > "$OUT";
 fi
 
-exec $PYCKET_BIN "$OUT" "$@"
+if [ ! -f "$OUT" ]; then echo "ERROR: no such benchmark"; exit 1; fi
+
+
+if [ "$VARIABLE" = "CHAP" ]; then
+    exec $PYCKET_BIN "$OUT" "$@" \
+    | awk '/^cpu time:/ {printf "RESULT-cpu: %f\nRESULT-gc: %f\nRESULT-total: %f\n", $3, $9, $6 } {print}'
+else
+    exec $PYCKET_BIN "$OUT" "$@"
+fi

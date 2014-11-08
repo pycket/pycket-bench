@@ -1,0 +1,34 @@
+#! /bin/bash
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+if [ ! -z "$ZSH_VERSION" ]; then
+  setopt shwordsplit
+fi
+
+BENCHDIR="$(dirname $PROGDIR)"
+
+SMDIR="$BENCHDIR/spidermonkey/bin"
+SM="${SM:-js24}"
+SM_BIN="${SM_BIN:-$SMDIR/$SM}"
+
+if [ $# -lt 2 ]; then
+    echo "No."
+    exit -1
+fi
+
+VARIABLE=$1
+shift
+BENCHMARK=$1
+shift
+
+if [ "$VARIABLE" != "CHAP" ]; then
+    echo "Can't do"
+    exit 1
+fi
+
+OUT="src/$BENCHMARK.js"
+
+if [ ! -f "$OUT" ]; then echo "ERROR: no such benchmark"; exit 1; fi
+
+exec $SM_BIN $SM_ARGS "$@" "$OUT"

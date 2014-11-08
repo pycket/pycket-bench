@@ -30,6 +30,9 @@ shift
 SRC="gambit/${BENCHMARK}${VARIABLE}.scm"
 OUT="gambit/${BENCHMARK}${VARIABLE}.exe"
 
+if [ ! -f "$SRC" ]; then echo "ERROR: no such benchmark"; exit 1; fi
+
+
 GAMBIT_PRELUDE="${GAMBIT_PRELUDE:-configuration/definitions-gambit.scm configuration/iterations.rkt}"
 GAMBIT_SPECIALIZE="configuration/specialize-gambit$VARIABLE.scm"
 

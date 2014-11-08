@@ -23,6 +23,12 @@ _gone() {
     cd "$_OLD"
 }
 
+RACKET="`command -v python`"
+if [ -z "$RACKET" ]; then
+    $ECHO "Cannot find pyhton. Really?" 1>&2
+    exit 1
+fi
+
 REBENCH="`command -v rebench`"
 if [ -z "$REBENCH" ]; then
     $ECHO "installing ReBench"
@@ -36,6 +42,13 @@ if [ -z "$RACKET" ]; then
     $ECHO "Cannot find racket" 1>&2
     exit 1
 fi
+
+RACKET="`command -v pypy`"
+if [ -z "$RACKET" ]; then
+    $ECHO "Cannot find pypy" 1>&2
+    exit 1
+fi
+
 
 if [ ! -x "$PROGDIR/bigloo/bin/bigloo" ]; then
     $ECHO "installing Bigloo"

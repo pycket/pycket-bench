@@ -134,12 +134,12 @@ if [ ! -x "$PROGDIR/v8/v8" ]; then
         export GYP_DEFINES="clang=1"
     fi
     make x64.release -j4
-    ln -s shell out/x64.release/v8
+    ln -fs shell out/x64.release/v8
     ln -fs $PROGDIR/src/v8-git-mirror-$V8V/out/x64.release $PROGDIR/v8
     _gone
 fi
 
-if [ ! -x "$PRODIR/spidermonkery/bin/js24" ]; then
+if [ ! -x "$PROGDIR/spidermonkery/bin/js24" ]; then
     if uname | grep -qi 'Darwin' && type -fp brew >/dev/null; then
       AUTOCONF=autoconf213
       if [ ! \( -f /usr/local/bin/autoconf213 -a \
@@ -155,10 +155,10 @@ if [ ! -x "$PRODIR/spidermonkery/bin/js24" ]; then
           exit 1
       fi
     fi
-    _go "$PRODIR/src"
+    _go "$PROGDIR/src"
     MJS=mozjs-24.2.0
     $FETCH https://ftp.mozilla.org/pub/mozilla.org/js/$MJS.tar.bz2
-    tar -xjf $MFIL.tar.bz2
+    tar -xjf $MJS.tar.bz2
     cd $MJS/js/src
     $AUTOCONF
     mkdir build-release

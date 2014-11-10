@@ -10,6 +10,29 @@
 \usepackage{textcomp}
 \usepackage{relsize}
 \usepackage{longtable}
+\usepackage{rotating}
+\iffalse
+  \usepackage{lscape}
+\else
+\makeatletter
+  \def\landscape{%
+    \global\let\origTable\table\relax%
+    \def\table{
+      \@ifnextchar[%]
+      \i@table%
+      \@empty}
+    \def\i@table[##1]{\@empty}
+    \global\let\origEndtable\endtable\relax%
+    \let\endtable\empty%
+    \sidewaystable}
+  \def\endlandscape{%
+    \endsidewaystable%
+    \global\let\table\origTable\relax%
+    \global\let\endtable\origEndtable\relax%
+  }
+\makeatother
+\fi
+
 \usepackage{etoolbox}
 \ifcsundef{FILE}{
   \def\FILE{current}

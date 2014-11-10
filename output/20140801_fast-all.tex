@@ -1,0 +1,36 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "footnotesize", colheads = rep(c("mean",         "error"), len), col.just = rep(c("r", "@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r"),         len), cgroup = levels(as.factor(bench.summary$vm)), cdec = rep(0,         len * 2))%
+{\footnotesize
+\begin{tabular}{lrc@{\,\si{\milli\second} \ensuremath{\pm}}r}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}\tabularnewline
+\midrule
+ack&$ 400$&&$   91$\tabularnewline
+array1&$ 280$&&$  655$\tabularnewline
+cpstak&$3424$&&$ 1867$\tabularnewline
+ctak&$ 352$&&$43487$\tabularnewline
+diviter&$ 888$&&$ 1732$\tabularnewline
+divrec&$2936$&&$ 2148$\tabularnewline
+fft&$ 304$&&$  948$\tabularnewline
+fib&$3980$&&$ 1185$\tabularnewline
+fibc&$ 724$&&$28250$\tabularnewline
+fibfp&$1676$&&$ 1263$\tabularnewline
+gcbench&$3204$&&$ 1293$\tabularnewline
+mbrot&$ 852$&&$ 1730$\tabularnewline
+nqueens&$2948$&&$ 1001$\tabularnewline
+paraffins&$7724$&&$ 2951$\tabularnewline
+perm9&$2536$&&$ 2299$\tabularnewline
+pi&$ 584$&&$  532$\tabularnewline
+pnpoly&$ 728$&&$ 1375$\tabularnewline
+primes&$2844$&&$ 1768$\tabularnewline
+simplex&$3484$&&$ 1375$\tabularnewline
+string&$  28$&&$  144$\tabularnewline
+sum&$ 140$&&$  518$\tabularnewline
+sumfp&$ 148$&&$ 1240$\tabularnewline
+sumloop&$ 136$&&$  799$\tabularnewline
+tak&$5180$&&$ 1079$\tabularnewline
+takl&$2008$&&$ 1242$\tabularnewline
+triangl&$1092$&&$ 1881$\tabularnewline
+\bottomrule
+\end{tabular}}

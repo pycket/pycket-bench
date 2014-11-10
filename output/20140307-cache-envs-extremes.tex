@@ -1,0 +1,9 @@
+%latex.default(bench.summary.table.ltx, file = paste0(input.basename,     "-extremes.tex"), label = "tbl:extremes", caption = "Extreme runtimes",     ctable = TRUE, where = "htbp", size = "footnotesize", colheads = rep(c("mean",         "error"), length(bench.summary.table.ltx)/2), col.just = rep(c("r",         "@{ \\(\\pm\\)}r"), length(bench.summary.table.ltx)/2),     cgroup = levels(as.factor(bench.summary.table$vm)), cdec = rep(c(1,         2), length(bench.summary.table.ltx)/2))%
+{\footnotesize\ctable[caption={Extreme runtimes}label=tbl:extremes,pos=htbp,]{lr@{ \(\pm\)}rcr@{ \(\pm\)}r}{}{\FL
+\multicolumn{1}{l}{\bfseries bench.summary.table.ltx}&\multicolumn{2}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Racket}\NN
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{error}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{error}\ML
+ctak&$ 299.2$&$ 5.46$&&$40205.8$&$107.80$\NN
+fibc&$1033.6$&$ 5.63$&&$27124.9$&$ 91.47$\NN
+paraffins&$8657.6$&$39.38$&&$ 2171.9$&$ 23.72$\LL
+}}

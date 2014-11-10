@@ -1,0 +1,170 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "footnotesize", colheads = rep(c("mean",         "error"), len), col.just = rep(c("r", "@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r"),         len), cgroup = levels(as.factor(bench.summary$vm)), cdec = rep(0,         len * 2))%
+{\footnotesize
+\begin{tabular}{lr@{\,\si{\milli\second} \ensuremath{\pm}}rc@{\,\si{\milli\second} \ensuremath{\pm}}rcrc@{\,\si{\milli\second} \ensuremath{\pm}}rcr}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1.2}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1.2}{c}{\bfseries Racket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1.2}{c}{\bfseries Larceny}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1.2}{c}{\bfseries Gambit}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1.2}{c}{\bfseries Bigloo}\tabularnewline
+\cline{2-2.2} \cline{4.2-4.4} \cline{6.4-6.6} \cline{8.6-8.8} \cline{10.8-11}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{error}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}\tabularnewline
+\midrule
+1&ack&$  1770$&&$  1550$&&$  831$&&$  1354$&&$ 2066$\tabularnewline
+2&array1&$  3152$&&$  1240$&&$ 2031$&&$   935$&&$ 1589$\tabularnewline
+3&boyer&$  1109$&&$   570$&&$  890$&&$   637$&&$ 1711$\tabularnewline
+4&browse&$  1956$&&$  1200$&&$ 1171$&&$   947$&&$ 2453$\tabularnewline
+5&cat&$   359$&&$    60$&&$  370$&&$   105$&&$ 5095$\tabularnewline
+6&conform&$   672$&&$   190$&&$  495$&&$   542$&&$ 3196$\tabularnewline
+7&cpstak&$  4591$&&$  8350$&&$ 2019$&&$  2239$&&$ 1712$\tabularnewline
+8&ctak&$ 19113$&&$ 15940$&&$  431$&&$  1214$&&$ 7814$\tabularnewline
+9&dderiv&$  2072$&&$  2690$&&$  971$&&$  1084$&&$ 1767$\tabularnewline
+10&deriv&$  1799$&&$  2630$&&$  696$&&$   770$&&$ 1820$\tabularnewline
+11&destruc&$  1462$&&$   810$&&$  829$&&$   826$&&$ 1492$\tabularnewline
+12&diviter&$  3093$&&$  4760$&&$ 3180$&&$  1429$&&$ 1881$\tabularnewline
+13&divrec&$  1194$&&$  1720$&&$  590$&&$   569$&&$ 1303$\tabularnewline
+14&dynamic&$   364$&&$   160$&&$  366$&&$   279$&&$ 5922$\tabularnewline
+15&earley&$   657$&&$   380$&&$  405$&&$   521$&&$ 2467$\tabularnewline
+16&fft&$  4139$&&$   390$&&$ 8321$&&$  9582$&&$ 1793$\tabularnewline
+17&fib&$   484$&&$   180$&&$  591$&&$   582$&&$  993$\tabularnewline
+18&fibc&$400974$&&$216010$&&$11536$&&$ 31256$&&$ 1086$\tabularnewline
+19&fibfp&$  1117$&&$  2260$&&$ 1909$&&$$&&$ 1872$\tabularnewline
+20&gcbench&$   833$&&$$&&$  856$&&$$&&$ 1077$\tabularnewline
+21&graphs&$   657$&&$   520$&&$  484$&&$   502$&&$ 2964$\tabularnewline
+22&lattice&$  1103$&&$   250$&&$  943$&&$   568$&&$ 1830$\tabularnewline
+23&matrix&$$&&$$&&$  584$&&$   664$&&$$\tabularnewline
+24&maze&$   569$&&$   260$&&$  353$&&$  1082$&&$$\tabularnewline
+25&mazefun&$   596$&&$   370$&&$  470$&&$   550$&&$ 1707$\tabularnewline
+26&mbrot&$  1536$&&$   950$&&$ 5118$&&$$&&$ 1116$\tabularnewline
+27&nboyer&$   756$&&$$&&$  692$&&$   451$&&$ 1624$\tabularnewline
+28&nqueens&$   664$&&$   460$&&$  536$&&$   590$&&$ 1259$\tabularnewline
+29&nucleic&$$&&$$&&$  271$&&$$&&$$\tabularnewline
+30&paraffins&$  2202$&&$  1570$&&$  598$&&$   971$&&$ 3358$\tabularnewline
+31&parsing&$  2053$&&$   950$&&$ 1499$&&$  2336$&&$ 4403$\tabularnewline
+32&perm9&$  1785$&&$  1020$&&$  861$&&$   504$&&$ 1514$\tabularnewline
+33&pi&$  2792$&&$$&&$ 3540$&&$212712$&&$ 1896$\tabularnewline
+34&pnpoly&$  3462$&&$   380$&&$ 4365$&&$$&&$ 1618$\tabularnewline
+35&primes&$  1991$&&$  2290$&&$ 1510$&&$  5800$&&$ 1814$\tabularnewline
+36&puzzle&$  3495$&&$  2010$&&$ 2129$&&$  2847$&&$ 1658$\tabularnewline
+37&ray&$$&&$$&&$  333$&&$$&&$$\tabularnewline
+38&sboyer&$   594$&&$$&&$  424$&&$   447$&&$ 1248$\tabularnewline
+39&scheme&$   753$&&$   360$&&$  500$&&$   463$&&$$\tabularnewline
+40&simplex&$$&&$$&&$ 1929$&&$$&&$$\tabularnewline
+41&slatex&$   455$&&$   270$&&$  367$&&$   430$&&$ 2723$\tabularnewline
+42&string&$ 10360$&&$   880$&&$ 2198$&&$ 26587$&&$ 1536$\tabularnewline
+43&sum&$  6714$&&$  1840$&&$ 4107$&&$  5988$&&$ 1854$\tabularnewline
+44&sum1&$   444$&&$    60$&&$  136$&&$   806$&&$ 1457$\tabularnewline
+45&sumfp&$  3443$&&$  1410$&&$ 5560$&&$$&&$ 1533$\tabularnewline
+46&sumloop&$ 15002$&&$     0$&&$ 8437$&&$ 14675$&&$ 2456$\tabularnewline
+47&tail&$   951$&&$   560$&&$ 1085$&&$   807$&&$ 1714$\tabularnewline
+48&tak&$  1276$&&$   520$&&$  903$&&$  1004$&&$ 1617$\tabularnewline
+49&takl&$  1984$&&$   300$&&$ 1657$&&$  1435$&&$ 1809$\tabularnewline
+50&trav1&$  2868$&&$$&&$ 1648$&&$  2175$&&$ 1863$\tabularnewline
+51&trav2&$  6487$&&$$&&$ 6495$&&$  5132$&&$ 1991$\tabularnewline
+52&triangl&$  4682$&&$  1690$&&$ 3426$&&$  4211$&&$ 1668$\tabularnewline
+53&wc&$   579$&&$    90$&&$  638$&&$   225$&&$ 1796$\tabularnewline
+54&ack&$  1784$&&$  3000$&&$ 1115$&&$  1554$&&$ 2126$\tabularnewline
+55&array1&$  3380$&&$  3050$&&$ 2393$&&$   944$&&$ 1588$\tabularnewline
+56&boyer&$  1097$&&$   560$&&$  835$&&$   637$&&$ 1371$\tabularnewline
+57&browse&$  2027$&&$  1200$&&$ 1334$&&$   939$&&$ 2456$\tabularnewline
+58&cat&$   361$&&$    60$&&$  410$&&$   108$&&$ 5167$\tabularnewline
+59&conform&$   670$&&$   290$&&$  585$&&$   551$&&$ 3052$\tabularnewline
+60&cpstak&$  4599$&&$  9760$&&$ 2253$&&$  2051$&&$ 1740$\tabularnewline
+61&ctak&$ 19701$&&$ 16010$&&$  459$&&$  1204$&&$ 8057$\tabularnewline
+62&dderiv&$  2162$&&$  2650$&&$  981$&&$  1104$&&$ 1745$\tabularnewline
+63&deriv&$  1784$&&$  2640$&&$  711$&&$   782$&&$ 1822$\tabularnewline
+64&destruc&$  1489$&&$  1430$&&$  837$&&$   858$&&$ 1474$\tabularnewline
+65&diviter&$  3173$&&$  4770$&&$ 3174$&&$  1409$&&$ 1854$\tabularnewline
+66&divrec&$  1172$&&$  1730$&&$  619$&&$   570$&&$ 1314$\tabularnewline
+67&dynamic&$   375$&&$   150$&&$  377$&&$   288$&&$ 6036$\tabularnewline
+68&earley&$   644$&&$   470$&&$  418$&&$   522$&&$ 2459$\tabularnewline
+69&fft&$ 11164$&&$ 25390$&&$10289$&&$ 10210$&&$ 1705$\tabularnewline
+70&fib&$   569$&&$  1050$&&$  646$&&$   551$&&$ 1027$\tabularnewline
+71&fibc&$408571$&&$218710$&&$11228$&&$ 31457$&&$ 1089$\tabularnewline
+72&fibfp&$  2549$&&$  5660$&&$ 1814$&&$  2897$&&$ 1907$\tabularnewline
+73&gcbench&$   783$&&$$&&$  864$&&$   413$&&$ 1108$\tabularnewline
+74&graphs&$   641$&&$   670$&&$  483$&&$   498$&&$ 3026$\tabularnewline
+75&lattice&$  1071$&&$   250$&&$  933$&&$   584$&&$ 1952$\tabularnewline
+76&matrix&$   793$&&$   710$&&$  626$&&$   657$&&$ 4737$\tabularnewline
+77&maze&$   556$&&$$&&$  620$&&$  1090$&&$ 4584$\tabularnewline
+78&mazefun&$   608$&&$   620$&&$  455$&&$   551$&&$ 1754$\tabularnewline
+79&mbrot&$  7311$&&$ 19260$&&$ 5029$&&$  6659$&&$ 1145$\tabularnewline
+80&nboyer&$   804$&&$$&&$  674$&&$   446$&&$ 1724$\tabularnewline
+81&nqueens&$   677$&&$  1090$&&$  599$&&$   609$&&$ 1263$\tabularnewline
+82&nucleic&$   233$&&$$&&$  270$&&$   439$&&$58164$\tabularnewline
+83&paraffins&$  2090$&&$  1570$&&$  524$&&$   971$&&$ 3268$\tabularnewline
+84&parsing&$  1986$&&$  1210$&&$ 1372$&&$  2326$&&$ 4680$\tabularnewline
+85&perm9&$  1854$&&$  1310$&&$  899$&&$   551$&&$ 1505$\tabularnewline
+86&pi&$  2683$&&$$&&$ 3711$&&$212626$&&$ 1886$\tabularnewline
+87&pnpoly&$  5496$&&$$&&$ 4472$&&$  5549$&&$ 1667$\tabularnewline
+88&primes&$  2024$&&$  2820$&&$ 1524$&&$  5801$&&$ 1748$\tabularnewline
+89&puzzle&$  3551$&&$  4240$&&$ 2509$&&$  2871$&&$ 1682$\tabularnewline
+90&ray&$   300$&&$   820$&&$  333$&&$   765$&&$ 1139$\tabularnewline
+91&sboyer&$   607$&&$$&&$  449$&&$   449$&&$ 1294$\tabularnewline
+92&scheme&$   745$&&$   380$&&$  474$&&$   469$&&$ 1843$\tabularnewline
+93&simplex&$  2647$&&$  3130$&&$ 1978$&&$  4408$&&$ 1688$\tabularnewline
+94&slatex&$   425$&&$   260$&&$  430$&&$   408$&&$ 2872$\tabularnewline
+95&string&$ 12530$&&$   860$&&$ 2082$&&$ 26538$&&$ 1576$\tabularnewline
+96&sum&$  8069$&&$ 23160$&&$ 6547$&&$  5492$&&$ 1888$\tabularnewline
+97&sum1&$   443$&&$    70$&&$  134$&&$   795$&&$ 1489$\tabularnewline
+98&sumfp&$ 10324$&&$ 28810$&&$ 6585$&&$ 10679$&&$ 1578$\tabularnewline
+99&sumloop&$ 15820$&&$ 36700$&&$ 9830$&&$  8586$&&$ 2483$\tabularnewline
+100&tail&$   945$&&$   460$&&$ 1111$&&$   795$&&$ 1702$\tabularnewline
+101&tak&$  1240$&&$  2130$&&$ 1036$&&$  1080$&&$ 1670$\tabularnewline
+102&takl&$  2024$&&$   310$&&$ 1801$&&$  1240$&&$ 1865$\tabularnewline
+103&trav1&$  2834$&&$$&&$ 1897$&&$  2200$&&$ 1808$\tabularnewline
+104&trav2&$  6256$&&$$&&$ 6353$&&$  5116$&&$ 1962$\tabularnewline
+105&triangl&$  4852$&&$  3980$&&$ 3454$&&$  4407$&&$ 1709$\tabularnewline
+106&wc&$   557$&&$   140$&&$  587$&&$   226$&&$ 1837$\tabularnewline
+107&gcold&$ 14392$&&$ 14480$&&$$&&$  5013$&&$ 9743$\tabularnewline
+108&ack&$  1681$&&$  1550$&&$  712$&&$  1213$&&$ 2032$\tabularnewline
+109&array1&$  2987$&&$  1280$&&$  824$&&$  1112$&&$ 1574$\tabularnewline
+110&boyer&$  1114$&&$   590$&&$  717$&&$   640$&&$ 1708$\tabularnewline
+111&browse&$  1939$&&$  1200$&&$  894$&&$   921$&&$ 2482$\tabularnewline
+112&cat&$   380$&&$    50$&&$  405$&&$   103$&&$ 5107$\tabularnewline
+113&conform&$   669$&&$   180$&&$  417$&&$   442$&&$ 3186$\tabularnewline
+114&cpstak&$  4573$&&$  8350$&&$ 1837$&&$  2064$&&$ 1587$\tabularnewline
+115&ctak&$ 19048$&&$ 15790$&&$  411$&&$  1188$&&$ 7793$\tabularnewline
+116&dderiv&$  2043$&&$  2680$&&$  805$&&$  1224$&&$ 1719$\tabularnewline
+117&deriv&$  1774$&&$  2640$&&$  743$&&$   907$&&$ 1826$\tabularnewline
+118&destruc&$  1423$&&$   800$&&$  682$&&$   882$&&$ 1654$\tabularnewline
+119&diviter&$  3166$&&$  4770$&&$ 1412$&&$  1545$&&$ 1835$\tabularnewline
+120&divrec&$  1174$&&$  1820$&&$  577$&&$  1221$&&$ 1312$\tabularnewline
+121&dynamic&$   368$&&$   160$&&$  321$&&$   287$&&$ 5881$\tabularnewline
+122&earley&$   622$&&$   380$&&$  327$&&$   472$&&$ 2688$\tabularnewline
+123&fft&$  2709$&&$   390$&&$ 2136$&&$  9370$&&$ 2300$\tabularnewline
+124&fib&$   336$&&$   180$&&$  496$&&$   403$&&$ 1049$\tabularnewline
+125&fibc&$402015$&&$213090$&&$10764$&&$ 30100$&&$ 1014$\tabularnewline
+126&fibfp&$   995$&&$  2240$&&$ 1221$&&$$&&$ 1822$\tabularnewline
+127&gcbench&$   758$&&$$&&$  869$&&$$&&$ 1127$\tabularnewline
+128&graphs&$   646$&&$   530$&&$  344$&&$   402$&&$ 2870$\tabularnewline
+129&lattice&$  1065$&&$   260$&&$  639$&&$   516$&&$ 1816$\tabularnewline
+130&matrix&$$&&$$&&$  436$&&$   622$&&$$\tabularnewline
+131&maze&$   561$&&$   260$&&$  273$&&$   972$&&$$\tabularnewline
+132&mazefun&$   567$&&$   380$&&$  321$&&$   480$&&$ 1767$\tabularnewline
+133&mbrot&$  1507$&&$   950$&&$ 1958$&&$$&&$ 1024$\tabularnewline
+134&nboyer&$   836$&&$$&&$  563$&&$   469$&&$ 1671$\tabularnewline
+135&nqueens&$   578$&&$   460$&&$  368$&&$   523$&&$ 1184$\tabularnewline
+136&nucleic&$$&&$$&&$  147$&&$$&&$$\tabularnewline
+137&paraffins&$  1983$&&$  1570$&&$  649$&&$  1114$&&$ 3404$\tabularnewline
+138&parsing&$  1890$&&$   940$&&$  909$&&$  2303$&&$ 4499$\tabularnewline
+139&perm9&$  1720$&&$  1020$&&$  838$&&$   526$&&$ 1502$\tabularnewline
+140&pi&$  2650$&&$$&&$ 3429$&&$212727$&&$ 1885$\tabularnewline
+141&pnpoly&$  1504$&&$   380$&&$  593$&&$$&&$$\tabularnewline
+142&primes&$  1920$&&$  2290$&&$ 1213$&&$  6049$&&$ 1693$\tabularnewline
+143&puzzle&$  3181$&&$  1970$&&$  627$&&$  1514$&&$ 1649$\tabularnewline
+144&ray&$$&&$$&&$  200$&&$$&&$$\tabularnewline
+145&sboyer&$   591$&&$$&&$  318$&&$   447$&&$ 1263$\tabularnewline
+146&scheme&$   758$&&$   360$&&$  393$&&$   427$&&$$\tabularnewline
+147&simplex&$$&&$$&&$ 1010$&&$$&&$$\tabularnewline
+148&slatex&$   619$&&$   250$&&$  349$&&$   394$&&$ 2733$\tabularnewline
+149&string&$ 10374$&&$   880$&&$ 1925$&&$ 26528$&&$ 1522$\tabularnewline
+150&sum&$  7227$&&$  1840$&&$  985$&&$  6252$&&$ 1392$\tabularnewline
+151&sum1&$   435$&&$    60$&&$  136$&&$   805$&&$ 1448$\tabularnewline
+152&sumfp&$  3451$&&$  1380$&&$ 4674$&&$$&&$ 1540$\tabularnewline
+153&sumloop&$ 14713$&&$     0$&&$ 1234$&&$  9790$&&$ 2149$\tabularnewline
+154&tail&$  1022$&&$   540$&&$ 1110$&&$   775$&&$ 1674$\tabularnewline
+155&tak&$  1158$&&$   520$&&$  653$&&$   708$&&$ 1517$\tabularnewline
+156&takl&$  2144$&&$   300$&&$  650$&&$  1154$&&$ 1820$\tabularnewline
+157&trav1&$  2777$&&$$&&$ 1165$&&$  1970$&&$ 2326$\tabularnewline
+158&trav2&$  6420$&&$$&&$ 6396$&&$  4987$&&$ 2034$\tabularnewline
+159&triangl&$  4237$&&$  1700$&&$ 2196$&&$  2752$&&$ 1654$\tabularnewline
+160&wc&$   553$&&$    90$&&$  565$&&$   211$&&$ 1774$\tabularnewline
+\bottomrule
+\end{tabular}}

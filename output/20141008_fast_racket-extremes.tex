@@ -1,0 +1,11 @@
+%latex.default(bench.summary.table.ltx, file = paste0(input.basename,     "-extremes.tex"), rowlabel = "", booktabs = TRUE, cgroupTexCmd = "mdseries",     rgroupTexCmd = "mdseries", table.env = FALSE, center = "none",     where = "htbp", size = "footnotesize", colheads = rep("",         len * 2), col.just = rep(c("r", "@{\\scriptsize\\,\\ensuremath{\\pm}}>{\\scriptsize}r"),         len), cgroup = levels(as.factor(bench.summary.table$vm)),     cdec = rep(0, len * 2))%
+{\footnotesize
+\begin{tabular}{rc@{\scriptsize\,\ensuremath{\pm}}>{\scriptsize}r}
+\toprule
+\multicolumn{1}{c}{\mdseries Pycket}&\multicolumn{1}{c}{\mdseries }&\multicolumn{1}{c}{\mdseries Racket}\tabularnewline
+\cline{1-3}
+\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}\tabularnewline
+\midrule
+$$&&$$\tabularnewline
+\bottomrule
+\end{tabular}}

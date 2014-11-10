@@ -1,0 +1,18 @@
+%latex.default(bench.summary.table.ltx, file = paste0(input.basename,     "-extremes.tex"), rowlabel = "", booktabs = TRUE, cgroupTexCmd = "mdseries",     rgroupTexCmd = "mdseries", table.env = FALSE, center = "none",     where = "htbp", size = "footnotesize", colheads = rep(c("mean",         ""), len), col.just = .just, cgroup = levels(as.factor(bench.summary.table$vm)),     cdec = rep(0, len * 2))%
+{\footnotesize
+\begin{tabular}{l@{}rc@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}}
+\toprule
+\multicolumn{1}{l}{\mdseries }&\multicolumn{1}{c}{\mdseries Pycket}&\multicolumn{1}{c}{\mdseries }&\multicolumn{1}{c}{\mdseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}\tabularnewline
+\midrule
+ctak&$  132$&&$ 22853$\tabularnewline
+dynamic&$ 5312$&&$   536$\tabularnewline
+fibc&$ 1936$&&$510440$\tabularnewline
+matrix&$ 4968$&&$  1146$\tabularnewline
+maze&$ 4544$&&$   854$\tabularnewline
+nucleic&$99838$&&$   431$\tabularnewline
+pi&$ 2660$&&$  3428$\tabularnewline
+slatex&$ 2528$&&$   482$\tabularnewline
+\bottomrule
+\end{tabular}}

@@ -1,0 +1,65 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = (!.long),     center = "none", longtable = .long, size = "small", colheads = rep(c("mean",         ""), len), col.just = .just, cgroup = levels(as.factor(bench.summary$vm)),     cdec = rep(0, len * 2))%
+\setlongtables{\small
+\begin{longtable}{l@{}rc@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}}\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}\tabularnewline
+\midrule
+\endhead
+\midrule
+\endfoot
+ack&$ 3080$&&$  3346$\tabularnewline
+array1&$ 2696$&&$  5907$\tabularnewline
+boyer&$ 2024$&&$  1795$\tabularnewline
+browse&$ 1944$&&$  2580$\tabularnewline
+conform&$ 3680$&&$  1048$\tabularnewline
+cpstak&$ 2752$&&$  6665$\tabularnewline
+ctak&$  132$&&$ 22853$\tabularnewline
+dderiv&$ 2952$&&$  2999$\tabularnewline
+deriv&$ 2532$&&$  2552$\tabularnewline
+destruc&$ 1692$&&$  2168$\tabularnewline
+diviter&$ 2220$&&$  4247$\tabularnewline
+divrec&$ 1936$&&$  1602$\tabularnewline
+dynamic&$ 5312$&&$   536$\tabularnewline
+earley&$ 3228$&&$   954$\tabularnewline
+fft&$ 2436$&&$ 16464$\tabularnewline
+fib&$ 1128$&&$   970$\tabularnewline
+fibc&$ 1936$&&$510440$\tabularnewline
+fibfp&$ 2076$&&$  3803$\tabularnewline
+gcbench&$ 1316$&&$  1162$\tabularnewline
+gcold&$16645$&&$ 29933$\tabularnewline
+graphs&$ 3416$&&$   977$\tabularnewline
+lattice&$ 2472$&&$  1962$\tabularnewline
+matrix&$ 4968$&&$  1146$\tabularnewline
+maze&$ 4544$&&$   854$\tabularnewline
+mazefun&$ 2116$&&$   888$\tabularnewline
+mbrot&$ 1572$&&$ 11140$\tabularnewline
+nboyer&$ 2272$&&$  1244$\tabularnewline
+nqueens&$ 1464$&&$   947$\tabularnewline
+nucleic&$99838$&&$   431$\tabularnewline
+paraffins&$ 2536$&&$  3335$\tabularnewline
+parsing&$ 5984$&&$  3136$\tabularnewline
+perm9&$ 2220$&&$  3681$\tabularnewline
+peval&$ 6168$&&$   763$\tabularnewline
+pi&$ 2660$&&$  3428$\tabularnewline
+pnpoly&$ 2664$&&$  9123$\tabularnewline
+primes&$ 2640$&&$  2898$\tabularnewline
+puzzle&$ 2452$&&$  5522$\tabularnewline
+ray&$ 1268$&&$   495$\tabularnewline
+sboyer&$ 1860$&&$   917$\tabularnewline
+scheme&$ 3336$&&$  1290$\tabularnewline
+\newpage
+simplex&$ 2800$&&$  4723$\tabularnewline
+slatex&$ 2528$&&$   482$\tabularnewline
+string&$ 1408$&&$ 17973$\tabularnewline
+sum&$ 4348$&&$ 15067$\tabularnewline
+sumfp&$ 2108$&&$ 15663$\tabularnewline
+sumloop&$ 5016$&&$ 28868$\tabularnewline
+tail&$ 2180$&&$  1332$\tabularnewline
+tak&$ 2668$&&$  2219$\tabularnewline
+takl&$ 3012$&&$  3456$\tabularnewline
+trav1&$ 2616$&&$  4751$\tabularnewline
+trav2&$ 2788$&&$ 10925$\tabularnewline
+triangl&$ 2528$&&$  7744$\tabularnewline
+\bottomrule
+\end{longtable}}

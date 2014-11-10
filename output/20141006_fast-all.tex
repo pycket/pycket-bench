@@ -1,0 +1,42 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "footnotesize", colheads = rep(c("mean",         "error"), len), col.just = rep(c("r", "@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r"),         len), cgroup = levels(as.factor(bench.summary$vm)), cdec = rep(0,         len * 2))%
+{\footnotesize
+\begin{tabular}{lrc@{\,\si{\milli\second} \ensuremath{\pm}}r}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}\tabularnewline
+\midrule
+ack&$  272$&&$   93$\tabularnewline
+array1&$  740$&&$  557$\tabularnewline
+cpstak&$ 2208$&&$ 2130$\tabularnewline
+ctak&$  240$&&$43645$\tabularnewline
+deriv&$ 2036$&&$ 1703$\tabularnewline
+diviter&$  808$&&$ 1668$\tabularnewline
+divrec&$ 2716$&&$ 2536$\tabularnewline
+earley&$ 3812$&&$ 1162$\tabularnewline
+fft&$  328$&&$  950$\tabularnewline
+fib&$ 4164$&&$ 1194$\tabularnewline
+fibc&$  548$&&$28056$\tabularnewline
+fibfp&$ 2028$&&$ 1243$\tabularnewline
+gcbench&$ 2952$&&$ 1351$\tabularnewline
+graphs&$ 4628$&&$ 1297$\tabularnewline
+mazefun&$ 3320$&&$ 1013$\tabularnewline
+mbrot&$  276$&&$ 2093$\tabularnewline
+nqueens&$ 2104$&&$ 1055$\tabularnewline
+nucleic&$ 4668$&&$  785$\tabularnewline
+paraffins&$10172$&&$ 3332$\tabularnewline
+perm9&$ 2280$&&$ 2309$\tabularnewline
+pi&$  556$&&$  573$\tabularnewline
+pnpoly&$  596$&&$ 1399$\tabularnewline
+primes&$ 2452$&&$ 1830$\tabularnewline
+puzzle&$  876$&&$ 2196$\tabularnewline
+simplex&$ 2884$&&$ 1360$\tabularnewline
+string&$   24$&&$  147$\tabularnewline
+sum&$  148$&&$  520$\tabularnewline
+sumfp&$  144$&&$ 1265$\tabularnewline
+sumloop&$  136$&&$  800$\tabularnewline
+tak&$ 3064$&&$ 1069$\tabularnewline
+takl&$ 1676$&&$ 1239$\tabularnewline
+triangl&$  976$&&$ 1894$\tabularnewline
+\bottomrule
+\end{tabular}}

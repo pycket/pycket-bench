@@ -1,0 +1,34 @@
+%latex.default(bench.summary.table.ltx, file = paste0(input.basename,     "-extremes.tex"), rowlabel = "", booktabs = TRUE, cgroupTexCmd = "mdseries",     rgroupTexCmd = "mdseries", table.env = FALSE, center = "none",     where = "htbp", size = "footnotesize", colheads = rep(c("mean",         ""), len), col.just = .just, cgroup = levels(as.factor(bench.summary.table$vm)),     cdec = rep(0, len * 2))%
+{\footnotesize
+\begin{tabular}{l@{}r@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}}
+\toprule
+\multicolumn{1}{l}{\mdseries }&\multicolumn{2}{c}{\mdseries Pycket}&\multicolumn{1}{c}{\mdseries }&\multicolumn{2}{c}{\mdseries Racket}&\multicolumn{1}{c}{\mdseries }&\multicolumn{2}{c}{\mdseries Larceny}&\multicolumn{1}{c}{\mdseries }&\multicolumn{2}{c}{\mdseries Gambit}&\multicolumn{1}{c}{\mdseries }&\multicolumn{2}{c}{\mdseries Bigloo}\tabularnewline
+\cline{2-3} \cline{5-6} \cline{8-9} \cline{11-12} \cline{14-15}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}\tabularnewline
+\midrule
+ctak\textsubscript{fixflo}&$ 10586$&$  85$&&$ 23422$&$ 204$&&$  1924$&$  61$&&$  741$&$23$&&$ 23736$&$ 888$\tabularnewline
+ctak\textsubscript{nothing}&$ 10874$&$  18$&&$ 23444$&$ 200$&&$  1887$&$  12$&&$  780$&$14$&&$ 24581$&$1692$\tabularnewline
+ctak\textsubscript{unsafe}&$ 10433$&$  56$&&$ 23150$&$ 191$&&$  1875$&$  13$&&$  724$&$ 1$&&$ 23269$&$ 814$\tabularnewline
+dynamic\textsubscript{fixflo}&$  8978$&$  97$&&$   531$&$   3$&&$   450$&$   3$&&$  509$&$ 3$&&$   205$&$   3$\tabularnewline
+dynamic\textsubscript{nothing}&$  9140$&$ 237$&&$   548$&$   4$&&$   456$&$   4$&&$  504$&$ 2$&&$   210$&$   0$\tabularnewline
+dynamic\textsubscript{unsafe}&$  9010$&$ 152$&&$   526$&$   1$&&$   440$&$   1$&&$  425$&$ 2$&&$   206$&$   3$\tabularnewline
+fibc\textsubscript{fixflo}&$  1972$&$   5$&&$530043$&$4793$&&$ 49866$&$ 370$&&$19145$&$40$&&$257080$&$1934$\tabularnewline
+fibc\textsubscript{nothing}&$  1968$&$   8$&&$534182$&$4517$&&$ 51054$&$3464$&&$20351$&$46$&&$260369$&$ 633$\tabularnewline
+fibc\textsubscript{unsafe}&$  1730$&$   9$&&$519214$&$3389$&&$ 47205$&$ 275$&&$19653$&$95$&&$257214$&$1280$\tabularnewline
+matrix\textsubscript{fixflo}&$$&$$&&$$&$$&&$  1178$&$   2$&&$ 1032$&$ 4$&&$$&$$\tabularnewline
+matrix\textsubscript{nothing}&$  7518$&$ 174$&&$  1130$&$   4$&&$  1172$&$   5$&&$ 1062$&$ 1$&&$   788$&$   5$\tabularnewline
+matrix\textsubscript{unsafe}&$$&$$&&$$&$$&&$  1124$&$  11$&&$  851$&$ 2$&&$$&$$\tabularnewline
+maze\textsubscript{fixflo}&$$&$$&&$   844$&$   4$&&$  2008$&$   3$&&$  729$&$ 2$&&$   282$&$   3$\tabularnewline
+maze\textsubscript{nothing}&$  6108$&$ 120$&&$   857$&$   2$&&$  2020$&$   3$&&$ 1267$&$ 2$&&$$&$$\tabularnewline
+maze\textsubscript{unsafe}&$$&$$&&$   857$&$   3$&&$  1768$&$   3$&&$  601$&$ 3$&&$   281$&$   2$\tabularnewline
+nucleic\textsubscript{fixflo}&$$&$$&&$$&$$&&$$&$$&&$  590$&$ 2$&&$$&$$\tabularnewline
+nucleic\textsubscript{nothing}&$110900$&$3121$&&$   437$&$   3$&&$   686$&$   7$&&$  610$&$ 2$&&$$&$$\tabularnewline
+nucleic\textsubscript{unsafe}&$$&$$&&$$&$$&&$$&$$&&$  294$&$ 0$&&$$&$$\tabularnewline
+pi\textsubscript{fixflo}&$  2606$&$   6$&&$  3466$&$  14$&&$434256$&$3308$&&$ 4925$&$ 5$&&$$&$$\tabularnewline
+pi\textsubscript{nothing}&$  2611$&$   6$&&$  3479$&$  25$&&$433252$&$4020$&&$ 5005$&$ 6$&&$$&$$\tabularnewline
+pi\textsubscript{unsafe}&$  2604$&$   4$&&$  3474$&$  25$&&$433931$&$3879$&&$ 4979$&$ 4$&&$$&$$\tabularnewline
+slatex\textsubscript{fixflo}&$  3640$&$  21$&&$   492$&$   1$&&$   548$&$   7$&&$  475$&$ 7$&&$   247$&$   5$\tabularnewline
+slatex\textsubscript{nothing}&$  3672$&$  53$&&$   497$&$  12$&&$   588$&$  18$&&$  519$&$14$&&$   224$&$   3$\tabularnewline
+slatex\textsubscript{unsafe}&$  3654$&$  48$&&$   503$&$  13$&&$   533$&$   6$&&$  431$&$ 6$&&$   228$&$   3$\tabularnewline
+\bottomrule
+\end{tabular}}

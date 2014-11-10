@@ -1,0 +1,45 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "footnotesize", colheads = rep(c("mean",         "error"), len), col.just = rep(c("r", "@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r"),         len), cgroup = levels(as.factor(bench.summary$vm)), cdec = rep(0,         len * 2))%
+{\footnotesize
+\begin{tabular}{lrc@{\,\si{\milli\second} \ensuremath{\pm}}r}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}\tabularnewline
+\midrule
+ack&$    63$&&$   46$\tabularnewline
+array1&$   168$&&$  261$\tabularnewline
+boyer&$   856$&&$  480$\tabularnewline
+cpstak&$   404$&&$  918$\tabularnewline
+ctak&$  7298$&&$19580$\tabularnewline
+deriv&$   880$&&$  874$\tabularnewline
+diviter&$   502$&&$  769$\tabularnewline
+divrec&$  1365$&&$ 1181$\tabularnewline
+earley&$  2367$&&$  648$\tabularnewline
+fft&$   285$&&$  445$\tabularnewline
+fib&$  1076$&&$  603$\tabularnewline
+fibc&$   181$&&$12899$\tabularnewline
+fibfp&$   495$&&$  640$\tabularnewline
+gcbench&$  1024$&&$  767$\tabularnewline
+graphs&$  3025$&&$  636$\tabularnewline
+mazefun&$  1755$&&$  615$\tabularnewline
+mbrot&$   162$&&$  720$\tabularnewline
+nboyer&$  1700$&&$  854$\tabularnewline
+nqueens&$  1173$&&$  692$\tabularnewline
+nucleic&$109944$&&$  282$\tabularnewline
+paraffins&$  3066$&&$ 1986$\tabularnewline
+perm9&$   822$&&$  921$\tabularnewline
+pi&$   226$&&$  278$\tabularnewline
+pnpoly&$   366$&&$  569$\tabularnewline
+primes&$   934$&&$ 1037$\tabularnewline
+puzzle&$   615$&&$  941$\tabularnewline
+sboyer&$  1311$&&$  629$\tabularnewline
+simplex&$   656$&&$  528$\tabularnewline
+string&$    18$&&$   47$\tabularnewline
+sum&$    70$&&$  285$\tabularnewline
+sumfp&$    87$&&$  508$\tabularnewline
+sumloop&$    67$&&$  412$\tabularnewline
+tak&$   720$&&$  516$\tabularnewline
+takl&$   641$&&$  635$\tabularnewline
+triangl&$   412$&&$ 1005$\tabularnewline
+\bottomrule
+\end{tabular}}

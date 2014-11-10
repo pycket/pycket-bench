@@ -1,0 +1,44 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "footnotesize", colheads = rep(c("mean",         "error"), len), col.just = rep(c("r", "@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r"),         len), cgroup = levels(as.factor(bench.summary$vm)), cdec = rep(0,         len * 2))%
+{\footnotesize
+\begin{tabular}{lrc@{\,\si{\milli\second} \ensuremath{\pm}}r}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}\tabularnewline
+\midrule
+ack&$2082$&&$  1861$\tabularnewline
+array1&$1593$&&$  3386$\tabularnewline
+boyer&$1373$&&$  1113$\tabularnewline
+cpstak&$1804$&&$  4495$\tabularnewline
+ctak&$8276$&&$ 19533$\tabularnewline
+deriv&$1882$&&$  1778$\tabularnewline
+diviter&$1906$&&$  3103$\tabularnewline
+divrec&$1291$&&$  1195$\tabularnewline
+earley&$2585$&&$   655$\tabularnewline
+fft&$1719$&&$ 11221$\tabularnewline
+fib&$1064$&&$   576$\tabularnewline
+fibc&$1214$&&$401751$\tabularnewline
+fibfp&$2028$&&$  2564$\tabularnewline
+gcbench&$1111$&&$   778$\tabularnewline
+graphs&$3177$&&$   657$\tabularnewline
+mazefun&$1786$&&$   620$\tabularnewline
+mbrot&$1184$&&$  7546$\tabularnewline
+nboyer&$1765$&&$   848$\tabularnewline
+nqueens&$1298$&&$   690$\tabularnewline
+paraffins&$3251$&&$  2032$\tabularnewline
+perm9&$1514$&&$  1838$\tabularnewline
+pi&$1989$&&$  2739$\tabularnewline
+pnpoly&$1687$&&$  5657$\tabularnewline
+primes&$1818$&&$  2021$\tabularnewline
+puzzle&$1756$&&$  3582$\tabularnewline
+sboyer&$1315$&&$   610$\tabularnewline
+simplex&$1674$&&$  2483$\tabularnewline
+string&$1636$&&$ 12369$\tabularnewline
+sum&$1949$&&$  8244$\tabularnewline
+sumfp&$1595$&&$ 10123$\tabularnewline
+sumloop&$2528$&&$ 16036$\tabularnewline
+tak&$1693$&&$  1322$\tabularnewline
+takl&$1913$&&$  2051$\tabularnewline
+triangl&$1756$&&$  5030$\tabularnewline
+\bottomrule
+\end{tabular}}

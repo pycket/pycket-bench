@@ -1,0 +1,45 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "footnotesize", colheads = rep(c("mean",         "error"), len), col.just = rep(c("r", "@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r"),         len), cgroup = levels(as.factor(bench.summary$vm)), cdec = rep(0,         len * 2))%
+{\footnotesize
+\begin{tabular}{lrc@{\,\si{\milli\second} \ensuremath{\pm}}r}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}\tabularnewline
+\midrule
+ack&$ 234$&&$   65$\tabularnewline
+array1&$ 125$&&$  485$\tabularnewline
+cpstak&$2248$&&$ 1398$\tabularnewline
+ctak&$ 190$&&$17372$\tabularnewline
+deriv&$1507$&&$  970$\tabularnewline
+diviter&$ 604$&&$  745$\tabularnewline
+divrec&$2438$&&$ 1231$\tabularnewline
+earley&$1907$&&$  774$\tabularnewline
+fft&$ 180$&&$  856$\tabularnewline
+fib&$2122$&&$  801$\tabularnewline
+fibc&$ 513$&&$12102$\tabularnewline
+fibfp&$ 886$&&$  698$\tabularnewline
+gcbench&$1785$&&$  625$\tabularnewline
+gcold&$$&&$14920$\tabularnewline
+mazefun&$$&&$  670$\tabularnewline
+mbrot&$ 502$&&$  657$\tabularnewline
+nqueens&$1444$&&$  712$\tabularnewline
+nucleic&$1866$&&$  374$\tabularnewline
+paraffins&$5070$&&$ 1153$\tabularnewline
+parsing&$$&&$ 2594$\tabularnewline
+perm9&$1526$&&$  968$\tabularnewline
+pi&$ 353$&&$  275$\tabularnewline
+pnpoly&$ 410$&&$  728$\tabularnewline
+primes&$1717$&&$ 1069$\tabularnewline
+puzzle&$ 672$&&$ 1165$\tabularnewline
+simplex&$2072$&&$ 1332$\tabularnewline
+string&$  14$&&$  119$\tabularnewline
+sum&$ 111$&&$  403$\tabularnewline
+sum1&$$&&$  163$\tabularnewline
+sumfp&$  90$&&$  583$\tabularnewline
+sumloop&$ 167$&&$  833$\tabularnewline
+tak&$2810$&&$  723$\tabularnewline
+takl&$1146$&&$  888$\tabularnewline
+triangl&$ 629$&&$ 1200$\tabularnewline
+wc&$$&&$  232$\tabularnewline
+\bottomrule
+\end{tabular}}

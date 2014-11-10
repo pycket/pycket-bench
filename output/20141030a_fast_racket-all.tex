@@ -1,0 +1,50 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "footnotesize", colheads = rep(c("mean",         "error"), len), col.just = rep(c("r", "@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r"),         len), cgroup = levels(as.factor(bench.summary$vm)), cdec = rep(0,         len * 2))%
+{\footnotesize
+\begin{tabular}{lrc@{\,\si{\milli\second} \ensuremath{\pm}}r}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}\tabularnewline
+\midrule
+ackermann&$5448$&&$ 2921$\tabularnewline
+ary&$ 998$&&$ 4235$\tabularnewline
+binarytrees&$4094$&&$ 1200$\tabularnewline
+fannkuch&$1040$&&$ 1424$\tabularnewline
+fannkuch-redux&$1073$&&$ 1052$\tabularnewline
+fasta&$7928$&&$ 2478$\tabularnewline
+fibo&$5465$&&$ 3229$\tabularnewline
+hash&$1778$&&$ 3978$\tabularnewline
+hash2&$ 785$&&$ 2222$\tabularnewline
+heapsort&$6388$&&$ 3769$\tabularnewline
+k-nucleotide&$$&&$ 2575$\tabularnewline
+lists&$2391$&&$ 3938$\tabularnewline
+mandelbrot&$2543$&&$ 1747$\tabularnewline
+mandelbrot-generic&$2714$&&$ 8902$\tabularnewline
+matrix&$1358$&&$ 2897$\tabularnewline
+meteor&$ 753$&&$  271$\tabularnewline
+moments&$3980$&&$ 3065$\tabularnewline
+nbody&$1416$&&$ 2881$\tabularnewline
+nbody-generic&$1469$&&$ 6505$\tabularnewline
+nbody-vec&$ 812$&&$ 1584$\tabularnewline
+nbody-vec-generic&$1017$&&$ 6443$\tabularnewline
+nestedloop&$1805$&&$ 3848$\tabularnewline
+nsieve&$2890$&&$ 3030$\tabularnewline
+nsievebits&$ 720$&&$ 4127$\tabularnewline
+partialsums&$ 362$&&$ 1639$\tabularnewline
+pidigits&$1135$&&$ 1107$\tabularnewline
+random&$ 626$&&$ 2755$\tabularnewline
+recursive&$9528$&&$ 6152$\tabularnewline
+regexmatch&$4860$&&$ 2895$\tabularnewline
+regexpdna&$$&&$ 5655$\tabularnewline
+reversecomplement&$$&&$ 3038$\tabularnewline
+reversefile&$5548$&&$ 1568$\tabularnewline
+sieve&$1493$&&$ 3778$\tabularnewline
+spectralnorm&$1868$&&$ 1215$\tabularnewline
+spectralnorm-generic&$1630$&&$10310$\tabularnewline
+spellcheck&$ 752$&&$  338$\tabularnewline
+strcat&$1619$&&$ 2258$\tabularnewline
+sumcol&$ 980$&&$ 2371$\tabularnewline
+wc&$2972$&&$ 3489$\tabularnewline
+wordfreq&$2353$&&$ 3729$\tabularnewline
+\bottomrule
+\end{tabular}}

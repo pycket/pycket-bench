@@ -1,0 +1,49 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "footnotesize", colheads = rep(c("mean",         "error"), len), col.just = rep(c("r", "@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r"),         len), cgroup = levels(as.factor(bench.summary$vm)), cdec = rep(0,         len * 2))%
+{\footnotesize
+\begin{tabular}{lrc@{\,\si{\milli\second} \ensuremath{\pm}}r}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{1}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{1}{c}{\bfseries Racket}\tabularnewline
+\cline{2-2} \cline{4-4}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{error}\tabularnewline
+\midrule
+ackermann&$ 7593$&&$ 2876$\tabularnewline
+ary&$ 1013$&&$ 4084$\tabularnewline
+binarytrees&$ 4055$&&$ 1162$\tabularnewline
+chameneos&$$&&$ 3344$\tabularnewline
+cheapconcurrency&$$&&$ 2680$\tabularnewline
+except&$$&&$ 4066$\tabularnewline
+fannkuch&$  963$&&$ 1354$\tabularnewline
+fannkuch-redux&$  927$&&$ 1025$\tabularnewline
+fasta&$$&&$ 2332$\tabularnewline
+fibo&$ 7422$&&$ 3238$\tabularnewline
+heapsort&$$&&$ 3881$\tabularnewline
+k-nucleotide&$$&&$ 2770$\tabularnewline
+lists&$14849$&&$ 3921$\tabularnewline
+mandelbrot&$$&&$ 1720$\tabularnewline
+mandelbrot-generic&$$&&$ 8780$\tabularnewline
+meteor&$$&&$  278$\tabularnewline
+moments&$$&&$ 3052$\tabularnewline
+nbody&$ 1605$&&$ 2869$\tabularnewline
+nbody-generic&$ 1728$&&$ 6422$\tabularnewline
+nbody-vec&$  749$&&$ 1608$\tabularnewline
+nbody-vec-generic&$  989$&&$ 6377$\tabularnewline
+nestedloop&$$&&$ 3817$\tabularnewline
+nsieve&$ 2870$&&$ 3035$\tabularnewline
+nsievebits&$$&&$ 3910$\tabularnewline
+partialsums&$  366$&&$ 1647$\tabularnewline
+pidigits&$ 1101$&&$ 1126$\tabularnewline
+pidigits1&$$&&$  502$\tabularnewline
+random&$$&&$ 2775$\tabularnewline
+recursive&$$&&$ 6125$\tabularnewline
+regexmatch&$$&&$ 2829$\tabularnewline
+regexpdna&$$&&$ 5683$\tabularnewline
+reversecomplement&$$&&$ 2945$\tabularnewline
+reversefile&$ 6015$&&$ 1582$\tabularnewline
+sieve&$ 1531$&&$ 3803$\tabularnewline
+spectralnorm&$ 1823$&&$ 1157$\tabularnewline
+spectralnorm-generic&$ 1836$&&$10324$\tabularnewline
+strcat&$$&&$ 2290$\tabularnewline
+sumcol&$  871$&&$ 2435$\tabularnewline
+wordfreq&$$&&$ 3603$\tabularnewline
+\bottomrule
+\end{tabular}}

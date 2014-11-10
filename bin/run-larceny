@@ -35,7 +35,7 @@ if [ "$VARIABLE" = "CHAP" ]; then
 (compile-file "$SRC" "$OUT")
 EOF
   exec $LARCENY -r6rs -program $OUT \
-       2>&1 | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } /^Elapsed\ time/ {printf "RESULT-cpu: %f\nRESULT-total: %f\n", $6, $3 } {print}'
+       | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } /^Elapsed\ time/ {printf "RESULT-cpu: %f\nRESULT-total: %f\n", $6, $3 } {print}'
 else
 
   $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF
@@ -45,7 +45,7 @@ else
 EOF
 
   exec $LARCENY -nobanner -- -e '(begin (herald #f) (repl-prompt values))' <<EOF \
-       2>&1 | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } /^Elapsed\ time/ {printf "RESULT-cpu: %f\nRESULT-total: %f\n", $6, $3 } {print}'
+       | awk '/Error/ { sub("Error", "Warning") } /^Elapsed\ GC\ time/ { printf "RESULT-gc: %f\n", $4 } /^Elapsed\ time/ {printf "RESULT-cpu: %f\nRESULT-total: %f\n", $6, $3 } {print}'
 (begin
   (load "configuration/definitions-larceny.scm")
   (load "configuration/iterations.rkt")

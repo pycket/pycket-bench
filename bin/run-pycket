@@ -44,8 +44,8 @@ if [ ! -f "$OUT" ]; then echo "ERROR: no such benchmark"; exit 1; fi
 
 
 if [ "$VARIABLE" = "CHAP" ]; then
-    exec $PYCKET_BIN "$OUT" "$@" \
+    (exec $PYCKET_BIN "$OUT" "$@"  3>&2 2>&1 1>&3) 2>/dev/null \
     | awk '/^cpu time:/ {printf "RESULT-cpu: %f\nRESULT-gc: %f\nRESULT-total: %f\n", $3, $9, $6 } {print}'
 else
-    exec $PYCKET_BIN "$OUT" "$@"
+    exec $PYCKET_BIN "$OUT" "$@"  3>&2 2>&1 1>&3
 fi

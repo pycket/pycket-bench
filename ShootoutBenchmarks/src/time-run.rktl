@@ -10,7 +10,8 @@
                         (car argsl))]
          [args      (benchargs (current-command-line-arguments))])
     (let-values ([(v cpu user gc) (time-apply bench (list args))])
-      (printf "\n\nRESULT-cpu: ~a.0\nRESULT-gc: ~a.0\nRESULT-total: ~a.0\n"
+      (fprintf (current-error-port)
+              "\n\nRESULT-cpu: ~a.0\nRESULT-gc: ~a.0\nRESULT-total: ~a.0\n"
               cpu gc user)
       (apply values v))))
 

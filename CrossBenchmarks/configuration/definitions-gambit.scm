@@ -13,7 +13,8 @@
                 (rd (number->string (* (- r* r) 1000))))
            (display (string-append "RESULT-cpu: " d "\n"
                                    "RESULT-gc: 0.0" "\n"
-                                   "RESULT-total: " rd "\n"))
+                                   "RESULT-total: " rd "\n")
+                    (current-error-port))
            (apply values vals))))))
 ;------------------------------------------------------------------------------
 

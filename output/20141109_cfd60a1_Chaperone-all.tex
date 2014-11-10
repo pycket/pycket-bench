@@ -1,0 +1,41 @@
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = (!.long),     center = "none", longtable = .long, landscape = .side, size = "small",     colheads = rep(c("mean", ""), len), col.just = .just, cgroup = levels(as.factor(bench.summary$vm)),     cdec = rep(0, len * 2))%
+\begin{landscape}\begin{table}[!tbp]
+{\small
+\begin{tabular}{l@{}r@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}}
+\toprule
+\multicolumn{1}{l}{\bfseries Benchmark}&\multicolumn{2}{c}{\bfseries Pycket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Racket}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Larceny}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries V8}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Spidermonkey}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Python}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Pypy}\tabularnewline
+\cline{2-3} \cline{5-6} \cline{8-9} \cline{11-12} \cline{14-15} \cline{17-18} \cline{20-21}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{mean}&\multicolumn{1}{c}{}\tabularnewline
+\midrule
+Bubble\textsubscript{chaperone}&$ 776$&$ 7$&&$ 6667$&$   5$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Bubble\textsubscript{direct}&$ 653$&$ 3$&&$ 1382$&$   2$&&$1595$&$ 1$&&$   336$&$   0$&&$   221$&$   0$&&$ 20626$&$  36$&&$  597$&$  2$\tabularnewline
+Bubble\textsubscript{proxy}&$$&$$&&$$&$$&&$$&$$&&$111379$&$4449$&&$113832$&$2284$&&$100209$&$ 816$&&$ 1248$&$ 11$\tabularnewline
+Bubble\textsubscript{unsafe}&$ 547$&$ 2$&&$  955$&$   2$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Bubble\textsubscript{unsafe2}&$ 540$&$ 2$&&$  726$&$   1$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Church\textsubscript{chaperone}&$6960$&$49$&&$38042$&$1200$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Church\textsubscript{chaperone-a}&$1239$&$ 6$&&$ 4542$&$ 213$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Church\textsubscript{contract}&$1448$&$12$&&$10330$&$ 284$&&$$&$$&&$291928$&$1548$&&$403966$&$5428$&&$$&$$&&$$&$$\tabularnewline
+Church\textsubscript{direct}&$ 752$&$ 3$&&$ 1241$&$   7$&&$ 796$&$12$&&$  2067$&$   7$&&$  3470$&$  10$&&$$&$$&&$$&$$\tabularnewline
+Church\textsubscript{proxy}&$$&$$&&$$&$$&&$$&$$&&$ 54073$&$ 118$&&$153989$&$ 680$&&$$&$$&&$$&$$\tabularnewline
+Church\textsubscript{proxy-a}&$$&$$&&$$&$$&&$$&$$&&$ 51991$&$ 125$&&$150996$&$ 950$&&$$&$$&&$$&$$\tabularnewline
+Church\textsubscript{wrap}&$2392$&$ 8$&&$ 4184$&$   8$&&$4129$&$19$&&$  8588$&$  39$&&$ 17171$&$ 203$&&$298532$&$6236$&&$68958$&$172$\tabularnewline
+Proc\textsubscript{chaperone}&$  88$&$ 1$&&$ 1051$&$  10$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Proc\textsubscript{chaperone+return}&$  90$&$ 1$&&$ 1576$&$   8$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Proc\textsubscript{direct}&$  21$&$ 1$&&$   34$&$   0$&&$$&$$&&$    39$&$   0$&&$    27$&$   0$&&$  1464$&$  25$&&$   67$&$  1$\tabularnewline
+Proc\textsubscript{impersonate}&$  88$&$ 1$&&$ 1020$&$   7$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Proc\textsubscript{impersonate+return}&$  90$&$ 1$&&$ 1532$&$  10$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Proc\textsubscript{indirect}&$  20$&$ 1$&&$  124$&$   2$&&$$&$$&&$    38$&$   0$&&$    28$&$   1$&&$  1453$&$  25$&&$   80$&$  1$\tabularnewline
+Proc\textsubscript{proxy}&$$&$$&&$$&$$&&$$&$$&&$  1555$&$   9$&&$  2604$&$   8$&&$$&$$&&$$&$$\tabularnewline
+Proc\textsubscript{wrapped}&$  22$&$ 1$&&$  180$&$   1$&&$$&$$&&$    38$&$   0$&&$    27$&$   0$&&$  2682$&$  15$&&$   72$&$  2$\tabularnewline
+Proc\textsubscript{wrapped+check}&$  23$&$ 1$&&$  366$&$   3$&&$$&$$&&$   118$&$   1$&&$   140$&$   0$&&$  4319$&$  92$&&$   83$&$  2$\tabularnewline
+Proc\textsubscript{wrapped+return}&$  23$&$ 1$&&$  405$&$   7$&&$$&$$&&$   368$&$   1$&&$   668$&$   5$&&$  5457$&$  57$&&$  276$&$  1$\tabularnewline
+Struct\textsubscript{chaperone}&$ 135$&$ 1$&&$ 5546$&$  60$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Struct\textsubscript{direct}&$ 134$&$ 1$&&$  527$&$   0$&&$1069$&$ 1$&&$   377$&$   0$&&$   271$&$  18$&&$  4650$&$  34$&&$  126$&$  1$\tabularnewline
+Struct\textsubscript{impersonate}&$ 136$&$ 1$&&$ 5530$&$ 103$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Struct\textsubscript{proxy}&$$&$$&&$$&$$&&$$&$$&&$ 26531$&$ 618$&&$ 26760$&$ 103$&&$103454$&$ 860$&&$ 2077$&$ 28$\tabularnewline
+Struct\textsubscript{unsafe}&$ 133$&$ 1$&&$  337$&$   0$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Struct\textsubscript{unsafe2}&$ 133$&$ 1$&&$  337$&$   0$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+\bottomrule
+\end{tabular}}
+
+\end{table}\end{landscape}

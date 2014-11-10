@@ -12,7 +12,7 @@ pkgs = c(
 )
 
 use <- function(pkg) {
-  if (!require(pkg, character.only=TRUE)) { install.packages(pkg) }
+  if (!require(pkg, character.only=TRUE)) { install.packages(pkg, repos="http://cran.rstudio.com") }
   library(pkg,character.only=TRUE)
 }
 sapply(pkgs, use)

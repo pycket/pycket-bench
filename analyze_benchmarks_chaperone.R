@@ -54,12 +54,15 @@ bench <- read.delim(tsv_name, comment.char = "#", header=FALSE,
 
 bench$vm <- sapply(bench$vm, function (x)
   if (x=='RRacket') 'Racket' else paste0("",x))
-                                
+bench$benchmark <- sapply(bench$benchmark, function (x)
+  if (x=='unsafe2') 'unsafe*' else paste0("",x))
+
+
 bench <- droplevels(bench[bench$vm != 'PycketNoJit',,drop=TRUE])
 bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
 
 bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "Gambit", "Bigloo", "V8", "Spidermonkey", "Python", "Pypy"))
-bench$suite <- factor(gsub("Chaperone(\\w+)Benchmarks", "\\1", bench$suite))
+bench$suite <- gsub("Chaperone(\\w+)Benchmarks", "\\1", bench$suite)
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 
@@ -150,11 +153,11 @@ rigorous <- 1 < nrow(bench[
 
 
 bench.corr = data.frame()
-for (suite in levels(bench$suite)) {
+for (suite in levels(factor(bench$suite))) {
   .s <- bench[bench$suite == suite,, ]
   for (crit in levels(droplevels(bench$criterion))) {
     for (vm in levels(droplevels(bench$vm))) {  
-      for (benchmark in levels(droplevels(.s$benchmark))) {
+      for (benchmark in levels(droplevels(factor(.s$benchmark)))) {
         if (1 > nrow(.s[(
             bench$criterion == crit & 
             bench$vm == vm &

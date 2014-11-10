@@ -78,6 +78,9 @@ if ('ctak' %in% bench$benchmark) {
   table.only <- c()
 }
 
+message(">>>>>>>>>> Putting these only into a table: ")
+message(table.only)
+
 # in inches
 figure.width <- 7
 figure.height <- 2.8
@@ -421,87 +424,138 @@ ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb')
 embed_fonts(gg.file, options=pdf.embed.options)
 
 
-if (FALSE) {
-#
-# and now color
-#
-p <- ggplot(data=bench.summary.graph,
-#        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
-       aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
-) +
-  geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
-  #   xlab("Benchmark") +
-  ylab("Relative Runtime") +
-  theme_bw(base_size=8, base_family="Helvetica") +
-  theme(
-    rect = element_rect(),
-    axis.title.x =  element_blank(),
-    #     axis.title.x = element_text(face="bold", size=9),
-    #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2,
-    axis.text.x  = element_text(size=8, angle=45, hjust=1),
-    axis.title.y = element_text(face="bold", size=8),
-    axis.text.y  = element_text(size=8), #angle=45, hjust=0.2, vjust=0.5,
-    legend.position=c(0.15, .75),
-    plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
-    legend.text = element_text(size=7),
-    legend.title = element_text(size=7, face="bold"),
-    legend.background = element_rect(fill="gray90", size=0),
-    legend.margin = unit(0, "cm"),
-    legend.key=element_rect(fill="white"),
-    legend.key.size=unit(5,"mm")
-  ) +
-  scale_y_continuous(breaks=seq(0,ymax,.5), limits=c(0,ymax),expand=c(0,0)) +
-  scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1") +
-  #facet_null()
-  facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
+# if (FALSE) {
+# #
+# # and now color
+# #
+# p <- ggplot(data=bench.summary.graph,
+# #        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
+#        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
+# ) +
+#   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
+#   #   xlab("Benchmark") +
+#   ylab("Relative Runtime") +
+#   theme_bw(base_size=8, base_family="Helvetica") +
+#   theme(
+#     rect = element_rect(),
+#     axis.title.x =  element_blank(),
+#     #     axis.title.x = element_text(face="bold", size=9),
+#     #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2,
+#     axis.text.x  = element_text(size=8, angle=45, hjust=1),
+#     axis.title.y = element_text(face="bold", size=8),
+#     axis.text.y  = element_text(size=8), #angle=45, hjust=0.2, vjust=0.5,
+#     legend.position=c(0.15, .75),
+#     plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
+#     legend.text = element_text(size=7),
+#     legend.title = element_text(size=7, face="bold"),
+#     legend.background = element_rect(fill="gray90", size=0),
+#     legend.margin = unit(0, "cm"),
+#     legend.key=element_rect(fill="white"),
+#     legend.key.size=unit(5,"mm")
+#   ) +
+#   scale_y_continuous(breaks=seq(0,ymax,.5), limits=c(0,ymax),expand=c(0,0)) +
+#   scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1") +
+#   #facet_null()
+#   facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
+# if (rigorous) {
+#   p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
+# }
+# p
+# gg.file <- paste0(input.basename, "-norm-col.pdf")
+# ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
+# embed_fonts(gg.file, options=pdf.embed.options)
+# 
+# }
+
 if (rigorous) {
-  p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
-}
-p
-gg.file <- paste0(input.basename, "-norm-col.pdf")
-ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
-embed_fonts(gg.file, options=pdf.embed.options)
+  # LaTeX table
+  (function() {
+    if (nrow(bench.summary.table.ltx) <= 0) {
+      return();
+    }
+    len <- ncol(bench.summary.table.ltx)/2
+    .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
+    .just = c('@{}r', .just[2:length(.just)])
+    out <- latex(bench.summary.table.ltx,
+                 file=paste0(input.basename, "-extremes.tex"),
+                 rowlabel="",
+                 #label="tbl:extremes",caption="Extreme runtimes",
+                 booktabs=TRUE,
+                 #ctable=TRUE,
+                 cgroupTexCmd="mdseries",
+                 rgroupTexCmd="mdseries",
+                 table.env=FALSE, center="none",
+                 where="htbp", size="footnotesize", #center="centering",
+                 #colheads=rep(c('mean', 'error'), len),
+                 colheads=rep(c('mean', ''),len),
+                 col.just=.just,
+  #                col.just=rep(c('r','@{\\scriptsize\\,\\ensuremath{\\pm}}>{\\scriptsize}r'), len),
+                 cgroup=levels(as.factor(bench.summary.table$vm)),
+                 cdec=rep(0, len*2))
+  })()
+  # LaTeX table, all
+  (function() {
+    if (nrow(bench.summary.ltx) <= 0) {
+      return();
+    }
+    len <- ncol(bench.summary.ltx)/2
+    .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
+    .just = c('@{}r', .just[2:length(.just)])
+    .long <- nrow(bench.summary.ltx) > 50
+    out <- latex(bench.summary.ltx,
+                 file=paste0(input.basename, "-all.tex"),
+                 rowlabel="Benchmark",
+                 booktabs=TRUE,
+                 table.env=(! .long), center="none",
+                 longtable=.long,
+                 size="small", #center="centering",
+                 colheads=rep(c('mean', ''), len),
+                 col.just=.just,
+                 #col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
+                 cgroup=levels(as.factor(bench.summary$vm)),
+                 cdec=rep(0, len*2))
+  })()
+  
+} else {
 
+  # LaTeX table
+  (function() {
+    if (nrow(bench.summary.table.ltx) <= 0) {
+      return();
+    }
+    colnames(bench.summary.table.ltx) <- gsub(' mean', '', colnames(bench.summary.table.ltx))
+    len <- ncol(bench.summary.table.ltx)
+    .just = rep('@{}r', len)
+    out <- latex(bench.summary.table.ltx,
+                 file=paste0(input.basename, "-extremes.tex"),
+                 rowlabel="",
+                 booktabs=TRUE,
+                 cgroupTexCmd="mdseries",
+                 rgroupTexCmd="mdseries",
+                 table.env=FALSE, center="none",
+                 where="htbp", size="footnotesize", #center="centering",
+                 col.just=.just,
+                 cdec=rep(0, len))
+  })()
+  # LaTeX table, all
+  (function() {
+    if (nrow(bench.summary.ltx) <= 0) {
+      return();
+    }
+    colnames(bench.summary.ltx) <- gsub(' mean', '', colnames(bench.summary.ltx))  
+    len <- ncol(bench.summary.ltx)
+    .just = rep('@{}r', len)
+    .long <- nrow(bench.summary.ltx) > 50
+    out <- latex(bench.summary.ltx,
+                 file=paste0(input.basename, "-all.tex"),
+                 rowlabel="Benchmark",
+                 booktabs=TRUE,
+                 table.env=(! .long), center="none",
+                 longtable=.long,
+                 size="small", #center="centering",
+                 col.just=.just,
+                 cdec=rep(0, len))
+  })()
+  
+  
 }
-
-# LaTeX table
-(function() {
-  len <- length(bench.summary.table.ltx)/2
-  .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
-  .just = c('@{}r', .just[2:length(.just)])
-  out <- latex(bench.summary.table.ltx,
-               file=paste0(input.basename, "-extremes.tex"),
-               rowlabel="",
-               #label="tbl:extremes",caption="Extreme runtimes",
-               booktabs=TRUE,
-               #ctable=TRUE,
-               cgroupTexCmd="mdseries",
-               rgroupTexCmd="mdseries",
-               table.env=FALSE, center="none",
-               where="htbp", size="footnotesize", #center="centering",
-               #colheads=rep(c('mean', 'error'), len),
-               colheads=rep(c('mean', ''),len),
-               col.just=.just,
-#                col.just=rep(c('r','@{\\scriptsize\\,\\ensuremath{\\pm}}>{\\scriptsize}r'), len),
-               cgroup=levels(as.factor(bench.summary.table$vm)),
-               cdec=rep(0, len*2))
-})()
-# LaTeX table, all
-(function() {
-  len <- length(bench.summary.ltx)/2
-  .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
-  .just = c('@{}r', .just[2:length(.just)])
-  .long <- nrow(bench.summary.ltx) > 50
-  out <- latex(bench.summary.ltx,
-               file=paste0(input.basename, "-all.tex"),
-               rowlabel="Benchmark",
-               booktabs=TRUE,
-               table.env=(! .long), center="none",
-               longtable=.long,
-               size="small", #center="centering",
-               colheads=rep(c('mean', ''), len),
-               col.just=.just,
-               #col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
-               cgroup=levels(as.factor(bench.summary$vm)),
-               cdec=rep(0, len*2))
-})()

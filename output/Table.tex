@@ -1,0 +1,40 @@
+%
+% Define \FILE
+%
+\documentclass{scrartcl}
+\usepackage{booktabs}
+\usepackage{fixltx2e}
+\usepackage{siunitx}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{relsize}
+\usepackage{longtable}
+\usepackage{etoolbox}
+\ifcsundef{FILE}{
+  \def\FILE{current}
+}{
+  \message{^^J^^J using \FILE\space as \string\FILE ^^J^^J}
+}
+\begin{document}
+\small
+\null
+\IfFileExists{\FILE-extremes}{
+  \begin{table}[h]
+    \caption{Extreme results}
+    \label{tab:only}
+    \centering
+    \input{\FILE -extremes}
+  \end{table}
+  \newpage
+}{}
+\IfFileExists{\FILE-all}{
+  % \begin{table}[h]
+  %   \caption{All benchmarks}
+  %   \label{tab:all}
+  %   \centering
+  \input{\FILE -all}
+  % \vspace*{-3cm}
+  % \end{table}
+}{}
+\end{document}

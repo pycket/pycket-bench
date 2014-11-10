@@ -12,15 +12,15 @@ pkgs = c(
 )
 
 use <- function(pkg) {
-  if (!require(pkg, character.only=TRUE)) { install.packages(pkg) }
+  if (!require(pkg, character.only=TRUE)) { install.packages(pkg, repos="http://cran.rstudio.com") }
   library(pkg,character.only=TRUE)
 }
 sapply(pkgs, use)
 if (!require(extrafont)) {
-  install.packages("devtools")
+  install.packages("devtools", repos="http://cran.rstudio.com")
   library(devtools)
-  install_github("Rttf2pt1", "wch")
-  install_github("extrafont", "wch")
+  install_github("wch/Rttf2pt1", ref='21c5dbc42bedf1714cc11c8a3c0d5086d4e7b85f')
+  install_github("wch/extrafont")
 }
 library(extrafont)
 loadfonts(quiet=TRUE)

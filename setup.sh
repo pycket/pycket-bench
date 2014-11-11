@@ -63,10 +63,10 @@ if [ ! -x "$PROGDIR/bigloo/bin/bigloo" ]; then
     if uname | grep -qi 'Darwin'; then
         mkdir -p $PROGDIR/bigloo/lib
         ln -s $PROGDIR/bigloo/lib $PROGDIR/bigloo/Frameworks
-        ./configure --prefix=$PROGDIR/bigloo --clang --disable-flac
+        CFLAGS=-DLARGE_CONFIG ./configure --prefix=$PROGDIR/bigloo --clang --disable-flac
         make
     else
-      ./configure --prefix=$PROGDIR/bigloo --benchmark=yes
+      CFLAGS=-DLARGE_CONFIG ./configure --prefix=$PROGDIR/bigloo --benchmark=yes
       make
     fi
     make install

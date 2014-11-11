@@ -22,6 +22,8 @@ shift
 
 if [ "$VARIABLE" = "PURE" -o "$VARIABLE" = "CHAP" ]; then
     OUT="src/${BENCHMARK}.rkt"
+elif [ "$VARIABLE" = "CHAPM" ]; then
+    OUT="$BENCHMARK"
 else
     OUT="racket/${BENCHMARK}${VARIABLE}.rkt"
 

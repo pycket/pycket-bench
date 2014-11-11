@@ -182,5 +182,6 @@ if [ ! -f "$PROGDIR/ShootoutBenchmarks/fasta-1000000" ]; then
     $ECHO "generating input files for some Racket benchmarks"
     _go "$PROGDIR/ShootoutBenchmarks"
     racket gen-inputs.rkt
+    gunzip ulysses.gz
     _gone
 fi

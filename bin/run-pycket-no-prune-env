@@ -1,0 +1,5 @@
+#! /bin/sh
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+PYCKET=pycket-c-no-prune-env $PROGDIR/run-pycket "$@"

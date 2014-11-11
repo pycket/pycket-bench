@@ -235,17 +235,18 @@ if (rigorous) {
       return();
     }
     len <- ncol(bench.summary.ltx)/2
+    
     .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
     .just = c('@{}r', .just[2:length(.just)])
-    .long <- nrow(bench.summary.ltx) > 50
-    .side <- (!.long & len > 5)
+#     .long <- nrow(bench.summary.ltx) > 50
     out <- latex(bench.summary.ltx,
                  file=paste0(input.basename, "-all.tex"),
                  rowlabel="Benchmark",
                  booktabs=TRUE,
-                 table.env=(! .long), center="none",
-                 longtable=.long,
-                 landscape=.side,
+#                  table.env=(! .long),
+                table.env=FALSE,
+                 center="none",
+#                  longtable=.long,
                  size="small", #center="centering",
                  colheads=rep(c('mean', ''), len),
                  col.just=.just,
@@ -264,13 +265,11 @@ if (rigorous) {
     colnames(bench.summary.ltx) <- gsub(' mean', '', colnames(bench.summary.ltx))  
     len <- ncol(bench.summary.ltx)
     .just = rep('@{}r', len)
-    .long <- nrow(bench.summary.ltx) > 50
     out <- latex(bench.summary.ltx,
                  file=paste0(input.basename, "-all.tex"),
                  rowlabel="Benchmark",
                  booktabs=TRUE,
-                 table.env=(! .long), center="none",
-                 longtable=.long,
+                 table.env=false, center="none",
                  size="small", #center="centering",
                  col.just=.just,
                  cdec=rep(0, len))

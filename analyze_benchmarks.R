@@ -8,7 +8,8 @@ pkgs = c(
   "Hmisc",
   "ggplot2",
   "tools",
-  "xlsx"
+  "xlsx",
+  "dplyr"
 )
 
 use <- function(pkg) {
@@ -59,24 +60,26 @@ bench$vm <- sapply(bench$vm, function (x)
 bench <- droplevels(bench[bench$vm != 'PycketNoJit',,drop=TRUE])
 bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
 
-if (length(factor(bench$vm)) > 2) {
-  bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "Gambit", "Bigloo"))
-} else {
-  bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket"))  
+if ('Racket' %in% bench$vm) {
+  if (length(factor(bench$vm)) > 2) {
+    bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "Gambit", "Bigloo"))
+  } else {
+    bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket"))  
+  }
+  # There are too big differences to plot. thus, table only
+  if ('ctak' %in% bench$benchmark) {  
+    table.only <- c('ctak','fibc', 'pi', 'nucleic', 'dynamic', 'maze', 'slatex', 'matrix')
+    #table.only <- c('ctak')
+  } else if ('fannkuch-redux' %in% bench$benchmark) {
+    # these are not the original ones, ignore them
+    table.only <- c('binarytrees-generic', 'fannkuch-redux-generic', 'fasta-generic', 'reversecomplement-generic')
+  }
 }
-
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 # These are currently not run on pycket
 blacklist <- c('sum1', 'wc', 'cat')
 
-# There are too big differences to plot. thus, table only
-if ('ctak' %in% bench$benchmark) {  
-  table.only <- c('ctak','fibc', 'pi', 'nucleic', 'dynamic', 'maze', 'slatex', 'matrix')
-  #table.only <- c('ctak')
-} else {
-  table.only <- c()
-}
 
 message(">>>>>>>>>> Putting these only into a table: ")
 message(table.only)
@@ -167,55 +170,58 @@ geomean <- function(X) {
 
 
 
+
 bench <- droplevels(bench[!(bench$benchmark %in% blacklist),,drop=TRUE])
 bench <- bench[c('criterion','vm','benchmark','value', 'variable_values')]
 
-num.vms <- length(levels(factor(bench$vm)))
-num.runs <- length(bench$benchmark)
-num.benches <- length(levels(bench$benchmark))
-num.vars <- length(levels(factor(bench$variable_values)))
-num.crit <- length(levels(bench$criterion))
+if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
+  multi.variate <- FALSE
+  rigorous <- FALSE  
+} else {
+  num.vms <- length(levels(factor(bench$vm)))
+  num.runs <- length(bench$benchmark)
+  num.benches <- length(levels(bench$benchmark))
+  num.vars <- length(levels(factor(bench$variable_values)))
+  num.crit <- length(levels(bench$criterion))
+  
+  if (num.vars == 0) {
+    num.vars <- 1
+  }
+  rigorous <- num.runs > (num.vms * num.benches * num.vars * num.crit)
+  multi.variate <- num.vars > 1
 
-if (num.vars == 0) {
-  num.vars <- 1
-}
-rigorous <- num.runs > (num.vms * num.benches * num.vars * num.crit)
-multi.variate <- num.vars > 1
-
-
-
-bench.corr = data.frame()
-for (var in levels(bench$variable_values)) {
-  for (crit in levels(bench$criterion)) {
-    for (vm in levels(bench$vm)) {  
-      for (benchmark in levels(bench$benchmark)) {
-        if (1 > nrow(bench[(
-          bench$variable_values == var &
-            bench$criterion == crit & 
-            bench$vm == vm &
-            bench$benchmark == benchmark
-          ),,])) {
-          .x <- data.frame(criterion=crit,vm=vm,benchmark=benchmark,value=NA,variable_values=var)
-          bench.corr <- rbind(bench.corr, .x)
-          if (rigorous) {
+  bench.corr = data.frame()
+  for (var in levels(bench$variable_values)) {
+    for (crit in levels(bench$criterion)) {
+      for (vm in levels(bench$vm)) {  
+        for (benchmark in levels(bench$benchmark)) {
+          if (1 > nrow(bench[(
+            bench$variable_values == var &
+              bench$criterion == crit & 
+              bench$vm == vm &
+              bench$benchmark == benchmark
+            ),,])) {
+            .x <- data.frame(criterion=crit,vm=vm,benchmark=benchmark,value=NA,variable_values=var)
             bench.corr <- rbind(bench.corr, .x)
-            bench.corr <- rbind(bench.corr, .x)
-            bench.corr <- rbind(bench.corr, .x)
-            bench.corr <- rbind(bench.corr, .x)
-            bench.corr <- rbind(bench.corr, .x)
-            bench.corr <- rbind(bench.corr, .x)
-            bench.corr <- rbind(bench.corr, .x)            
-            bench.corr <- rbind(bench.corr, .x)
-            bench.corr <- rbind(bench.corr, .x)            
-            
+            if (rigorous) {
+              bench.corr <- rbind(bench.corr, .x)
+              bench.corr <- rbind(bench.corr, .x)
+              bench.corr <- rbind(bench.corr, .x)
+              bench.corr <- rbind(bench.corr, .x)
+              bench.corr <- rbind(bench.corr, .x)
+              bench.corr <- rbind(bench.corr, .x)
+              bench.corr <- rbind(bench.corr, .x)            
+              bench.corr <- rbind(bench.corr, .x)
+              bench.corr <- rbind(bench.corr, .x)            
+              
+            }
           }
         }
       }
     }
   }
+  bench <- rbind(bench, bench.corr)
 }
-
-bench <- rbind(bench, bench.corr)
 
 
 ######################################################
@@ -291,6 +297,16 @@ if (multi.variate) {
   .group.by <- as.quoted(c("vm"))
 }
 
+bench.summary.overall.all <- ddply(melt(bench.summary[.selection], id.vars=.ids), .group.by,
+                               plyr::summarize, 
+                               overall=TRUE,
+                               benchmark='geometric\nmean',
+                               mean=1,
+                               mean.norm=geomean(value),
+                               median=1
+)
+print(">>>> OVERALL\n")
+print(bench.summary.overall.all)
 
 bench.summary.overall <- ddply(melt(bench.summary.graph[.selection], id.vars=.ids), .group.by,
                                plyr::summarize, 
@@ -362,6 +378,52 @@ if (multi.variate & do.only.nothing) {
   bench.summary.graph <- droplevels(bench.summary.graph[bench.summary.graph$variable_values == 'nothing',,drop=TRUE])
 }
 
+if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
+  
+  # Normalized bargraph
+  dodge <- position_dodge(width=.8)
+  #ymax <- round_any(max(1/bench.summary.graph$mean.norm,  na.rm=TRUE), 0.5, ceiling)
+  ymax <- round_any(max(bench.summary.overall.all$mean.norm, na.rm=TRUE), 1, ceiling)
+  p <- ggplot(data=bench.summary.overall.all,
+              #        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
+              aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
+  ) +
+    geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm))+
+    geom_point(position=dodge,aes(y=0.15, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
+    xlab("") +
+    ylab("Relative Runtime") +
+    theme_bw(base_size=8, base_family="Helvetica") +
+    theme(
+       rect = element_rect(),
+      axis.title.x =  element_blank(),
+#       #     axis.title.x = element_text(face="bold", size=9),
+#       #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2,
+#       axis.text.x  = element_text(size=8, angle=45, hjust=1),
+#       axis.title.y = element_text(face="bold", size=8),
+#       axis.text.y  = element_text(size=8), #angle=45, hjust=0.2, vjust=0.5,
+      legend.position=c(0.5, .85),
+#       legend.position = "bottom"
+#       #plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
+#       legend.text = element_text(size=7),
+#       legend.title = element_text(size=7, face="bold"),
+#       legend.background = element_rect(fill="gray90", size=0),
+#       legend.margin = unit(0, "cm"),
+#       legend.key=element_rect(fill="white"),
+       legend.key.size=unit(3,"mm")
+    ) +
+    scale_y_continuous(breaks=seq(0,ymax,.2), limits=c(0,ymax),expand=c(0,0)) +
+    #scale_fill_grey(name = "Virtual Machine")
+    scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set2") +
+    scale_shape_manual(name = "Virtual Machine", values=c(1,8,10,13))
+  if (rigorous) {
+    p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
+  }
+  p <- p + facet_null()
+  
+  p
+  figure.width  <- figure.width / 3
+
+} else {
 # Normalized bargraph
 dodge <- position_dodge(width=.8)
 #ymax <- round_any(max(1/bench.summary.graph$mean.norm,  na.rm=TRUE), 0.5, ceiling)
@@ -417,10 +479,11 @@ if (multi.variate & !do.only.nothing) {
 }
 
 p
+}
 
 gg.file <- paste0(input.basename, "-norm.pdf")
-#ggsave(gg.file, width=figure.width, height=figure.height*num.vars, units=c("in"), colormodel='rgb')
-ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb')
+ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
+#ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb')
 embed_fonts(gg.file, options=pdf.embed.options)
 
 
@@ -467,6 +530,30 @@ embed_fonts(gg.file, options=pdf.embed.options)
 # 
 # }
 
+if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
+  (function() {
+    if (nrow(bench.summary.overall.all) <= 0) {
+      return();
+    }
+    table.ltx.sel <- bench.summary.overall.all[c('vm','mean.norm')]
+    table.ltx <- table.ltx.sel[2]
+    rownames(table.ltx) <- gsub("^$", "Optimized", gsub("([A-Z])([A-Z][a-z])|([a-z0-9])([A-Z])","\\1\\3 \\2\\4", gsub("Pycket","", table.ltx.sel$vm)))
+    colnames(table.ltx) <- c("\\llap{Relative Runtime (geometric mean)}")
+    out <- latex(table.ltx,
+                 file=paste0(input.basename, ".tex"),
+                 rowlabel="",
+                 #label="tbl:extremes",caption="Extreme runtimes",
+                 booktabs=TRUE,
+                 #ctable=TRUE,
+                 cgroupTexCmd="mdseries",
+                 rgroupTexCmd="mdseries",
+                 table.env=FALSE, center="none",
+                 rdec = c(0, rep(4, nrow(table.ltx) - 1)),
+                 where="htbp", size="footnotesize", #center="centering",
+)
+  })()
+  quit(safe="no")
+}
 if (rigorous) {
   # LaTeX table
   (function() {
@@ -559,3 +646,40 @@ if (rigorous) {
   
   
 }
+
+bench.info <- if ('fannkuch-redux' %in% bench$benchmark) {
+  bench.summary.graph[bench.summary.graph$overall == FALSE,,] 
+} else {
+  bench.summary
+}
+
+if (multi.variate) {
+  pycket.timings <- (bench.info[bench.info$variable_values == 'nothing' & bench.summary$vm == 'Pycket',,])$mean.norm
+} else {
+  pycket.timings <- (bench.info[bench.info$vm == 'Pycket',,])$mean.norm
+}
+  
+  
+print(">> slowest pycket")
+print(max(pycket.timings))
+print(">> fastest pycket")
+print(1/min(pycket.timings))
+
+if (multi.variate) {
+  bench.summary.nothing <- bench.info[bench.info$variable_values == 'nothing',,]
+  winners <- bench.summary.nothing %>% group_by(benchmark) %>% filter(mean.norm == min(mean.norm))
+} else {
+  winners <- bench.info %>% group_by(benchmark) %>% filter(mean.norm == min(mean.norm))
+}
+winners <- winners[c('mean.norm','benchmark','vm')]
+winners <- winners[do.call(order, winners),]
+print("pycket wins in ");
+print(winners[winners$vm == 'Pycket',,])
+print("(this is")
+print(nrow(winners[winners$vm == 'Pycket',,]))
+print("out of")
+print(nrow(winners))
+
+
+
+print(">> done");

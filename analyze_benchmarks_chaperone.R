@@ -61,7 +61,7 @@ bench$benchmark <- sapply(bench$benchmark, function (x)
 bench <- droplevels(bench[bench$vm != 'PycketNoJit',,drop=TRUE])
 bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
 
-bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "Gambit", "Bigloo", "V8", "Spidermonkey", "Python", "Pypy"))
+bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
 bench$suite <- gsub("Chaperone(\\w+)Benchmarks", "\\1", bench$suite)
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 

@@ -77,7 +77,7 @@ if ('Racket' %in% bench$vm) {
   }
   # There are too big differences to plot. thus, table only
   if ('ctak' %in% bench$benchmark) {  
-    table.only <- c('ctak','fibc', 'pi', 'nucleic')
+    table.only <- c('ctak','fibc', 'pi')
     #table.only <- c('ctak')
   } else if ('fannkuch-redux' %in% bench$benchmark) {
     # these are not the original ones, ignore them

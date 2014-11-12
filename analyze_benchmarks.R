@@ -287,7 +287,7 @@ if (rigorous) {
 if ('ctak' %in% bench$benchmark) {  
   bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
   bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != reference.vm,,drop=TRUE]
-  bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > 3,]$mean.norm <- MAX.CROSS
+  bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > MAX.CROSS,]$mean.norm <- MAX.CROSS
   
   
 } else {

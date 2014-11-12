@@ -1,0 +1,123 @@
+% latex.default(bench.summary.ltx, file = paste0(input.basename,      "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = (!.long),      center = "none", longtable = .long, size = "small", col.just = .just,      cdec = rep(0, len)) 
+%
+
+\setlongtables
+
+{\small
+
+
+\begin{longtable}{l@{}r@{}r@{}r@{}r@{}r}
+\toprule
+\multicolumn{1}{l}{Benchmark}&\multicolumn{1}{c}{Pycket}&\multicolumn{1}{c}{Racket}&\multicolumn{1}{c}{Larceny}&\multicolumn{1}{c}{Gambit}&\multicolumn{1}{c}{Bigloo}\tabularnewline
+\midrule
+\endhead
+\midrule
+\endfoot
+ack\textsubscript{fixflo}&$ 8588$&$   5943$&$  6235$&$ 4171$&$  3790$\tabularnewline
+ack\textsubscript{nothing}&$10668$&$   6707$&$  5660$&$ 5435$&$  8920$\tabularnewline
+array1\textsubscript{fixflo}&$ 3252$&$   9185$&$  2048$&$ 4654$&$  3120$\tabularnewline
+array1\textsubscript{nothing}&$ 3436$&$   9764$&$  2052$&$ 5287$&$  6620$\tabularnewline
+boyer\textsubscript{fixflo}&$ 5236$&$   5509$&$  2807$&$ 3597$&$  2270$\tabularnewline
+boyer\textsubscript{nothing}&$ 5232$&$   5447$&$  2773$&$ 3594$&$  2240$\tabularnewline
+browse\textsubscript{fixflo}&$ 4960$&$   8611$&$  4916$&$ 7179$&$  3920$\tabularnewline
+browse\textsubscript{nothing}&$ 4964$&$   8372$&$  4830$&$ 7380$&$  3960$\tabularnewline
+conform\textsubscript{fixflo}&$ 5324$&$   2507$&$  2174$&$ 2747$&$   590$\tabularnewline
+conform\textsubscript{nothing}&$ 5360$&$   2597$&$  2216$&$ 3017$&$   600$\tabularnewline
+cpstak\textsubscript{fixflo}&$ 5244$&$  11983$&$  6775$&$ 5119$&$ 16510$\tabularnewline
+cpstak\textsubscript{nothing}&$14248$&$  12074$&$  6251$&$ 5989$&$ 20250$\tabularnewline
+ctak\textsubscript{fixflo}&$  300$&$ 114489$&$  9453$&$ 3681$&$111640$\tabularnewline
+ctak\textsubscript{nothing}&$  900$&$ 114917$&$  9372$&$ 3958$&$133010$\tabularnewline
+dderiv\textsubscript{fixflo}&$ 5840$&$   6059$&$  3749$&$ 3609$&$  4630$\tabularnewline
+dderiv\textsubscript{nothing}&$ 5692$&$   6011$&$  3822$&$ 3080$&$  4700$\tabularnewline
+deriv\textsubscript{fixflo}&$ 6436$&$   8280$&$  3894$&$ 3604$&$  7500$\tabularnewline
+deriv\textsubscript{nothing}&$ 6188$&$   8353$&$  3916$&$ 3741$&$  7620$\tabularnewline
+destruc\textsubscript{fixflo}&$ 6284$&$   7246$&$  4650$&$ 4522$&$  3050$\tabularnewline
+destruc\textsubscript{nothing}&$ 6420$&$   7568$&$  4698$&$ 5379$&$  5830$\tabularnewline
+diviter\textsubscript{fixflo}&$ 5032$&$   9305$&$  4393$&$ 8986$&$  9290$\tabularnewline
+diviter\textsubscript{nothing}&$ 4960$&$   9464$&$  4391$&$ 6613$&$  9350$\tabularnewline
+divrec\textsubscript{fixflo}&$ 5596$&$   4769$&$  2426$&$ 3302$&$  4060$\tabularnewline
+divrec\textsubscript{nothing}&$ 5472$&$   4839$&$  2490$&$ 3081$&$  3990$\tabularnewline
+dynamic\textsubscript{fixflo}&$ 3560$&$    951$&$   904$&$ 1012$&$   410$\tabularnewline
+dynamic\textsubscript{nothing}&$ 3560$&$    968$&$   906$&$  968$&$   410$\tabularnewline
+earley\textsubscript{fixflo}&$ 5376$&$   3230$&$  2385$&$ 1745$&$  1380$\tabularnewline
+earley\textsubscript{nothing}&$ 5764$&$   3148$&$  2441$&$ 1838$&$  1690$\tabularnewline
+fft\textsubscript{fixflo}&$ 6780$&$  13032$&$ 34712$&$29883$&$  1340$\tabularnewline
+fft\textsubscript{nothing}&$ 4884$&$  33312$&$ 35586$&$26848$&$ 56660$\tabularnewline
+fib\textsubscript{fixflo}&$ 5128$&$   4170$&$  4920$&$ 7521$&$  1020$\tabularnewline
+fib\textsubscript{nothing}&$10220$&$   4855$&$  4378$&$ 7591$&$  7040$\tabularnewline
+fibc\textsubscript{fixflo}&$ 5856$&$1351626$&$130895$&$52071$&$695450$\tabularnewline
+fibc\textsubscript{nothing}&$ 5876$&$1360785$&$130618$&$52867$&$705310$\tabularnewline
+fibfp\textsubscript{fixflo}&$ 4264$&$   4263$&$ 13992$&$ 7482$&$  6070$\tabularnewline
+fibfp\textsubscript{nothing}&$ 9780$&$   9508$&$ 11915$&$ 8222$&$ 16270$\tabularnewline
+gcbench\textsubscript{fixflo}&$ 5672$&$   5114$&$  2869$&$ 9130$&$$\tabularnewline
+gcbench\textsubscript{nothing}&$ 6036$&$   5350$&$  3028$&$ 9939$&$$\tabularnewline
+gcold\textsubscript{fixflo}&$$&$$&$$&$$&$$\tabularnewline
+gcold\textsubscript{nothing}&$ 5544$&$  10900$&$  2653$&$$&$ 13280$\tabularnewline
+\newpage
+graphs\textsubscript{fixflo}&$ 5372$&$   3126$&$  2534$&$ 2869$&$  1830$\tabularnewline
+graphs\textsubscript{nothing}&$ 5220$&$   3147$&$  2528$&$ 2641$&$  2390$\tabularnewline
+lattice\textsubscript{fixflo}&$ 4020$&$   3927$&$  2153$&$ 3788$&$   800$\tabularnewline
+lattice\textsubscript{nothing}&$ 3816$&$   3849$&$  2192$&$ 3830$&$   810$\tabularnewline
+matrix\textsubscript{fixflo}&$ 4964$&$   2243$&$  2327$&$ 1957$&$  1190$\tabularnewline
+matrix\textsubscript{nothing}&$ 5288$&$   2284$&$  2334$&$ 2107$&$  1530$\tabularnewline
+maze\textsubscript{fixflo}&$$&$   2054$&$  4915$&$ 1813$&$   680$\tabularnewline
+maze\textsubscript{nothing}&$ 4380$&$   2122$&$  5810$&$ 3101$&$  2040$\tabularnewline
+mazefun\textsubscript{fixflo}&$ 3644$&$   2446$&$  2535$&$ 2504$&$  1080$\tabularnewline
+mazefun\textsubscript{nothing}&$ 4500$&$   2621$&$  2520$&$ 2419$&$  2350$\tabularnewline
+mbrot\textsubscript{fixflo}&$ 5200$&$   7312$&$ 36031$&$19722$&$  4260$\tabularnewline
+mbrot\textsubscript{nothing}&$ 5252$&$  39056$&$ 37600$&$24626$&$ 73330$\tabularnewline
+nboyer\textsubscript{fixflo}&$ 4860$&$   3940$&$  1788$&$ 2261$&$$\tabularnewline
+nboyer\textsubscript{nothing}&$ 4972$&$   3603$&$  1771$&$ 2157$&$$\tabularnewline
+nqueens\textsubscript{fixflo}&$ 5092$&$   3438$&$  3607$&$ 3424$&$  1630$\tabularnewline
+nqueens\textsubscript{nothing}&$ 4772$&$   3498$&$  3437$&$ 4218$&$  4870$\tabularnewline
+nucleic\textsubscript{fixflo}&$$&$$&$ 25954$&$30779$&$  6930$\tabularnewline
+nucleic\textsubscript{nothing}&$ 5300$&$  15388$&$ 25539$&$22642$&$ 18250$\tabularnewline
+paraffins\textsubscript{fixflo}&$ 4128$&$   7953$&$  2925$&$ 1289$&$  2680$\tabularnewline
+paraffins\textsubscript{nothing}&$ 4156$&$   7161$&$  2919$&$ 1287$&$  3360$\tabularnewline
+parsing\textsubscript{fixflo}&$ 4612$&$   3088$&$  3533$&$ 2875$&$  1210$\tabularnewline
+parsing\textsubscript{nothing}&$ 4388$&$   3165$&$  3538$&$ 2934$&$  1850$\tabularnewline
+perm9\textsubscript{fixflo}&$ 5244$&$   9951$&$  1951$&$ 4032$&$  1190$\tabularnewline
+perm9\textsubscript{nothing}&$ 5944$&$   9840$&$  2106$&$ 4077$&$  3290$\tabularnewline
+peval\textsubscript{fixflo}&$ 4316$&$   1136$&$   932$&$  991$&$   440$\tabularnewline
+peval\textsubscript{nothing}&$ 4380$&$   1137$&$   938$&$ 1029$&$   440$\tabularnewline
+pi\textsubscript{fixflo}&$ 5284$&$   6889$&$860335$&$ 9909$&$$\tabularnewline
+pi\textsubscript{nothing}&$ 5296$&$   6840$&$861688$&$ 9930$&$$\tabularnewline
+pnpoly\textsubscript{fixflo}&$ 6412$&$  10155$&$ 26851$&$15035$&$  1370$\tabularnewline
+pnpoly\textsubscript{nothing}&$ 6272$&$  18230$&$ 17881$&$14829$&$  4590$\tabularnewline
+primes\textsubscript{fixflo}&$ 4492$&$   4982$&$ 20188$&$ 3857$&$  3980$\tabularnewline
+primes\textsubscript{nothing}&$ 4476$&$   5081$&$ 19867$&$ 4210$&$  5530$\tabularnewline
+puzzle\textsubscript{fixflo}&$13516$&$  12513$&$  9250$&$ 7724$&$  6080$\tabularnewline
+puzzle\textsubscript{nothing}&$13492$&$  12958$&$ 10017$&$ 8784$&$ 14930$\tabularnewline
+ray\textsubscript{fixflo}&$$&$  25523$&$ 52946$&$37587$&$  2700$\tabularnewline
+ray\textsubscript{nothing}&$ 5380$&$  33937$&$ 80986$&$37997$&$ 55910$\tabularnewline
+sboyer\textsubscript{fixflo}&$ 4708$&$   2708$&$  2074$&$ 2565$&$$\tabularnewline
+sboyer\textsubscript{nothing}&$ 4360$&$   2659$&$  2239$&$ 2498$&$$\tabularnewline
+scheme\textsubscript{fixflo}&$$&$   3175$&$  2116$&$ 2665$&$  1260$\tabularnewline
+scheme\textsubscript{nothing}&$ 6392$&$   3187$&$  2116$&$ 2669$&$  1290$\tabularnewline
+\newpage
+simplex\textsubscript{fixflo}&$$&$$&$$&$ 7639$&$  1090$\tabularnewline
+simplex\textsubscript{nothing}&$12028$&$   7616$&$ 10771$&$ 6673$&$  5850$\tabularnewline
+string\textsubscript{fixflo}&$ 5320$&$  87197$&$166685$&$54519$&$  3860$\tabularnewline
+string\textsubscript{nothing}&$ 5200$&$  71910$&$165566$&$52180$&$  3940$\tabularnewline
+sum\textsubscript{fixflo}&$ 5084$&$  14638$&$ 11061$&$10608$&$  1480$\tabularnewline
+sum\textsubscript{nothing}&$ 5092$&$  17550$&$ 10254$&$17558$&$ 36540$\tabularnewline
+sumfp\textsubscript{fixflo}&$ 5236$&$  11516$&$ 54566$&$19461$&$  5230$\tabularnewline
+sumfp\textsubscript{nothing}&$ 5256$&$  39450$&$ 45941$&$25783$&$ 85040$\tabularnewline
+sumloop\textsubscript{fixflo}&$ 5020$&$  29234$&$ 23981$&$13106$&$     0$\tabularnewline
+sumloop\textsubscript{nothing}&$ 5020$&$  28831$&$ 30088$&$21761$&$ 53470$\tabularnewline
+tail\textsubscript{fixflo}&$ 4924$&$   3657$&$  3349$&$ 4637$&$  1270$\tabularnewline
+tail\textsubscript{nothing}&$ 4912$&$   3599$&$  3371$&$ 4488$&$  1280$\tabularnewline
+tak\textsubscript{fixflo}&$ 4200$&$   5094$&$  4238$&$ 4670$&$  1930$\tabularnewline
+tak\textsubscript{nothing}&$17973$&$   5304$&$  3815$&$ 4787$&$  9790$\tabularnewline
+takl\textsubscript{fixflo}&$ 6348$&$   6880$&$  4807$&$ 4822$&$   990$\tabularnewline
+takl\textsubscript{nothing}&$ 6328$&$   6863$&$  4815$&$ 4722$&$  1110$\tabularnewline
+trav1\textsubscript{fixflo}&$ 4824$&$   8747$&$  7324$&$ 8779$&$$\tabularnewline
+trav1\textsubscript{nothing}&$ 4832$&$   9724$&$  6921$&$ 7450$&$$\tabularnewline
+trav2\textsubscript{fixflo}&$ 4680$&$  18066$&$ 12670$&$16540$&$$\tabularnewline
+trav2\textsubscript{nothing}&$ 4592$&$  17917$&$ 12850$&$16595$&$$\tabularnewline
+triangl\textsubscript{fixflo}&$ 5408$&$  15031$&$ 15171$&$12394$&$  4140$\tabularnewline
+triangl\textsubscript{nothing}&$ 5616$&$  15423$&$ 14722$&$13395$&$ 11550$\tabularnewline
+\bottomrule
+\end{longtable}
+}
+

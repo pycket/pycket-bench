@@ -2,7 +2,8 @@
 
 # in inches
 figure.width <- 7
-figure.height <- 2.8
+figure.height <- 2.3
+
 
 do.only.nothing <- TRUE
 all.mean.in.graph <- TRUE
@@ -458,14 +459,14 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
   
 
 # Normalized bargraph
-dodge <- position_dodge(width=.8)
+dodge <- position_dodge(width=.75)
 #ymax <- round_any(max(1/bench.summary.graph$mean.norm,  na.rm=TRUE), 0.5, ceiling)
 ymax <- round_any(max(bench.summary.graph$mean.norm, na.rm=TRUE), 0.5, ceiling)
 p <- ggplot(data=bench.summary.graph,
 #        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
-  geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm))+
+  geom_bar(stat="identity", position=dodge, width=.6, aes(fill = vm))+
 #   geom_point(position=dodge,aes(y=0.15, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
   #   xlab("Benchmark") +
   ylab("Relative Runtime") +
@@ -478,7 +479,7 @@ p <- ggplot(data=bench.summary.graph,
     axis.text.x  = element_text(size=6, angle=45, hjust=1),
     axis.title.y = element_text(face="bold", size=6),
     axis.text.y  = element_text(size=6), #angle=45, hjust=0.2, vjust=0.5,
-    legend.position=c(0.15, .75),
+    legend.position=c(0.15, .8),
     plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
     legend.text = element_text(size=6),
     legend.title = element_text(size=6, face="bold"),

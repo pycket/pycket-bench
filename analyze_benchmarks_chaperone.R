@@ -8,7 +8,7 @@ pkgs = c(
   "Hmisc",
   "ggplot2",
   "tools",
-  "xlsx",
+  "xlsx"
 )
 
 use <- function(pkg) {
@@ -60,15 +60,13 @@ bench$benchmark <- sapply(bench$benchmark, function (x)
   if (x=='unsafe2') 'unsafe*' else paste0("",x))
 
 
-bench <- droplevels(bench[bench$vm %ni% c('Larceny','Spidermonkey','Python','PycketNoJit'),,drop=TRUE])
-bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
-
-
 
 bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
 bench$suite <- gsub("Chaperone(\\w+)Benchmarks", "\\1", bench$suite)
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
+bench <- droplevels(bench[bench$vm %ni% c('Larceny','Spidermonkey','Python','PycketNoJit'),,drop=TRUE])
+bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
 bench <- droplevels(bench[!(bench$suite == 'Struct' & bench$benchmark == 'impersonate'),,])
 
 # ------ functions -----
@@ -221,8 +219,20 @@ sel.col = if (rigorous) { c('suite','benchmark','vm','mean','err095') } else
                         { c('suite','benchmark','vm','mean') }
 bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('suite', 'benchmark','vm')), suite + benchmark ~ vm + variable)
 bench.summary.ltx <- bench.summary.sel[3:length(bench.summary.sel)]
-rownames(bench.summary.ltx) <- paste0(bench.summary.sel$suite, '\\textsubscript{', bench.summary.sel$benchmark, '}')
+bench.summary.tbl <- data.frame(bench.summary.ltx)
+
+rownames(bench.summary.ltx) <- paste0(bench.summary.sel$suite, '\\textsubscript', bench.summary.sel$benchmark, '}')
 colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
+
+colnames(bench.summary.tbl) <- sapply(colnames(bench.summary.tbl), function(x) {sedit(x, '_', ' ')})
+bench.summary.tbl <- format(bench.summary.tbl, digits=0, scientific=FALSE, drop0trailing=TRUE)
+bench.summary.tbl <- data.frame(lapply(bench.summary.tbl, function(x) {gsub("NA", " ---", x)}))
+rownames(bench.summary.tbl) <- paste0(bench.summary.sel$suite, ' ', bench.summary.sel$benchmark, '')
+
+
+
+
+
 
 # ----- Outputting -----
 
@@ -230,53 +240,54 @@ colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {
 write.xlsx(bench.tot, paste0(input.basename, ".xlsx"), append=FALSE, sheetName="bench")
 write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetName="summary")
 
-
+write.table(bench.summary.tbl, file=paste0(input.basename, "-all.tex"), sep=" & ", quote=FALSE, eol=" \\\\\n")
 # 
-if (rigorous) {
-  # LaTeX table, all
-  (function() {
-    if (nrow(bench.summary.ltx) <= 0) {
-      return();
-    }
-    len <- ncol(bench.summary.ltx)/2
-    
-    .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
-    .just = c('@{}r', .just[2:length(.just)])
-#     .long <- nrow(bench.summary.ltx) > 50
-    out <- latex(bench.summary.ltx,
-                 file=paste0(input.basename, "-all.tex"),
-                 rowlabel="Benchmark",
-                 booktabs=TRUE,
-#                  table.env=(! .long),
-                table.env=FALSE,
-                 center="none",
-#                  longtable=.long,
-                 size="small", #center="centering",
-                 colheads=rep(c('mean', ''), len),
-                 col.just=.just,
-                 #col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
-                 cgroup=levels(as.factor(bench.summary$vm)),
-                 cdec=rep(0, len*2))
-  })()
-  
-} else {
-
-  # LaTeX table, all
-  (function() {
-    if (nrow(bench.summary.ltx) <= 0) {
-      return();
-    }
-    colnames(bench.summary.ltx) <- gsub(' mean', '', colnames(bench.summary.ltx))  
-    len <- ncol(bench.summary.ltx)
-    .just = rep('@{}r', len)
-    out <- latex(bench.summary.ltx,
-                 file=paste0(input.basename, "-all.tex"),
-                 rowlabel="Benchmark",
-                 booktabs=TRUE,
-                 table.env=false, center="none",
-                 size="small", #center="centering",
-                 col.just=.just,
-                 cdec=rep(0, len))
-  })()
-
-}
+# # 
+# if (rigorous) {
+#   # LaTeX table, all
+#   (function() {
+#     if (nrow(bench.summary.ltx) <= 0) {
+#       return();
+#     }
+#     len <- ncol(bench.summary.ltx)/2
+#     
+#     .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
+#     .just = c('@{}r', .just[2:length(.just)])
+# #     .long <- nrow(bench.summary.ltx) > 50
+#     out <- latex(bench.summary.ltx,
+#                  file=paste0(input.basename, "-all.tex"),
+#                  rowlabel="Benchmark",
+#                  booktabs=TRUE,
+# #                  table.env=(! .long),
+#                 table.env=FALSE,
+#                  center="none",
+# #                  longtable=.long,
+#                  size="small", #center="centering",
+#                  colheads=rep(c('mean', ''), len),
+#                  col.just=.just,
+#                  #col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
+#                  cgroup=levels(as.factor(bench.summary$vm)),
+#                  cdec=rep(0, len*2))
+#   })()
+#   
+# } else {
+# 
+#   # LaTeX table, all
+#   (function() {
+#     if (nrow(bench.summary.ltx) <= 0) {
+#       return();
+#     }
+#     colnames(bench.summary.ltx) <- gsub(' mean', '', colnames(bench.summary.ltx))  
+#     len <- ncol(bench.summary.ltx)
+#     .just = rep('@{}r', len)
+#     out <- latex(bench.summary.ltx,
+#                  file=paste0(input.basename, "-all.tex"),
+#                  rowlabel="Benchmark",
+#                  booktabs=TRUE,
+#                  table.env=false, center="none",
+#                  size="small", #center="centering",
+#                  col.just=.just,
+#                  cdec=rep(0, len))
+#   })()
+# 
+# }

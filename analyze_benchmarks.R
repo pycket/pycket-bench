@@ -1,5 +1,14 @@
 #! /usr/bin/env Rscript
 
+# in inches
+figure.width <- 7
+figure.height <- 2.8
+
+do.only.nothing <- TRUE
+all.mean.in.graph <- TRUE
+
+
+
 pkgs = c(
   "reshape2",
   "plyr",
@@ -83,12 +92,6 @@ blacklist <- c('sum1', 'wc', 'cat')
 
 message(">>>>>>>>>> Putting these only into a table: ")
 message(table.only)
-
-# in inches
-figure.width <- 7
-figure.height <- 2.8
-
-do.only.nothing <- TRUE
 
 
 
@@ -317,10 +320,22 @@ bench.summary.overall <- ddply(melt(bench.summary.graph[.selection], id.vars=.id
                                median=1
 )
 if (rigorous) {
+  bench.summary.overall.all <- merge(bench.summary.overall.all, data.frame(stdev=1, err095=1, cnfIntHigh=1,
+                                                                       cnfIntLow=1, conf=1, upper=NA, lower=NA))
+  
+  
   bench.summary.overall <- merge(bench.summary.overall, data.frame(stdev=1, err095=1, cnfIntHigh=1,
                                                                    cnfIntLow=1, conf=1, upper=NA, lower=NA))
 }
-bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
+
+if (all.mean.in.graph) {
+  bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall.all)
+  
+} else {
+  bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
+  
+  
+}
 #bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
 sel.col = if (rigorous) { if (multi.variate) { c('variable_values','benchmark','vm','mean','err095') } else { c('benchmark','vm','mean','err095') }  } else 
@@ -654,7 +669,7 @@ bench.info <- if ('fannkuch-redux' %in% bench$benchmark) {
 }
 
 if (multi.variate) {
-  pycket.timings <- (bench.info[bench.info$variable_values == 'nothing' & bench.summary$vm == 'Pycket',,])$mean.norm
+  pycket.timings <- (bench.info[bench.info$variable_values == 'nothing' & bench.info$vm == 'Pycket',,])$mean.norm
 } else {
   pycket.timings <- (bench.info[bench.info$vm == 'Pycket',,])$mean.norm
 }

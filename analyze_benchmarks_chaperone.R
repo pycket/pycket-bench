@@ -8,7 +8,7 @@ pkgs = c(
   "Hmisc",
   "ggplot2",
   "tools",
-  "xlsx"
+  "xlsx",
 )
 
 use <- function(pkg) {
@@ -29,6 +29,8 @@ if (length(fonts()) == 0) {
 }
 
 pdf.embed.options <- "-dEmbedAllFonts=true -dPDFSETTINGS=/prepress -dCompatibilityLevel=1.4 -dSubsetFonts=true -dHaveTrueTypeFonts=true"
+`%ni%` = Negate(`%in%`) 
+
 
 # ---- cmd line ----
 
@@ -58,7 +60,7 @@ bench$benchmark <- sapply(bench$benchmark, function (x)
   if (x=='unsafe2') 'unsafe*' else paste0("",x))
 
 
-bench <- droplevels(bench[bench$vm != 'PycketNoJit',,drop=TRUE])
+bench <- droplevels(bench[bench$vm %ni% c('Larceny','Spidermonkey','Python','PycketNoJit',,drop=TRUE])
 bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
 
 bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
@@ -68,7 +70,6 @@ reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 
 # ------ functions -----
-`%ni%` = Negate(`%in%`) 
 
 
 confInterval095Error <- function (samples) {
@@ -226,6 +227,7 @@ colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {
 # Excel for overall data
 write.xlsx(bench.tot, paste0(input.basename, ".xlsx"), append=FALSE, sheetName="bench")
 write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetName="summary")
+
 
 # 
 if (rigorous) {

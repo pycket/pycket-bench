@@ -1,0 +1,17 @@
+% latex.default(bench.summary.table.ltx, file = paste0(input.basename,      "-extremes.tex"), rowlabel = "", booktabs = TRUE, cgroupTexCmd = "mdseries",      rgroupTexCmd = "mdseries", table.env = FALSE, center = "none",      where = "htbp", size = "footnotesize", col.just = .just,      cdec = rep(0, len)) 
+%
+{\footnotesize
+\begin{tabular}{l@{}r@{}r@{}r@{}r@{}r}
+\toprule
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{Pycket}&\multicolumn{1}{c}{Racket}&\multicolumn{1}{c}{Larceny}&\multicolumn{1}{c}{Gambit}&\multicolumn{1}{c}{Bigloo}\tabularnewline
+\midrule
+ctak\textsubscript{fixflo}&$ 296$&$ 114489$&$  9453$&$ 3681$&$111640$\tabularnewline
+ctak\textsubscript{nothing}&$ 912$&$ 114917$&$  9372$&$ 3958$&$133010$\tabularnewline
+fibc\textsubscript{fixflo}&$5848$&$1351626$&$130895$&$52071$&$695450$\tabularnewline
+fibc\textsubscript{nothing}&$5876$&$1360785$&$130618$&$52867$&$705310$\tabularnewline
+pi\textsubscript{fixflo}&$5288$&$   6889$&$860335$&$ 9909$&$$\tabularnewline
+pi\textsubscript{nothing}&$5292$&$   6840$&$861688$&$ 9930$&$$\tabularnewline
+\bottomrule
+\end{tabular}
+}
+

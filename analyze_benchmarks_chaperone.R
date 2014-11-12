@@ -60,14 +60,16 @@ bench$benchmark <- sapply(bench$benchmark, function (x)
   if (x=='unsafe2') 'unsafe*' else paste0("",x))
 
 
-bench <- droplevels(bench[bench$vm %ni% c('Larceny','Spidermonkey','Python','PycketNoJit',,drop=TRUE])
+bench <- droplevels(bench[bench$vm %ni% c('Larceny','Spidermonkey','Python','PycketNoJit'),,drop=TRUE])
 bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
+
+
 
 bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
 bench$suite <- gsub("Chaperone(\\w+)Benchmarks", "\\1", bench$suite)
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
-
+bench <- droplevels(bench[!(bench$suite == 'Struct' & bench$benchmark == 'impersonate'),,])
 
 # ------ functions -----
 

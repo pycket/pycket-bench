@@ -29,4 +29,4 @@ OUT="src/$BENCHMARK.py"
 
 if [ ! -f "$OUT" ]; then echo "ERROR: no such benchmark"; exit 1; fi
 
-(exec $PYTHON "$@" "$OUT" 3>&2 2>&1 1>&3) 2>/dev/null
+exec $PYTHON "$@" "$OUT"

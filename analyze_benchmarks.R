@@ -7,7 +7,7 @@ figure.height <- 2.8
 do.only.nothing <- TRUE
 all.mean.in.graph <- TRUE
 
-
+MAX.CROSS <- 3
 
 pkgs = c(
   "reshape2",
@@ -284,10 +284,15 @@ if (rigorous) {
   }
 }
 
-
-bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
-# ignore nojit
-#bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != 'PycketNoJit',,drop=TRUE]
+if ('ctak' %in% bench$benchmark) {  
+  bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
+  bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != reference.vm,,drop=TRUE]
+  bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > 3,]$mean.norm <- MAX.CROSS
+  
+  
+} else {
+  bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
+}
 
 if (multi.variate) {
   .selection <- c('vm', 'variable_values','mean.norm')

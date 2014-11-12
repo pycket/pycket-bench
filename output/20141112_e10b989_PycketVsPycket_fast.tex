@@ -1,0 +1,12 @@
+%latex.default(table.ltx, file = paste0(input.basename, ".tex"),     rowlabel = "", booktabs = TRUE, cgroupTexCmd = "mdseries",     rgroupTexCmd = "mdseries", table.env = FALSE, center = "none",     rdec = c(0, rep(4, nrow(table.ltx) - 1)), where = "htbp",     size = "footnotesize", )%
+{\footnotesize
+\begin{tabular}{lr}
+\toprule
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{\llap{Relative Runtime (geometric mean)}}\tabularnewline
+\midrule
+Optimized&$1$\tabularnewline
+Callgraph&$0.9457$\tabularnewline
+No Strategies&$1.0532$\tabularnewline
+No Type Size Specialization&$1.0730$\tabularnewline
+\bottomrule
+\end{tabular}}

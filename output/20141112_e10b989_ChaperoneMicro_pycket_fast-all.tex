@@ -1,28 +1,18 @@
-Pycket.mean & Pycket.err095 & Racket.mean & Racket.err095 & V8.mean & V8.err095 & NA.mean & NA.err095 \\
-Bubble chaperone & 11372 &  --- &  6659 &  --- &      --- &  --- & 12440 &  --- \\
-Bubble direct &   692 &  --- &  1385 &  --- &    336 &  --- &   648 &  --- \\
-Bubble proxy &     --- &  --- &     --- &  --- & 105521 &  --- &     --- &  --- \\
-Bubble unsafe &   540 &  --- &   957 &  --- &      --- &  --- &   544 &  --- \\
-Bubble unsafe* &   548 &  --- &   726 &  --- &      --- &  --- &   544 &  --- \\
-Church chaperone &     --- &  --- & 37575 &  --- &      --- &  --- &     --- &  --- \\
-Church chaperone-a &     --- &  --- &  4405 &  --- &      --- &  --- &     --- &  --- \\
-Church contract &     --- &  --- &  9745 &  --- & 288890 &  --- &     --- &  --- \\
-Church direct &   724 &  --- &  1241 &  --- &   2041 &  --- &   792 &  --- \\
-Church proxy &     --- &  --- &     --- &  --- &  54039 &  --- &     --- &  --- \\
-Church proxy-a &     --- &  --- &     --- &  --- &  51951 &  --- &     --- &  --- \\
-Church wrap &  3188 &  --- &  4210 &  --- &   8519 &  --- &  3240 &  --- \\
-Proc chaperone &    92 &  --- &  1025 &  --- &      --- &  --- &    88 &  --- \\
-Proc chaperone+return &   100 &  --- &  1583 &  --- &      --- &  --- &    96 &  --- \\
-Proc direct &    20 &  --- &    34 &  --- &     38 &  --- &    20 &  --- \\
-Proc impersonate &    96 &  --- &   995 &  --- &      --- &  --- &    88 &  --- \\
-Proc impersonate+return &    96 &  --- &  1523 &  --- &      --- &  --- &    92 &  --- \\
-Proc indirect &    20 &  --- &   123 &  --- &     38 &  --- &    20 &  --- \\
-Proc proxy &     --- &  --- &     --- &  --- &   1592 &  --- &     --- &  --- \\
-Proc wrapped &    20 &  --- &   179 &  --- &     38 &  --- &    20 &  --- \\
-Proc wrapped+check &    20 &  --- &   382 &  --- &    118 &  --- &    20 &  --- \\
-Proc wrapped+return &    24 &  --- &   423 &  --- &    367 &  --- &    20 &  --- \\
-Struct chaperone &   136 &  --- &  5573 &  --- &      --- &  --- &   136 &  --- \\
-Struct direct &   132 &  --- &   526 &  --- &    376 &  --- &   132 &  --- \\
-Struct proxy &     --- &  --- &     --- &  --- &  26134 &  --- &     --- &  --- \\
-Struct unsafe &   132 &  --- &   337 &  --- &      --- &  --- &   132 &  --- \\
-Struct unsafe* &   132 &  --- &   336 &  --- &      --- &  --- &   136 &  --- \\
+& Pycket & PycketCallgraph & Racket & V8 & Pypy \\
+Bubble chaperone & 11372 & 12440 &  6659 &   &   \\
+Bubble direct &   692 &   648 &  1385 &    336 &    600 \\
+Bubble proxy &   &   &   & 105521 &   1240 \\
+Bubble unsafe &   540 &   544 &   957 &   &   \\
+Bubble unsafe* &   548 &   544 &   726 &   &   \\
+Church chaperone & 10412 & 10292 & 37575 &   &   \\
+Church chaperone-a &  1796 &  1436 &  4405 &   &   \\
+Church contract & 13716 &  1516 &  9745 & 288890 &   \\
+Church direct &   724 &   792 &  1241 &   2041 &   \\
+Church proxy &   &   &   &  54039 & 106951 \\
+Church proxy-a &   &   &   &  51951 &   \\
+Church wrap &  3188 &  3240 &  4210 &   8519 &  69148 \\
+Struct chaperone &   136 &   136 &  5573 &   &   \\
+Struct direct &   132 &   132 &   526 &    376 &    128 \\
+Struct proxy &   &   &   &  26134 &   2068 \\
+Struct unsafe &   132 &   132 &   337 &   &   \\
+Struct unsafe* &   132 &   136 &   336 &   &   \\

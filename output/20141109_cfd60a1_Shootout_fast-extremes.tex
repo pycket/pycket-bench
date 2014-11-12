@@ -1,0 +1,12 @@
+%latex.default(bench.summary.table.ltx, file = paste0(input.basename,     "-extremes.tex"), rowlabel = "", booktabs = TRUE, cgroupTexCmd = "mdseries",     rgroupTexCmd = "mdseries", table.env = FALSE, center = "none",     where = "htbp", size = "footnotesize", col.just = .just,     cdec = rep(0, len))%
+{\footnotesize
+\begin{tabular}{l@{}r@{}r}
+\toprule
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{Pycket}&\multicolumn{1}{c}{Racket}\tabularnewline
+\midrule
+binarytrees-generic&$ 3240$&$2198$\tabularnewline
+fannkuch-redux-generic&$ 1584$&$2163$\tabularnewline
+fasta-generic&$12296$&$3196$\tabularnewline
+reversecomplement-generic&$$&$8618$\tabularnewline
+\bottomrule
+\end{tabular}}

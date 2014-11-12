@@ -4,9 +4,9 @@
 [2014-11-09T20:29:00]	15148.000000	ms	cpu	nsieve	Racket	ShootoutBenchmarks	12	0	1		
 [2014-11-09T20:29:00]	0.000000	ms	gc	nsieve	Racket	ShootoutBenchmarks	12	0	1		
 [2014-11-09T20:29:00]	15122.000000	ms	total	nsieve	Racket	ShootoutBenchmarks	12	0	1		
-[2014-11-09T20:29:06]	5320.000000	ms	cpu	lists	Racket	ShootoutBenchmarks	2000	0	1		
-[2014-11-09T20:29:06]	1124.000000	ms	gc	lists	Racket	ShootoutBenchmarks	2000	0	1		
-[2014-11-09T20:29:06]	5314.000000	ms	total	lists	Racket	ShootoutBenchmarks	2000	0	1		
+# [2014-11-09T20:29:06]	5320.000000	ms	cpu	lists	Racket	ShootoutBenchmarks	2000	0	1		
+# [2014-11-09T20:29:06]	1124.000000	ms	gc	lists	Racket	ShootoutBenchmarks	2000	0	1		
+# [2014-11-09T20:29:06]	5314.000000	ms	total	lists	Racket	ShootoutBenchmarks	2000	0	1		
 [2014-11-09T20:29:10]	2932.000000	ms	cpu	k-nucleotide	Racket	ShootoutBenchmarks	fasta-500000	0	1		
 [2014-11-09T20:29:10]	84.000000	ms	gc	k-nucleotide	Racket	ShootoutBenchmarks	fasta-500000	0	1		
 [2014-11-09T20:29:10]	2929.000000	ms	total	k-nucleotide	Racket	ShootoutBenchmarks	fasta-500000	0	1		
@@ -251,7 +251,7 @@
 [2014-11-10T10:06:55]	1216.000000	ms	cpu	sumcol	Pycket	ShootoutBenchmarks	sumcol-10000	0	1		
 [2014-11-10T10:06:55]	0.000000	ms	gc	sumcol	Pycket	ShootoutBenchmarks	sumcol-10000	0	1		
 [2014-11-10T10:06:55]	1216.000000	ms	total	sumcol	Pycket	ShootoutBenchmarks	sumcol-10000	0	1		
-[2014-11-09T01:29:44]	2179988.000000	ms	cpu	lists	Pycket	ShootoutBenchmarks	2000	0	1		
-[2014-11-09T01:29:44]	0.000000	ms	gc	lists	Pycket	ShootoutBenchmarks	2000	0	1		
-[2014-11-09T01:29:44]	2179988.000000	ms	total	lists	Pycket	ShootoutBenchmarks	2000	0	1		
+# [2014-11-09T01:29:44]	2179988.000000	ms	cpu	lists	Pycket	ShootoutBenchmarks	2000	0	1		
+# [2014-11-09T01:29:44]	0.000000	ms	gc	lists	Pycket	ShootoutBenchmarks	2000	0	1		
+# [2014-11-09T01:29:44]	2179988.000000	ms	total	lists	Pycket	ShootoutBenchmarks	2000	0	1		
 

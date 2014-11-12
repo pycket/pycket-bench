@@ -77,7 +77,7 @@ if ('Racket' %in% bench$vm) {
   }
   # There are too big differences to plot. thus, table only
   if ('ctak' %in% bench$benchmark) {  
-    table.only <- c('ctak','fibc', 'pi', 'nucleic', 'dynamic', 'maze', 'slatex', 'matrix')
+    table.only <- c('ctak','fibc', 'pi', 'nucleic')
     #table.only <- c('ctak')
   } else if ('fannkuch-redux' %in% bench$benchmark) {
     # these are not the original ones, ignore them
@@ -87,7 +87,7 @@ if ('Racket' %in% bench$vm) {
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 # These are currently not run on pycket
-blacklist <- c('sum1', 'wc', 'cat')
+blacklist <- c('sum1', 'wc', 'cat', 'slatex')
 
 
 message(">>>>>>>>>> Putting these only into a table: ")
@@ -404,7 +404,7 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
               aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
   ) +
     geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm))+
-    geom_point(position=dodge,aes(y=0.15, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
+#     geom_point(position=dodge,aes(y=0.15, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
     xlab("") +
     ylab("Relative Runtime") +
     theme_bw(base_size=8, base_family="Helvetica") +
@@ -428,8 +428,9 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
     ) +
     scale_y_continuous(breaks=seq(0,ymax,.2), limits=c(0,ymax),expand=c(0,0)) +
     #scale_fill_grey(name = "Virtual Machine")
-    scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set2") +
-    scale_shape_manual(name = "Virtual Machine", values=c(1,8,10,13))
+    scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set2") 
+#+
+#    scale_shape_manual(name = "Virtual Machine", values=c(1,8,10,13))
   if (rigorous) {
     p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
   }
@@ -439,6 +440,8 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
   figure.width  <- figure.width / 3
 
 } else {
+  
+
 # Normalized bargraph
 dodge <- position_dodge(width=.8)
 #ymax <- round_any(max(1/bench.summary.graph$mean.norm,  na.rm=TRUE), 0.5, ceiling)
@@ -448,34 +451,43 @@ p <- ggplot(data=bench.summary.graph,
        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
 ) +
   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm))+
-  geom_point(position=dodge,aes(y=0.15, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
+#   geom_point(position=dodge,aes(y=0.15, ymax=ymax, shape=vm),size=2, color="grey90",stat="identity") +
   #   xlab("Benchmark") +
   ylab("Relative Runtime") +
-  theme_bw(base_size=8, base_family="Helvetica") +
+  theme_bw(base_size=6, base_family="Helvetica") +
   theme(
     rect = element_rect(),
     axis.title.x =  element_blank(),
     #     axis.title.x = element_text(face="bold", size=9),
     #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2,
-    axis.text.x  = element_text(size=8, angle=45, hjust=1),
-    axis.title.y = element_text(face="bold", size=8),
-    axis.text.y  = element_text(size=8), #angle=45, hjust=0.2, vjust=0.5,
+    axis.text.x  = element_text(size=6, angle=45, hjust=1),
+    axis.title.y = element_text(face="bold", size=6),
+    axis.text.y  = element_text(size=6), #angle=45, hjust=0.2, vjust=0.5,
     legend.position=c(0.15, .75),
-    #plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
-    legend.text = element_text(size=7),
-    legend.title = element_text(size=7, face="bold"),
+    plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
+    legend.text = element_text(size=6),
+    legend.title = element_text(size=6, face="bold"),
     legend.background = element_rect(fill="gray90", size=0),
     legend.margin = unit(0, "cm"),
     legend.key=element_rect(fill="white"),
-    legend.key.size=unit(5,"mm")
-  ) +
+    legend.key.size=unit(3,"mm")
+  )
+if ('fannkuch-redux' %in% bench$benchmark) {
+  p <- p +
+    scale_y_continuous(breaks=seq(0,ymax,1), limits=c(0,ymax),expand=c(0,0)) +
+    #scale_fill_grey(name = "Virtual Machine", guide="none")
+    scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1", guide="none")
+} else {
+  p <- p +
   scale_y_continuous(breaks=seq(0,ymax,1), limits=c(0,ymax),expand=c(0,0)) +
   #scale_fill_grey(name = "Virtual Machine")
-  scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1") +
-  scale_shape(name = "Virtual Machine", solid = FALSE)
+  scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1")
+#   + scale_shape(name = "Virtual Machine", solid = FALSE)
+}
 if (rigorous) {
   p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
 }
+
 
 if (multi.variate & !do.only.nothing) {
   .labeller <- function(var, value) {

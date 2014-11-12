@@ -1,5 +1,4 @@
-%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = (!.long),     center = "none", longtable = .long, landscape = .side, size = "small",     colheads = rep(c("mean", ""), len), col.just = .just, cgroup = levels(as.factor(bench.summary$vm)),     cdec = rep(0, len * 2))%
-\begin{landscape}\begin{table}[!tbp]
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = FALSE,     center = "none", size = "small", colheads = rep(c("mean",         ""), len), col.just = .just, cgroup = levels(as.factor(bench.summary$vm)),     cdec = rep(0, len * 2))%
 {\small
 \begin{tabular}{l@{}r@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}cr@{}>{\smaller\ensuremath{\pm}}r@{\,\si{\milli\second}}}
 \toprule
@@ -11,7 +10,7 @@ Bubble\textsubscript{chaperone}&$ 776$&$ 7$&&$ 6667$&$   5$&&$$&$$&&$$&$$&&$$&$$
 Bubble\textsubscript{direct}&$ 653$&$ 3$&&$ 1382$&$   2$&&$1595$&$ 1$&&$   336$&$   0$&&$   221$&$   0$&&$ 20626$&$  36$&&$  597$&$  2$\tabularnewline
 Bubble\textsubscript{proxy}&$$&$$&&$$&$$&&$$&$$&&$111379$&$4449$&&$113832$&$2284$&&$100209$&$ 816$&&$ 1248$&$ 11$\tabularnewline
 Bubble\textsubscript{unsafe}&$ 547$&$ 2$&&$  955$&$   2$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
-Bubble\textsubscript{unsafe2}&$ 540$&$ 2$&&$  726$&$   1$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Bubble\textsubscript{unsafe*}&$ 540$&$ 2$&&$  726$&$   1$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
 Church\textsubscript{chaperone}&$6960$&$49$&&$38042$&$1200$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
 Church\textsubscript{chaperone-a}&$1239$&$ 6$&&$ 4542$&$ 213$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
 Church\textsubscript{contract}&$1448$&$12$&&$10330$&$ 284$&&$$&$$&&$291928$&$1548$&&$403966$&$5428$&&$$&$$&&$$&$$\tabularnewline
@@ -34,8 +33,6 @@ Struct\textsubscript{direct}&$ 134$&$ 1$&&$  527$&$   0$&&$1069$&$ 1$&&$   377$&
 Struct\textsubscript{impersonate}&$ 136$&$ 1$&&$ 5530$&$ 103$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
 Struct\textsubscript{proxy}&$$&$$&&$$&$$&&$$&$$&&$ 26531$&$ 618$&&$ 26760$&$ 103$&&$103454$&$ 860$&&$ 2077$&$ 28$\tabularnewline
 Struct\textsubscript{unsafe}&$ 133$&$ 1$&&$  337$&$   0$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
-Struct\textsubscript{unsafe2}&$ 133$&$ 1$&&$  337$&$   0$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
+Struct\textsubscript{unsafe*}&$ 133$&$ 1$&&$  337$&$   0$&&$$&$$&&$$&$$&&$$&$$&&$$&$$&&$$&$$\tabularnewline
 \bottomrule
 \end{tabular}}
-
-\end{table}\end{landscape}

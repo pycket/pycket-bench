@@ -515,6 +515,7 @@ p
 }
 
 gg.file <- paste0(input.basename, "-norm.pdf")
+# if ('fannkuch-redux' %in% bench$benchmark) {
 ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
 #ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb')
 embed_fonts(gg.file, options=pdf.embed.options)
@@ -692,7 +693,7 @@ if (multi.variate) {
   pycket.timings <- (bench.info[bench.info$vm == 'Pycket',,])$mean.norm
 }
   
-  
+
 print(">> slowest pycket")
 print(max(pycket.timings))
 print(">> fastest pycket")

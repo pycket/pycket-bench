@@ -6,7 +6,7 @@ figure.height <- 2.8
 
 do.only.nothing <- TRUE
 all.mean.in.graph <- TRUE
-
+all.mean.in.graph.shootout <- FALSE
 MAX.CROSS <- 3
 
 pkgs = c(
@@ -292,6 +292,7 @@ if ('ctak' %in% bench$benchmark) {
   
 } else {
   bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
+  all.mean.in.graph <- all.mean.in.graph.shootout
 }
 
 if (multi.variate) {

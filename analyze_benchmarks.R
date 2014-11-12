@@ -81,7 +81,7 @@ if ('Racket' %in% bench$vm) {
     #table.only <- c('ctak')
   } else if ('fannkuch-redux' %in% bench$benchmark) {
     # these are not the original ones, ignore them
-    table.only <- c('binarytrees-generic', 'fannkuch-redux-generic', 'fasta-generic', 'reversecomplement-generic')
+    table.only <- c('binarytrees-generic', 'fannkuch-redux-generic', 'fasta-generic', 'reversecomplement-generic', 'nbody-vec', 'nbody-generic', 'nbody-vec-generic', 'spectralnorm-generic', 'mandelbrot-generic')
   }
 }
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'

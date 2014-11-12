@@ -83,15 +83,20 @@ if ('Racket' %in% bench$vm) {
     # these are not the original ones, ignore them
     table.only <- c('binarytrees-generic', 'fannkuch-redux-generic', 'fasta-generic', 'reversecomplement-generic', 'nbody-vec', 'nbody-generic', 'nbody-vec-generic', 'spectralnorm-generic', 'mandelbrot-generic')
   }
+  
+  message(">>>>>>>>>> Putting these only into a table: ")
+  sapply(table.only, message)
+  
+  
+} else {
+  table.only <- c()
 }
+
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 # These are currently not run on pycket
 blacklist <- c('sum1', 'wc', 'cat', 'slatex')
 
-
-message(">>>>>>>>>> Putting these only into a table: ")
-message(table.only)
 
 
 
@@ -284,15 +289,19 @@ if (rigorous) {
   }
 }
 
-if ('ctak' %in% bench$benchmark) {  
-  bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
-  bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != reference.vm,,drop=TRUE]
-  bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > MAX.CROSS,]$mean.norm <- MAX.CROSS
-  
-  
+if ('ctak' %in% bench$benchmark & 'ackermann' %in% bench$benchmark) {
+  bench.summary.graph <- bench.summary
 } else {
-  bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
-  all.mean.in.graph <- all.mean.in.graph.shootout
+  if ('ctak' %in% bench$benchmark) {  
+    bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
+    bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != reference.vm,,drop=TRUE]
+    bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > MAX.CROSS,]$mean.norm <- MAX.CROSS
+    
+    
+  } else {
+    bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
+    all.mean.in.graph <- all.mean.in.graph.shootout
+  }
 }
 
 if (multi.variate) {
@@ -520,49 +529,6 @@ ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormo
 #ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb')
 embed_fonts(gg.file, options=pdf.embed.options)
 
-
-# if (FALSE) {
-# #
-# # and now color
-# #
-# p <- ggplot(data=bench.summary.graph,
-# #        aes(x=benchmark,y=1/mean.norm,group=interaction(benchmark,vm),fill=vm,)
-#        aes(x=benchmark,y=mean.norm,group=interaction(benchmark,vm),fill=vm,)
-# ) +
-#   geom_bar(stat="identity", position=dodge, width=.75, aes(fill = vm),  )+
-#   #   xlab("Benchmark") +
-#   ylab("Relative Runtime") +
-#   theme_bw(base_size=8, base_family="Helvetica") +
-#   theme(
-#     rect = element_rect(),
-#     axis.title.x =  element_blank(),
-#     #     axis.title.x = element_text(face="bold", size=9),
-#     #     axis.text.x  = element_text(size=9), #angle=45, vjust=0.2,
-#     axis.text.x  = element_text(size=8, angle=45, hjust=1),
-#     axis.title.y = element_text(face="bold", size=8),
-#     axis.text.y  = element_text(size=8), #angle=45, hjust=0.2, vjust=0.5,
-#     legend.position=c(0.15, .75),
-#     plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
-#     legend.text = element_text(size=7),
-#     legend.title = element_text(size=7, face="bold"),
-#     legend.background = element_rect(fill="gray90", size=0),
-#     legend.margin = unit(0, "cm"),
-#     legend.key=element_rect(fill="white"),
-#     legend.key.size=unit(5,"mm")
-#   ) +
-#   scale_y_continuous(breaks=seq(0,ymax,.5), limits=c(0,ymax),expand=c(0,0)) +
-#   scale_fill_brewer(name = "Virtual Machine", type="qual", palette="Set1") +
-#   #facet_null()
-#   facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
-# if (rigorous) {
-#   p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
-# }
-# p
-# gg.file <- paste0(input.basename, "-norm-col.pdf")
-# ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
-# embed_fonts(gg.file, options=pdf.embed.options)
-# 
-# }
 
 if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
   (function() {

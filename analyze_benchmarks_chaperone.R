@@ -67,6 +67,11 @@ reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 bench <- droplevels(bench[bench$vm %ni% c('Larceny','Spidermonkey','Python','PycketNoJit'),,drop=TRUE])
 bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
+
+#
+bench <- droplevels(bench[bench$suite != 'Proc',,])
+
+
 bench <- droplevels(bench[!(bench$suite == 'Struct' & bench$benchmark == 'impersonate'),,])
 
 # ------ functions -----

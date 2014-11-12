@@ -553,7 +553,7 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
                  where="htbp", size="footnotesize", #center="centering",
 )
   })()
-  quit(safe="no")
+  quit(save="no")
 }
 if (rigorous) {
   # LaTeX table

@@ -224,9 +224,18 @@ bench.summary.tbl <- data.frame(bench.summary.ltx)
 rownames(bench.summary.ltx) <- paste0(bench.summary.sel$suite, '\\textsubscript', bench.summary.sel$benchmark, '}')
 colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
 
-colnames(bench.summary.tbl) <- sapply(colnames(bench.summary.tbl), function(x) {sedit(x, '_', ' ')})
+colnames.bench.summary.tbl <- lapply(colnames(bench.summary.tbl), function(x) {
+  if (grepl("err095", x)) {
+    paste0("{\\ensuremath{\\pm}}")
+  } else if (grepl("[_.]", x)) {
+    gsub("^(\\w+)[_.].*$", "\\1", x)
+  } else {
+    x
+  }
+})
+colnames.bench.summary.tbl[[1]] <- paste('&', colnames.bench.summary.tbl[[1]])
 bench.summary.tbl <- format(bench.summary.tbl, digits=0, scientific=FALSE, drop0trailing=TRUE)
-bench.summary.tbl <- data.frame(lapply(bench.summary.tbl, function(x) {gsub("NA", " ---", x)}))
+bench.summary.tbl <- data.frame(lapply(bench.summary.tbl, function(x) {gsub("\\s*NA\\s*", "--", x)}))
 rownames(bench.summary.tbl) <- paste0(bench.summary.sel$suite, ' ', bench.summary.sel$benchmark, '')
 
 
@@ -240,7 +249,7 @@ rownames(bench.summary.tbl) <- paste0(bench.summary.sel$suite, ' ', bench.summar
 write.xlsx(bench.tot, paste0(input.basename, ".xlsx"), append=FALSE, sheetName="bench")
 write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetName="summary")
 
-write.table(bench.summary.tbl, file=paste0(input.basename, "-all.tex"), sep=" & ", quote=FALSE, eol=" \\\\\n")
+write.table(bench.summary.tbl, file=paste0(input.basename, "-all.tex"), sep=" & ", quote=FALSE, eol=" \\\\\n", col.names=colnames.bench.summary.tbl)
 # 
 # # 
 # if (rigorous) {

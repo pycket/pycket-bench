@@ -1,0 +1,19 @@
+#!/usr/local/bin/rebench -d -v rebench_0.6.conf ChaperoneMacroBenchmarksRacketFast
+[2014-11-12T15:10:40]	5248.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2014-11-12T15:10:40]	2468.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2014-11-12T15:10:40]	5241.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2014-11-12T15:10:47]	5332.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2014-11-12T15:10:47]	2380.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2014-11-12T15:10:47]	5323.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2014-11-12T15:10:53]	2896.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		1
+[2014-11-12T15:10:53]	2896.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		1
+[2014-11-12T15:10:58]	2852.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		0
+[2014-11-12T15:10:58]	2852.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		0
+[2014-11-12T15:11:03]	2860.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		2
+[2014-11-12T15:11:03]	2860.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		2
+[2014-11-12T15:11:59]	53043.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		1
+[2014-11-12T15:11:59]	53043.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		1
+[2014-11-12T15:12:54]	53347.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		0
+[2014-11-12T15:12:54]	53347.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		0
+[2014-11-12T15:13:48]	51559.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		2
+[2014-11-12T15:13:48]	51559.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		2

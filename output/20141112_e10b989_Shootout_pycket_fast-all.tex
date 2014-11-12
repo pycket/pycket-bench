@@ -1,0 +1,50 @@
+% latex.default(bench.summary.ltx, file = paste0(input.basename,      "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = (!.long),      center = "none", longtable = .long, size = "small", col.just = .just,      cdec = rep(0, len)) 
+%
+\begin{table}[!tbp]
+{\small
+\begin{tabular}{l@{}r@{}r}
+\toprule
+\multicolumn{1}{l}{Benchmark}&\multicolumn{1}{c}{Pycket}&\multicolumn{1}{c}{Racket}\tabularnewline
+\midrule
+ackermann&$ 5692$&$ 5345$\tabularnewline
+ary&$ 4164$&$20924$\tabularnewline
+binarytrees&$ 3924$&$ 1846$\tabularnewline
+binarytrees-generic&$ 4772$&$ 2152$\tabularnewline
+fannkuch&$ 1496$&$ 1998$\tabularnewline
+fannkuch-redux&$ 1480$&$ 1522$\tabularnewline
+fannkuch-redux-generic&$ 1556$&$ 2106$\tabularnewline
+fasta&$ 6384$&$ 1580$\tabularnewline
+fasta-generic&$ 6196$&$ 1676$\tabularnewline
+fibo&$11052$&$ 5515$\tabularnewline
+hash&$ 6036$&$13374$\tabularnewline
+hash2&$ 5180$&$16391$\tabularnewline
+heapsort&$ 3148$&$ 3106$\tabularnewline
+lists&$ 2004$&$ 5305$\tabularnewline
+mandelbrot&$ 5740$&$ 6515$\tabularnewline
+mandelbrot-generic&$ 6104$&$32261$\tabularnewline
+matrix&$ 4820$&$10125$\tabularnewline
+meteor&$  600$&$  408$\tabularnewline
+moments&$ 4992$&$ 5361$\tabularnewline
+nbody&$ 4872$&$11151$\tabularnewline
+nbody-generic&$ 5088$&$24619$\tabularnewline
+nestedloop&$ 4276$&$10591$\tabularnewline
+nsieve&$ 5320$&$14956$\tabularnewline
+nsievebits&$ 1604$&$ 6292$\tabularnewline
+partialsums&$ 4620$&$14986$\tabularnewline
+pidigits&$ 4800$&$ 8440$\tabularnewline
+pidigits1&$ 4316$&$14012$\tabularnewline
+random&$ 5896$&$21816$\tabularnewline
+recursive&$22005$&$10928$\tabularnewline
+regexmatch&$ 2224$&$ 4460$\tabularnewline
+sieve&$ 5188$&$12404$\tabularnewline
+spectralnorm&$ 6692$&$ 3997$\tabularnewline
+spectralnorm-generic&$ 5708$&$31885$\tabularnewline
+spellcheck&$ 4400$&$ 6972$\tabularnewline
+strcat&$ 4796$&$ 6849$\tabularnewline
+sumcol&$ 2184$&$ 6697$\tabularnewline
+wordfreq&$ 2868$&$ 8194$\tabularnewline
+\bottomrule
+\end{tabular}
+}
+\end{table}
+

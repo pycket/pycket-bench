@@ -3,7 +3,7 @@
 (define boyer-iters       150)
 (define browse-iters     2000)
 (define cpstak-iters     9000)
-(define ctak-iters      12000)
+(define ctak-iters        500)
 (define dderiv-iters  8000000)
 (define deriv-iters  13000000)
 (define destruc-iters    3500)

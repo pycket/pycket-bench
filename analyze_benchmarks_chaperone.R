@@ -61,7 +61,7 @@ bench$benchmark <- sapply(bench$benchmark, function (x)
 
 
 
-bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy", "PycketCallgraph"))
+bench$vm <- factor(bench$vm, levels = c("Pycket", "PycketCallgraph", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
 bench$suite <- gsub("Chaperone(\\w+)Benchmarks", "\\1", bench$suite)
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
@@ -240,7 +240,7 @@ colnames.bench.summary.tbl <- lapply(colnames(bench.summary.tbl), function(x) {
 })
 colnames.bench.summary.tbl[[1]] <- paste('&', colnames.bench.summary.tbl[[1]])
 bench.summary.tbl <- format(bench.summary.tbl, digits=0, scientific=FALSE, drop0trailing=TRUE)
-bench.summary.tbl <- data.frame(lapply(bench.summary.tbl, function(x) {gsub("\\s*NA\\s*", "--", x)}))
+bench.summary.tbl <- data.frame(lapply(bench.summary.tbl, function(x) {gsub("\\s*NA\\s*", " ", x)}))
 rownames(bench.summary.tbl) <- paste0(bench.summary.sel$suite, ' ', bench.summary.sel$benchmark, '')
 
 

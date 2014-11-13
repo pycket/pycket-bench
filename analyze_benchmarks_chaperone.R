@@ -73,6 +73,8 @@ bench <- droplevels(bench[bench$suite != 'Proc',,])
 
 
 bench <- droplevels(bench[!(bench$suite == 'Struct' & bench$benchmark == 'impersonate'),,])
+bench <- droplevels(bench[bench$benchmark %ni% c('chaperone-a', 'proxy-a'),,])
+
 
 # ------ functions -----
 

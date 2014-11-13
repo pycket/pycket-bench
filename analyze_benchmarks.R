@@ -305,6 +305,8 @@ if ('ctak' %in% bench$benchmark & 'ackermann' %in% bench$benchmark) {
   }
 }
 
+
+
 if (multi.variate) {
   .selection <- c('vm', 'variable_values','mean.norm')
   .ids <- c('vm', 'variable_values')
@@ -348,10 +350,13 @@ if (all.mean.in.graph) {
   bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall.all)
   
 } else {
-  bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall)
-  
-  
+  bench.summary.graph <- rbind(bench.summary.graph, bench.summary.overall) 
 }
+
+
+
+
+
 #bench.summary.graph <- normalizeTo(bench.summary.graph, 'benchmark', 'vm', 'Racket', 'mean', c('mean', 'cnfIntHigh', 'cnfIntLow' ))
 
 sel.col = if (rigorous) { if (multi.variate) { c('variable_values','benchmark','vm','mean','err095') } else { c('benchmark','vm','mean','err095') }  } else 
@@ -386,9 +391,6 @@ if (multi.variate) {
 
 # ----- Outputting -----
 
-# Excel for overall data
-write.xlsx(bench.tot, paste0(input.basename, ".xlsx"), append=FALSE, sheetName="bench")
-write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetName="summary")
 
 # 
 # # Normalized bargraph 1
@@ -408,6 +410,17 @@ write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetNam
 if (multi.variate & do.only.nothing) {
   bench.summary.graph <- droplevels(bench.summary.graph[bench.summary.graph$variable_values == 'nothing',,drop=TRUE])
 }
+
+mn <- mapply(function(vm, n) {if (vm == "Pycket")  n else Inf }, bench.summary.graph$vm, bench.summary.graph$mean.norm)
+
+bench.summary.graph$benchmark <- 
+  reorder(bench.summary.graph$benchmark, mn, min)
+
+
+# Excel for overall data
+write.xlsx(bench.tot, paste0(input.basename, ".xlsx"), append=FALSE, sheetName="bench")
+write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetName="summary")
+
 
 if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
   
@@ -479,7 +492,7 @@ p <- ggplot(data=bench.summary.graph,
     axis.text.x  = element_text(size=6, angle=45, hjust=1),
     axis.title.y = element_text(face="bold", size=6),
     axis.text.y  = element_text(size=6), #angle=45, hjust=0.2, vjust=0.5,
-    legend.position=c(0.15, .8),
+    legend.position=c(0.3, .8),
     plot.margin = unit(c(-3.2,3,-4,-1),"mm"),
     legend.text = element_text(size=6),
     legend.title = element_text(size=6, face="bold"),
@@ -553,7 +566,7 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
                  where="htbp", size="footnotesize", #center="centering",
 )
   })()
-  quit(save="no")
+  quit(safe="no")
 }
 if (rigorous) {
   # LaTeX table

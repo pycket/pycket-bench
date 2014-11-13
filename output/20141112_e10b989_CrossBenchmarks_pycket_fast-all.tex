@@ -1,13 +1,6 @@
-% latex.default(bench.summary.ltx, file = paste0(input.basename,      "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = (!.long),      center = "none", longtable = .long, size = "small", col.just = .just,      cdec = rep(0, len)) 
-%
-
-\setlongtables
-
-{\small
-
-
-\begin{longtable}{l@{}r@{}r@{}r@{}r@{}r}
-\toprule
+%latex.default(bench.summary.ltx, file = paste0(input.basename,     "-all.tex"), rowlabel = "Benchmark", booktabs = TRUE, table.env = (!.long),     center = "none", longtable = .long, size = "small", col.just = .just,     cdec = rep(0, len))%
+\setlongtables{\small
+\begin{longtable}{l@{}r@{}r@{}r@{}r@{}r}\toprule
 \multicolumn{1}{l}{Benchmark}&\multicolumn{1}{c}{Pycket}&\multicolumn{1}{c}{Racket}&\multicolumn{1}{c}{Larceny}&\multicolumn{1}{c}{Gambit}&\multicolumn{1}{c}{Bigloo}\tabularnewline
 \midrule
 \endhead
@@ -118,6 +111,4 @@ trav2\textsubscript{nothing}&$ 4616$&$  17917$&$ 12850$&$16595$&$$\tabularnewlin
 triangl\textsubscript{fixflo}&$ 5424$&$  15031$&$ 15171$&$12394$&$  4140$\tabularnewline
 triangl\textsubscript{nothing}&$ 5608$&$  15423$&$ 14722$&$13395$&$ 11550$\tabularnewline
 \bottomrule
-\end{longtable}
-}
-
+\end{longtable}}

@@ -44,6 +44,9 @@ fi
 
 if [ ! -f "$OUT" ]; then echo "ERROR: no such benchmark"; exit 1; fi
 
+if [ ! -z "DO_PYPYLOG" ]; then
+    export PYPYLOG=jit-summary:${BENCHMARK}-out.txt
+fi
 
 if [ "$VARIABLE" = "CHAP" ]; then
     exec $PYCKET_BIN "$OUT" "$@" \

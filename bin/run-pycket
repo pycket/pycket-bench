@@ -26,10 +26,13 @@ shift
 
 if [ "$VARIABLE" = "PURE" -o "$VARIABLE" = "CHAP" ]; then
     OUT="src/${BENCHMARK}.rkt"
+    LOGVAR="${PYCKET}-${BENCHMARK}"
 elif [ "$VARIABLE" = "CHAPM" ]; then
     OUT="$BENCHMARK"
+    LOGVAR="${PYCKET}-${BENCHMARK}"
 else
     OUT="racket/${BENCHMARK}${VARIABLE}.rkt"
+    LOGVAR="${PYCKET}-${BENCHMARK}${VARIABLE}"
 
     if egrep -q 'set-c[ad]r!' "src/${BENCHMARK}.scm" ; then
         RFRS=" r5rs"
@@ -45,7 +48,7 @@ fi
 if [ ! -f "$OUT" ]; then echo "ERROR: no such benchmark"; exit 1; fi
 
 if [ ! -z "DO_PYPYLOG" ]; then
-    export PYPYLOG=jit-summary:${BENCHMARK}-out.txt
+    export PYPYLOG=${DO_PYPYLOG}:${LOGVAR}-out.txt
 fi
 
 if [ "$VARIABLE" = "CHAP" ]; then

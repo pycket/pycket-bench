@@ -41,7 +41,7 @@
 
 (def-macro (FLOAT/ . lst)
   (cond ((null? (cdr lst)) `(/fl 1.0 ,(car lst)))
-        (else              `(/fl ,(car lst) (FLOAT* ,@(cdr lst))))))
+        (else              `(/fl ,(car lst) (FLOAT/ ,@(cdr lst))))))
 
 (def-macro (FLOAT= . lst)  `(=fl ,@lst))
 (def-macro (FLOAT< . lst)  `(<fl ,@lst))
@@ -110,6 +110,13 @@
     [(* x)   x]
     [(* x y) (*fx x y)]
     [(* x y ...) (*fx x (* y ...))]))
+
+(define-syntax /
+  (syntax-rules ()
+    [(/ x)   (/fx 1 x)]
+    [(/ x y) (/fx x y)]
+    [(/ x y ...) (/fx x (/ y ...))]))
+
 
 (def-macro (quotient . lst) `(quotientfx ,@lst))
 (def-macro (modulo . lst) `(modulofx ,@lst))

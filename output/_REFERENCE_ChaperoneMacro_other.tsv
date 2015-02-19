@@ -1,0 +1,100 @@
+[2015-02-19T22:57:51]	52891.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:57:51]	52891.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:58:45]	52015.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:58:45]	52015.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:59:39]	51483.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:59:39]	51483.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:00:34]	52415.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:00:34]	52415.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:01:28]	52363.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:01:28]	52363.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:02:23]	52819.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:02:23]	52819.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:03:20]	53875.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:03:20]	53875.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:04:14]	52747.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:04:14]	52747.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:05:11]	53963.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:05:11]	53963.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:06:07]	53703.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:06:07]	53703.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:06:21]	12064.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:21]	2744.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:21]	12046.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:35]	12432.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:35]	2732.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:35]	12416.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:48]	12144.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:48]	2768.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:48]	12124.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:01]	12300.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:01]	2640.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:01]	12281.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:14]	12528.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:14]	2720.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:14]	12509.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:27]	11924.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:27]	2572.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:27]	11901.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:41]	12556.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:41]	2732.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:41]	12536.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:54]	12284.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:54]	2696.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:54]	12260.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:07]	12100.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:07]	2776.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:07]	12078.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:20]	12220.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:20]	2552.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:20]	12201.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:27]	5576.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:27]	2536.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:27]	5570.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:34]	5640.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:34]	2476.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:34]	5632.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:40]	5252.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:40]	2392.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:40]	5246.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:47]	5708.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:47]	2540.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:47]	5699.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:53]	5448.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:53]	2596.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:53]	5441.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:00]	5368.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:00]	2432.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:00]	5362.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:06]	5520.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:06]	2520.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:06]	5511.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:13]	5476.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:13]	2596.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:13]	5468.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:19]	5556.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:19]	2572.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:19]	5548.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:25]	5296.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:25]	2452.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:25]	5287.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:31]	2964.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:31]	2964.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:36]	2868.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:36]	2868.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:41]	2892.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:41]	2892.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:46]	2952.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:46]	2952.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:51]	2972.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:51]	2972.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:56]	2892.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:56]	2892.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:02]	2972.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:02]	2972.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:07]	2964.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:07]	2964.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:12]	2908.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:12]	2908.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:17]	2924.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:17]	2924.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		

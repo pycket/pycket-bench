@@ -1,5 +1,3 @@
-#!/usr/local/bin/rebench -d rebench_0.6.conf CrossBenchmarksOther
-#!/usr/local/bin/rebench -d -c rebench_0.6.conf CrossBenchmarksOther
 [2015-02-16T19:45:53]	9960.622000	ms	cpu	pi	Gambit	CrossBenchmarks		0	1		nothing
 [2015-02-16T19:45:53]	0.000000	ms	gc	pi	Gambit	CrossBenchmarks		0	1		nothing
 [2015-02-16T19:45:53]	9960.390091	ms	total	pi	Gambit	CrossBenchmarks		0	1		nothing

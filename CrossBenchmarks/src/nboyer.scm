@@ -91,7 +91,7 @@
      n)))
 
 (define (setup-boyer) #t) ; assigned below
-(define (test-boyer) #t)  ; assigned below
+(define (test-boyer alist term n) #t)  ; assigned below
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

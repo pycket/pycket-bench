@@ -47,7 +47,7 @@
   (open-output-file filename))
 
 (define (bigloo-main argv)
-    (apply main argv))
+    (apply main (cdr argv)))
 
 (define-macro (def-macro form . body)
   `(define-macro ,form (let () ,@body)))

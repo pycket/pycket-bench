@@ -1,5 +1,5 @@
-#lang racket
-(require "time-run.rktl")
+#lang racket/base
+(require "time-run.rktl" (for-syntax racket/base))
 
 (require mzlib/defmacro)
 

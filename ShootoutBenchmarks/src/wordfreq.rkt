@@ -4,8 +4,8 @@
 ;  Updated and corrected by Brent Fulgham
 ;  Re-written by Matthew Flatt with some inspriation from the Python example
 
-#lang racket
-(require "time-run.rktl")
+#lang racket/base
+(require "time-run.rktl" racket/port)
 
 (require mzlib/list)
 

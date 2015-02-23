@@ -2,4 +2,4 @@
 PROGRAM=`echo $0 | sed 's%.*/%%'`
 PROGDIR="$(cd `dirname $0`; echo $PWD)"
 
-PYCKET=pycket-c-callgraph $PROGDIR/run-pycket "$@"
+PYCKET=pycket-c-no-callgraph $PROGDIR/run-pycket "$@"

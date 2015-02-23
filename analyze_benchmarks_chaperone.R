@@ -61,7 +61,7 @@ bench$benchmark <- sapply(bench$benchmark, function (x)
 
 
 
-bench$vm <- factor(bench$vm, levels = c("Pycket", "PycketCallgraph", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
+bench$vm <- factor(bench$vm, levels = c("Pycket", "PycketNoCallgraph", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
 bench$suite <- gsub("Chaperone(\\w+)Benchmarks", "\\1", bench$suite)
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 

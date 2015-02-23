@@ -47,7 +47,8 @@ fi
 
 if [ ! -f "$OUT" ]; then echo "ERROR: no such benchmark"; exit 1; fi
 
-if [ ! -z "DO_PYPYLOG" ]; then
+if [ ! -z "${DO_PYPYLOG}" ]; then
+    rm -f ${LOGVAR}-out.txt
     export PYPYLOG=${DO_PYPYLOG}:${LOGVAR}-out.txt
 fi
 

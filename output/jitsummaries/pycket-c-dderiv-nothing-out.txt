@@ -1,0 +1,24 @@
+[759fc8233453d1] {jit-summary
+Tracing:      	35	0.039973
+Backend:      	25	0.009566
+TOTAL:      		5.822149
+ops:             	28285
+recorded ops:    	6820
+  calls:         	0
+guards:          	2968
+opt ops:         	2705
+opt guards:      	641
+forcings:        	263
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	10
+abort: force quasi-immut:	0
+nvirtuals:       	2284
+nvholes:         	188
+nvreused:        	1448
+Total # of loops:	7
+Total # of bridges:	18
+Freed # of loops:	0
+Freed # of bridges:	0
+[759fc823372b0a] jit-summary}

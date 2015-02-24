@@ -64,11 +64,11 @@
 
 (define-syntax FLOATnegative?
   (syntax-rules ()
-    ((FLOATnegative? x) (fl< 0.0 x))))
+    ((FLOATnegative? x) (fl< x 0.0))))
 
 (define-syntax FLOATpositive?
   (syntax-rules ()
-    ((FLOATpositive? x) (fl> 0.0 x))))
+    ((FLOATpositive? x) (fl> x 0.0))))
 
 (define-syntax FLOATzero?
   (syntax-rules ()

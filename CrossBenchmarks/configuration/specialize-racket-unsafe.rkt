@@ -70,11 +70,11 @@
 
 (define-syntax FLOATnegative?
   (syntax-rules ()
-    ((FLOATnegative? x) (unsafe-fl> 0.0 x))))
+    ((FLOATnegative? x) (unsafe-fl< x 0.0))))
 
 (define-syntax FLOATpositive?
   (syntax-rules ()
-    ((FLOATpositive? x) (unsafe-fl< 0.0 x))))
+    ((FLOATpositive? x) (unsafe-fl> x 0.0))))
 
 (define-syntax FLOATzero?
   (syntax-rules ()

@@ -55,7 +55,7 @@
 (define ray-iters         350)
 (define scheme-iters    50000)
 (define simplex-iters  800000)
-;; (define slatex-iters       20)
+(define slatex-iters       20)
 (define perm9-iters        50)
 (define nboyer-iters      250)
 (define sboyer-iters      300)

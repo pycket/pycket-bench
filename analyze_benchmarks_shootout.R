@@ -192,7 +192,6 @@ gg.file <- paste0(input.basename, "-generic-norm.pdf")
 ggsave(gg.file, width=figure.width * (1 - ratio), height=figure.height, units=c("in"), colormodel='rgb')
 embed_fonts(gg.file, options=pdf.embed.options)
 
-q(save="no")
 
 if (rigorous) {
   # LaTeX table, all
@@ -201,13 +200,14 @@ if (rigorous) {
     len <- ncol(bench.summary.ltx)/2
     .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
     .just = c('@{}r', .just[2:length(.just)])
-    .long <- nrow(bench.summary.ltx) > 50
     out <- latex(bench.summary.ltx,
                  file=paste0(input.basename, "-all.tex"),
                  rowlabel="Benchmark",
+                 caption="All Shootout benchmarks results",
+                 lines.page=999999,
                  booktabs=TRUE,
-                 table.env=(! .long), center="none",
-                 longtable=.long,
+                 center="none",
+                 longtable=TRUE,
                  size="small", #center="centering",
                  colheads=rep(c('mean', ''), len),
                  col.just=.just,
@@ -228,6 +228,7 @@ if (rigorous) {
                  file=paste0(input.basename, "-all.tex"),
                  rowlabel="Benchmark",
                  booktabs=TRUE,
+                 lines.page=999999,
                  table.env=(! .long), center="none",
                  longtable=.long,
                  size="small", #center="centering",

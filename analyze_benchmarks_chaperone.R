@@ -56,13 +56,16 @@ bench <- read.delim(tsv_name, comment.char = "#", header=FALSE,
 
 bench$vm <- sapply(bench$vm, function (x)
   if (x=='RRacket') 'Racket' else paste0("",x))
+bench$vm <- sapply(bench$vm, function (x)
+  if (x=='PycketNoCallgraph') 'Pycket*' else paste0("",x))
 bench$benchmark <- sapply(bench$benchmark, function (x)
   if (x=='unsafe2') 'unsafe*' else paste0("",x))
 
 
 
-bench$vm <- factor(bench$vm, levels = c("Pycket", "PycketNoCallgraph", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
+bench$vm <- factor(bench$vm, levels = c("Pycket", "Pycket*", "Racket", "Larceny", "V8", "Spidermonkey", "Python", "Pypy"))
 bench$suite <- gsub("Chaperone(\\w+)Benchmarks", "\\1", bench$suite)
+
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 bench <- droplevels(bench[bench$vm %ni% c('Larceny','Spidermonkey','Python','PycketNoJit'),,drop=TRUE])
@@ -74,6 +77,8 @@ bench <- droplevels(bench[bench$suite != 'Proc',,])
 
 bench <- droplevels(bench[!(bench$suite == 'Struct' & bench$benchmark == 'impersonate'),,])
 bench <- droplevels(bench[bench$benchmark %ni% c('chaperone-a', 'proxy-a'),,])
+
+
 
 
 # ------ functions -----
@@ -226,7 +231,7 @@ sel.col = if (rigorous) { c('suite','benchmark','vm','mean','err095') } else
                         { c('suite','benchmark','vm','mean') }
 bench.summary.sel <- dcast(melt(bench.summary[sel.col], id.vars=c('suite', 'benchmark','vm')), suite + benchmark ~ vm + variable)
 bench.summary.ltx <- bench.summary.sel[3:length(bench.summary.sel)]
-bench.summary.tbl <- data.frame(bench.summary.ltx)
+bench.summary.tbl <- bench.summary.sel[3:length(bench.summary.sel)]
 
 rownames(bench.summary.ltx) <- paste0(bench.summary.sel$suite, '\\textsubscript', bench.summary.sel$benchmark, '}')
 colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
@@ -235,7 +240,7 @@ colnames.bench.summary.tbl <- lapply(colnames(bench.summary.tbl), function(x) {
   if (grepl("err095", x)) {
     paste0("{\\ensuremath{\\pm}}")
   } else if (grepl("[_.]", x)) {
-    gsub("^(\\w+)[_.].*$", "\\1", x)
+    gsub("^([^_.]+)[_.].*$", "\\1", x)
   } else {
     x
   }

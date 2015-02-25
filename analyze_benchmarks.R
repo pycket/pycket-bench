@@ -70,17 +70,20 @@ bench$vm <- sapply(bench$vm, function (x)
 bench <- droplevels(bench[bench$vm != 'PycketNoJit',,drop=TRUE])
 bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
 
+table.only <- c()
+
 if ('Racket' %in% bench$vm) {
   if (length(factor(bench$vm)) > 2) {
     bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "Gambit", "Bigloo"))
   } else {
     bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket"))  
   }
-  # There are too big differences to plot. thus, table only
-  if ('ctak' %in% bench$benchmark) {  
-    table.only <- c('ctak','fibc', 'pi')
-    #table.only <- c('ctak')
-  } else if ('fannkuch-redux' %in% bench$benchmark) {
+#   # There are too big differences to plot. thus, table only
+#   if ('ctak' %in% bench$benchmark) {  
+#     table.only <- c('ctak','fibc', 'pi')
+#     #table.only <- c('ctak')
+#   } else
+    if ('fannkuch-redux' %in% bench$benchmark) {
     # these are not the original ones, ignore them
     table.only <- c('binarytrees-generic', 'fannkuch-redux-generic', 'fasta-generic', 'reversecomplement-generic', 'nbody-vec', 'nbody-generic', 'nbody-vec-generic', 'spectralnorm-generic', 'mandelbrot-generic')
   }
@@ -96,7 +99,7 @@ if ('Racket' %in% bench$vm) {
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 # These are currently not run on pycket
-blacklist <- c('sum1', 'wc', 'cat', 'slatex')
+blacklist <- c('slatex')
 
 
 
@@ -373,21 +376,25 @@ if (multi.variate) {
   colnames(bench.summary.ltx) <- sapply(colnames(bench.summary.ltx), function(x) {sedit(x, '_', ' ')})
 }
 
-bench.summary.table <- droplevels(bench.summary[bench.summary$vm != 'PycketNoJit',,drop=TRUE])
-if (multi.variate) {
-  bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','variable_values','vm')), benchmark + variable_values ~ vm + variable)  
-  bench.summary.table.sel.flt <- bench.summary.table.sel[bench.summary.table.sel$benchmark %in% table.only,]
-  bench.summary.table.ltx <- bench.summary.table.sel.flt[3:length(bench.summary.table.sel.flt)]
-  rownames(bench.summary.table.ltx) <- paste0(bench.summary.table.sel.flt$benchmark, '\\textsubscript{', bench.summary.table.sel.flt$variable_values, '}')
-  colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
-} else {
-  bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
-  bench.summary.table.sel <- bench.summary.table.sel[bench.summary.table.sel$benchmark %in% table.only,]
-  bench.summary.table.ltx <- bench.summary.table.sel[2:length(bench.summary.table.sel)]
-  rownames(bench.summary.table.ltx) <- bench.summary.table.sel$benchmark
-  colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
-}
 
+if (length(table.only) > 0) {
+
+  bench.summary.table <- droplevels(bench.summary[bench.summary$vm != 'PycketNoJit',,drop=TRUE])
+  if (multi.variate) {
+    bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','variable_values','vm')), benchmark + variable_values ~ vm + variable)  
+    bench.summary.table.sel.flt <- bench.summary.table.sel[bench.summary.table.sel$benchmark %in% table.only,]
+    bench.summary.table.ltx <- bench.summary.table.sel.flt[3:length(bench.summary.table.sel.flt)]
+    rownames(bench.summary.table.ltx) <- paste0(bench.summary.table.sel.flt$benchmark, '\\textsubscript{', bench.summary.table.sel.flt$variable_values, '}')
+    colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
+  } else {
+    bench.summary.table.sel <- dcast(melt(bench.summary.table[sel.col], id.vars=c('benchmark','vm')), benchmark ~ vm + variable)
+    bench.summary.table.sel <- bench.summary.table.sel[bench.summary.table.sel$benchmark %in% table.only,]
+    bench.summary.table.ltx <- bench.summary.table.sel[2:length(bench.summary.table.sel)]
+    rownames(bench.summary.table.ltx) <- bench.summary.table.sel$benchmark
+    colnames(bench.summary.table.ltx) <- sapply(colnames(bench.summary.table.ltx), function(x) {sedit(x, '_', ' ')})
+  }
+
+}
 
 # ----- Outputting -----
 
@@ -514,7 +521,7 @@ if ('fannkuch-redux' %in% bench$benchmark) {
 #   + scale_shape(name = "Virtual Machine", solid = FALSE)
 }
 if (rigorous) {
-  p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.33)  
+  p <- p + geom_errorbar(aes(ymin=lower, ymax = upper),  position=dodge, color=I("black"), size=.2)  
 }
 
 
@@ -568,10 +575,11 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
   })()
   quit(safe="no")
 }
+
 if (rigorous) {
   # LaTeX table
   (function() {
-    if (nrow(bench.summary.table.ltx) <= 0) {
+    if (length(table.only) <= 0 || nrow(bench.summary.table.ltx) <= 0) {
       return();
     }
     len <- ncol(bench.summary.table.ltx)/2
@@ -602,26 +610,43 @@ if (rigorous) {
     len <- ncol(bench.summary.ltx)/2
     .just = rep(c('r','@{}>{\\smaller\\ensuremath{\\pm}}r@{\\,\\si{\\milli\\second}}'), len)
     .just = c('@{}r', .just[2:length(.just)])
-    .long <- nrow(bench.summary.ltx) > 50
-    out <- latex(bench.summary.ltx,
+    ## .long <- nrow(bench.summary.ltx) > 50
+    out <- if (nrow(bench.summary.ltx) > 50) {
+           latex(bench.summary.ltx,
                  file=paste0(input.basename, "-all.tex"),
                  rowlabel="Benchmark",
                  booktabs=TRUE,
                  table.env=(! .long), center="none",
-                 longtable=.long,
+                 longtable=TRUE,
+                 caption="All Scheme benchmarks results",
+                 lines.page=999999,
                  size="small", #center="centering",
                  colheads=rep(c('mean', ''), len),
                  col.just=.just,
                  #col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
                  cgroup=levels(as.factor(bench.summary$vm)),
                  cdec=rep(0, len*2))
+       } else {
+           latex(bench.summary.ltx,
+            file=paste0(input.basename, "-all.tex"),
+            rowlabel="Benchmark",
+            booktabs=TRUE,
+            center="none",
+            size="small", #center="centering",
+            colheads=rep(c('mean', ''), len),
+            col.just=.just,
+            #col.just=rep(c('r','@{\\,\\si{\\milli\\second} \\ensuremath{\\pm}}r'), len),
+            cgroup=levels(as.factor(bench.summary$vm)),
+            cdec=rep(0, len*2))
+
+       }
   })()
   
 } else {
 
   # LaTeX table
   (function() {
-    if (nrow(bench.summary.table.ltx) <= 0) {
+    if (length(table.only) <= 0 || nrow(bench.summary.table.ltx) <= 0) {
       return();
     }
     colnames(bench.summary.table.ltx) <- gsub(' mean', '', colnames(bench.summary.table.ltx))
@@ -645,17 +670,30 @@ if (rigorous) {
     }
     colnames(bench.summary.ltx) <- gsub(' mean', '', colnames(bench.summary.ltx))  
     len <- ncol(bench.summary.ltx)
-    .just = rep('@{}r', len)
-    .long <- nrow(bench.summary.ltx) > 50
-    out <- latex(bench.summary.ltx,
+    .just = rep('r', len)
+    ## .long <- nrow(bench.summary.ltx) > 50
+    out <- if (nrow(bench.summary.ltx) > 50) {
+           latex(bench.summary.ltx,
                  file=paste0(input.basename, "-all.tex"),
                  rowlabel="Benchmark",
                  booktabs=TRUE,
-                 table.env=(! .long), center="none",
-                 longtable=.long,
+                 center="none",
+                 longtable=TRUE,
                  size="small", #center="centering",
+                 lines.page=999999,
+                 caption="All Scheme benchmarks results",
                  col.just=.just,
                  cdec=rep(0, len))
+    } else {
+        latex(bench.summary.ltx,
+            file=paste0(input.basename, "-all.tex"),
+            rowlabel="Benchmark",
+            booktabs=TRUE,
+            table.env=TRUE, center="none",
+            size="small", #center="centering",
+            col.just=.just,
+            cdec=rep(0, len))
+    }
   })()
   
   

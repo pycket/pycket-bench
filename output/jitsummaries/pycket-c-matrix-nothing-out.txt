@@ -1,24 +1,24 @@
-[759d534b303f25] {jit-summary
-Tracing:      	434	0.606865
-Backend:      	373	0.189927
-TOTAL:      		5.547840
-ops:             	604995
-recorded ops:    	129000
+[773bcbb5f9ba44] {jit-summary
+Tracing:      	422	0.573114
+Backend:      	371	0.168812
+TOTAL:      		5.429844
+ops:             	594040
+recorded ops:    	125588
   calls:         	4
-guards:          	48217
-opt ops:         	37819
-opt guards:      	9215
-forcings:        	2527
+guards:          	47243
+opt ops:         	37654
+opt guards:      	9081
+forcings:        	2558
 abort: trace too long:	0
 abort: compiling:	0
 abort: vable escape:	0
-abort: bad loop: 	61
+abort: bad loop: 	51
 abort: force quasi-immut:	0
-nvirtuals:       	51317
-nvholes:         	11836
-nvreused:        	27377
+nvirtuals:       	51933
+nvholes:         	12460
+nvreused:        	27557
 Total # of loops:	63
-Total # of bridges:	310
+Total # of bridges:	308
 Freed # of loops:	0
 Freed # of bridges:	0
-[759d534b3307f8] jit-summary}
+[773bcbb5fc7259] jit-summary}

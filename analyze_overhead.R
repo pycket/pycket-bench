@@ -3,7 +3,8 @@
 # in inches
 figure.width <- 7
 # ratio <- 2/3
-ratio <- 4/5
+# ratio <- 4/5
+ratio <- 1/2
 figure.height <- 2
 
 
@@ -41,13 +42,15 @@ overall <- read.csv(csv.overall,  col.names=c('benchid', 'jit', 'total', 'ratio'
 overall <- overall %>% mutate(variant='OVERALL', overall=TRUE)
 
 cross <- read.csv(csv.cross,  col.names=c('benchid','variant', 'jit', 'total', 'ratio'))
-cross <- cross %>% mutate(overall=FALSE, variant=paste('Cross',variant, sep="\n")) 
+# cross <- cross %>% mutate(overall=FALSE, variant=paste('Cross',variant, sep="\n")) 
+cross <- cross %>% filter(variant=='nothing') %>% mutate(overall=FALSE, variant='Cross-platform') 
+
 
 shoot <- read.csv(csv.shoot,  col.names=c('benchid', 'jit', 'total', 'ratio'))
 shoot <- shoot %>% mutate(variant='Shootout', overall=FALSE)
 
 chap <- read.csv(csv.chap,  col.names=c('variant', 'benchid', 'jit', 'total', 'ratio'))
-chap <- chap %>% mutate(overall=FALSE, variant=paste('Chaperones',variant, sep="\n")) 
+chap <- chap %>% filter(variant=='callgraph') %>% mutate(overall=FALSE, variant='Chaperone') 
 
 plot.data <- rbind(cross,shoot,chap,overall)
 
@@ -64,7 +67,7 @@ p <- ggplot(data=plot.data,aes(x=variant,y=ratio)) + default.theme() +
   ) +    
   geom_boxplot() + 
 #   annotate("segment", x=0,xend=10,y = geomean(overall$ratio) , yend = geomean(overall$ratio), colour="green") +
-  geom_jitter(height=.001, width=0, size=1, color="blue", alpha=0.5) +
+#   geom_jitter(height=.001, width=0, size=1, color="blue", alpha=0.5) +
   scale_y_continuous(breaks=seq(0,1,.2), limits=c(0,1),expand=c(0,0)) +
   ylab("Relative warmup time") +
   #   geom_point(position=position_jitter(width = 0.005, height=0), size=.25, color="blue") +

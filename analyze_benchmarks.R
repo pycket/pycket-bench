@@ -710,7 +710,11 @@ if (multi.variate) {
 } else {
   pycket.timings <- (bench.info[bench.info$vm == 'Pycket',,])$mean.norm
 }
-  
+
+print(">> racket nothing vs fixflo slowdown")
+print(-(1-1/(dcast(bench.summary %>% select(benchmark,vm,variable_values,mean) %>% filter(vm %in% c('Racket')), benchmark + vm ~ variable_values, value.var = 'mean')) %>% mutate(ratio=fixflo/nothing) %>% summarise(geomean(ratio))))
+print(">> pycket nothing vs fixflo slowdown")
+print(-(1-1/(dcast(bench.summary %>% select(benchmark,vm,variable_values,mean) %>% filter(vm %in% c('Pycket')), benchmark + vm ~ variable_values, value.var = 'mean')) %>% mutate(ratio=fixflo/nothing) %>% summarise(geomean(ratio))))
 
 print(">> slowest pycket")
 print(max(pycket.timings))

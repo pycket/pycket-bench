@@ -20,6 +20,7 @@ generic <- c('binarytrees-generic', 'fannkuch-redux-generic', 'fasta-generic', '
 tsv_name.default <- "output/Shootout.tsv"
 "#
 tsv_name.default <- 'output/20141112_e10b989_Shootout_pycket_fast.tsv'
+tsv_name.default <- 'output/20150227_535ee83_Shootout.tsv'
 "#
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -240,6 +241,15 @@ if (rigorous) {
 bench.info <- bench.summary.graph[bench.summary.graph$overall == FALSE,,] 
 
 pycket.timings <- (bench.info[bench.info$vm == 'Pycket',,])$mean.norm
+
+specialization <- join(
+  bench.summary %>% filter(benchmark %in% gsub("-generic", "", generic)) %>% filter(benchmark != 'nbody-vec') %>%  select(benchmark,vm,mean),
+  bench.summary.generic %>% mutate(benchmark=gsub("\ngeneric","", benchmark), generic.mean=mean) %>% filter(benchmark != 'nbody-vec') %>% select(benchmark,vm,generic.mean),
+  by = c('vm','benchmark')
+) %>% mutate(slowdown=1-(1/(generic.mean/mean)))
+print(ddply(specialization, .(vm), summarise, slowdown.geomean=geomean(slowdown),slowdown.mean=mean(slowdown)))
+
+
 
 print(">> slowest pycket")
 print(max(pycket.timings))

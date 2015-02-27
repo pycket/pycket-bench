@@ -99,7 +99,7 @@ if ('Racket' %in% bench$vm) {
 reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
 
 # These are currently not run on pycket
-blacklist <- c()
+blacklist <- c('slatex')
 
 
 

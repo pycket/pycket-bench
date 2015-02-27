@@ -1,0 +1,300 @@
+[2015-02-19T22:57:51]	52891.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:57:51]	52891.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:58:45]	52015.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:58:45]	52015.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:59:39]	51483.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T22:59:39]	51483.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:00:34]	52415.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:00:34]	52415.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:01:28]	52363.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:01:28]	52363.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:02:23]	52819.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:02:23]	52819.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:03:20]	53875.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:03:20]	53875.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:04:14]	52747.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:04:14]	52747.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:05:11]	53963.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:05:11]	53963.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:06:07]	53703.000000	ms	cpu	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:06:07]	53703.000000	ms	total	opt chap	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:06:21]	12064.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:21]	2744.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:21]	12046.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:35]	12432.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:35]	2732.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:35]	12416.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:48]	12144.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:48]	2768.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:06:48]	12124.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:01]	12300.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:01]	2640.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:01]	12281.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:14]	12528.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:14]	2720.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:14]	12509.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:27]	11924.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:27]	2572.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:27]	11901.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:41]	12556.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:41]	2732.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:41]	12536.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:54]	12284.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:54]	2696.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:07:54]	12260.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:07]	12100.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:07]	2776.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:07]	12078.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:20]	12220.000000	ms	cpu	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:20]	2552.000000	ms	gc	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:20]	12201.000000	ms	total	contract	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:27]	5576.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:27]	2536.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:27]	5570.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:34]	5640.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:34]	2476.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:34]	5632.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:40]	5252.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:40]	2392.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:40]	5246.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:47]	5708.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:47]	2540.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:47]	5699.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:53]	5448.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:53]	2596.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:08:53]	5441.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:00]	5368.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:00]	2432.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:00]	5362.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:06]	5520.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:06]	2520.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:06]	5511.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:13]	5476.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:13]	2596.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:13]	5468.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:19]	5556.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:19]	2572.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:19]	5548.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:25]	5296.000000	ms	cpu	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:25]	2452.000000	ms	gc	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:25]	5287.000000	ms	total	direct	Racket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-19T23:09:31]	2964.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:31]	2964.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:36]	2868.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:36]	2868.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:41]	2892.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:41]	2892.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:46]	2952.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:46]	2952.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:51]	2972.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:51]	2972.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:56]	2892.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:09:56]	2892.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:02]	2972.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:02]	2972.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:07]	2964.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:07]	2964.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:12]	2908.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:12]	2908.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:17]	2924.000000	ms	cpu	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-19T23:10:17]	2924.000000	ms	total	none	Racket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:01:32]	2174.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:32]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:32]	2174.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:34]	2155.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:34]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:34]	2155.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:37]	2166.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:37]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:37]	2166.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:40]	2151.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:40]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:40]	2151.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:43]	2140.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:43]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:43]	2140.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:45]	2168.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:45]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:45]	2168.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:48]	2156.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:48]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:48]	2156.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:51]	2154.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:51]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:51]	2154.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:53]	2156.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:53]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:53]	2156.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:56]	2161.000000	ms	cpu	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:56]	0.000000	ms	gc	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:01:56]	2161.000000	ms	total	direct	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:02:15]	18006.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:02:15]	18006.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:02:34]	17890.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:02:34]	17890.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:02:54]	17759.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:02:54]	17759.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:03:13]	17797.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:03:13]	17797.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:03:32]	17734.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:03:32]	17734.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:03:51]	17686.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:03:51]	17686.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:04:10]	17660.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:04:10]	17660.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:04:29]	17514.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:04:29]	17514.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:04:48]	17771.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:04:48]	17771.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:07]	17673.000000	ms	cpu	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:07]	17673.000000	ms	total	opt chap	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:10]	2476.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:10]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:10]	2476.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:13]	2462.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:13]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:13]	2462.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:16]	2480.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:16]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:16]	2480.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:19]	2488.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:19]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:19]	2488.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:22]	2478.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:22]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:22]	2478.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:25]	2453.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:25]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:25]	2453.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:28]	2452.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:28]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:28]	2452.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:31]	2457.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:31]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:31]	2457.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:34]	2452.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:34]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:34]	2452.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:37]	2468.000000	ms	cpu	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:37]	0.000000	ms	gc	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:37]	2468.000000	ms	total	contract	Pycket	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:05:40]	1433.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:40]	1433.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:42]	1454.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:42]	1454.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:45]	1428.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:45]	1428.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:48]	1449.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:48]	1449.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:50]	1432.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:50]	1432.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:53]	1426.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:53]	1426.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:56]	1427.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:56]	1427.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:58]	1465.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:05:58]	1465.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:06:01]	1439.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:06:01]	1439.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:06:04]	1435.000000	ms	cpu	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:06:04]	1435.000000	ms	total	none	Pycket	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:06:24]	19267.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:06:24]	19267.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:06:45]	19174.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:06:45]	19174.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:07:06]	19234.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:07:06]	19234.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:07:26]	19323.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:07:26]	19323.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:07:47]	19226.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:07:47]	19226.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:08:08]	19336.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:08:08]	19336.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:08:28]	19378.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:08:28]	19378.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:08:49]	19486.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:08:49]	19486.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:10]	19163.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:10]	19163.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:30]	19296.000000	ms	cpu	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:30]	19296.000000	ms	total	opt chap	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:39]	6982.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:39]	6982.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:47]	6977.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:47]	6977.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:55]	6772.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:09:55]	6772.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:03]	7048.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:03]	7048.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:12]	6872.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:12]	6872.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:20]	6800.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:20]	6800.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:28]	6738.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:28]	6738.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:36]	6815.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:36]	6815.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:44]	7084.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:44]	7084.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:52]	6706.000000	ms	cpu	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:52]	6706.000000	ms	total	none	PycketNoCallgraph	ChaperonePffBenchmarks		0	1		
+[2015-02-27T11:10:58]	5120.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:10:58]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:10:58]	5120.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:04]	5094.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:04]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:04]	5094.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:09]	5115.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:09]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:09]	5115.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:15]	5093.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:15]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:15]	5093.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:21]	5095.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:21]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:21]	5095.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:26]	5075.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:26]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:26]	5075.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:32]	5100.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:32]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:32]	5100.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:38]	5102.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:38]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:38]	5102.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:44]	5102.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:44]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:44]	5102.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:49]	5094.000000	ms	cpu	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:49]	0.000000	ms	gc	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:49]	5094.000000	ms	total	contract	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:52]	2638.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:52]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:52]	2638.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:56]	2636.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:56]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:56]	2636.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:59]	2640.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:59]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:11:59]	2640.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:02]	2648.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:02]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:02]	2648.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:05]	2652.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:05]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:05]	2652.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:08]	2657.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:08]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:08]	2657.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:12]	2663.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:12]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:12]	2663.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:15]	2631.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:15]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:15]	2631.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:18]	2647.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:18]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:18]	2647.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:21]	2637.000000	ms	cpu	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:21]	0.000000	ms	gc	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		
+[2015-02-27T11:12:21]	2637.000000	ms	total	direct	PycketNoCallgraph	ChaperoneOdeBenchmarks		0	1		

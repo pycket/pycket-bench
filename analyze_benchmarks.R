@@ -1,8 +1,10 @@
 #! /usr/bin/env Rscript
 
 # in inches
-figure.width <- 7
-figure.height <- 2.3
+# figure.width <- 7
+# figure.height <- 2.3
+figure.width <- 8.5
+figure.height <- 3
 
 
 do.only.nothing <- TRUE

@@ -188,6 +188,7 @@ geomean <- function(X) {
 bench <- droplevels(bench[!(bench$benchmark %in% blacklist),,drop=TRUE])
 bench <- bench[c('criterion','vm','benchmark','value', 'variable_values')]
 
+
 if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
   multi.variate <- FALSE
   rigorous <- FALSE  
@@ -242,6 +243,9 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
 
 bench.tot <- droplevels(bench[bench$criterion == 'total',,drop=TRUE])
 bench.cpu <- droplevels(bench[bench$criterion == "cpu",,drop=TRUE])
+
+bench.tot.nothing <- droplevels(bench.tot[bench.tot$variable_values == 'nothing',,drop=TRUE])
+
 
 if (multi.variate) {
   group.by <- as.quoted(c("variable_values","benchmark","vm"))
@@ -429,6 +433,7 @@ bench.summary.graph$benchmark <-
 # Excel for overall data
 write.xlsx(bench.tot, paste0(input.basename, ".xlsx"), append=FALSE, sheetName="bench")
 write.xlsx(bench.summary, paste0(input.basename, ".xlsx"), append=TRUE, sheetName="summary")
+write.table(bench.tot.nothing, file=paste0(input.basename,'-sanitized.tsv'),sep="\t")
 
 
 if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {

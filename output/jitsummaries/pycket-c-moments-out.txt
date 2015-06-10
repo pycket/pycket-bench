@@ -1,11 +1,11 @@
-[779b1e92b80eb1] {jit-summary
-Tracing:      	75	0.083209
-Backend:      	72	0.488220
-TOTAL:      		6.107519
-ops:             	58438
+[2119be0883f682] {jit-summary
+Tracing:      	75	0.076115
+Backend:      	72	0.423945
+TOTAL:      		5.377681
+ops:             	58709
 recorded ops:    	12425
   calls:         	28
-guards:          	4204
+guards:          	4205
 opt ops:         	5478
 opt guards:      	1124
 forcings:        	546
@@ -21,4 +21,4 @@ Total # of loops:	22
 Total # of bridges:	50
 Freed # of loops:	0
 Freed # of bridges:	0
-[779b1e92ba7d9b] jit-summary}
+[2119be088637fe] jit-summary}

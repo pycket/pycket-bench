@@ -5,7 +5,7 @@ figure.width <- 7
 # ratio <- 2/3
 # ratio <- 4/5
 ratio <- 1/2
-figure.height <- 2
+figure.height <- 1.8
 
 
 
@@ -74,7 +74,7 @@ p <- ggplot(data=plot.data,aes(x=variant,y=ratio)) + default.theme() +
   facet_grid(. ~ overall, scales="free", space="free",labeller=label_bquote(""))
 p
 gg.file <- paste0(input.basename, ".pdf")
-ggsave(gg.file, width=figure.width * ratio, height=figure.height, units=c("in"), colormodel='rgb')
+ggsave(gg.file, width=figure.width * ratio, height=figure.height, units=c("in"), colormodel='rgb', useDingbats=FALSE)
 embed_fonts(gg.file, options=pdf.embed.options)
 
 print(">> slowest pycket")

@@ -4,6 +4,7 @@
 figure.width <- 7
 ratio <- 2/3
 figure.height <- 2.3
+# figure.height <- 1.4
 
 
 do.only.nothing <- TRUE
@@ -170,7 +171,7 @@ if (rigorous) {
 p
 
 gg.file <- paste0(input.basename, "-norm.pdf")
-ggsave(gg.file, width=figure.width * ratio, height=figure.height, units=c("in"), colormodel='rgb')
+ggsave(gg.file, width=figure.width * ratio, height=figure.height, units=c("in"), colormodel='rgb', useDingbats=FALSE)
 embed_fonts(gg.file, options=pdf.embed.options)
 
 # -------------------------------- Generic -----------------------------------------
@@ -190,7 +191,7 @@ if (rigorous) {
 p
 
 gg.file <- paste0(input.basename, "-generic-norm.pdf")
-ggsave(gg.file, width=figure.width * (1 - ratio), height=figure.height, units=c("in"), colormodel='rgb')
+ggsave(gg.file, width=figure.width * (1 - ratio), height=figure.height, units=c("in"), colormodel='rgb', useDingbats=FALSE)
 embed_fonts(gg.file, options=pdf.embed.options)
 
 

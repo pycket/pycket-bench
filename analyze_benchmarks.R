@@ -548,8 +548,8 @@ p
 
 gg.file <- paste0(input.basename, "-norm.pdf")
 # if ('fannkuch-redux' %in% bench$benchmark) {
-ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb')
-#ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb')
+ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb', useDingbats=FALSE)
+#ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb', useDingbats=FALSE)
 embed_fonts(gg.file, options=pdf.embed.options)
 
 

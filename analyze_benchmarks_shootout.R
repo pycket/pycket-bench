@@ -14,7 +14,7 @@ MAX.CROSS <- 3
 
 reference.vm <- 'Racket'
 
-blacklist <- c('strcat')
+blacklist <- c('strcat', 'fasta', 'fasta-generic')
 
 generic <- c('binarytrees-generic', 'fannkuch-redux-generic', 'fasta-generic', 'reversecomplement-generic', 'nbody-vec', 'nbody-generic', 'nbody-vec-generic', 'spectralnorm-generic', 'mandelbrot-generic')
 

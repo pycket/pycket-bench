@@ -51,9 +51,15 @@ if (FALSE) {
 
 if (length(commandArgs(trailingOnly=TRUE)) > 0) {
   tsv_name = commandArgs(trailingOnly=TRUE)[1]
+  if (length(commandArgs(trailingOnly=TRUE)) > 1) {
+    CAPPING <- as.numeric(commandArgs(trailingOnly=TRUE)[2])
+  } else {
+    CAPPING <- Inf
+  }
 } else {
   # tsv_name <- "output/20140307-cache-envs.tsv"
   tsv_name <- "output/current.tsv"
+  CAPPING <- 2
 }
 
 if (!file.exists(tsv_name)) {
@@ -74,8 +80,8 @@ bench <- droplevels(bench[bench$criterion != 'gc',,drop=TRUE])
 
 table.only <- c()
 
-if ('Racket' %in% bench$vm) {
-  if (length(factor(bench$vm)) > 2) {
+if ('Racket' %in% bench$vm && !(length(levels(factor(bench$vm))) == 3) ) {
+  if (length(levels(factor(bench$vm))) > 2) {
     bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket", "Larceny", "Gambit", "Bigloo"))
   } else {
     bench$vm <- factor(bench$vm, levels = c("Pycket", "Racket"))  
@@ -98,7 +104,7 @@ if ('Racket' %in% bench$vm) {
   table.only <- c()
 }
 
-reference.vm <-  if ('Racket' %in% bench$vm) 'Racket' else 'Pycket'
+reference.vm <-  if ('PycketOrig' %in% bench$vm) 'PycketOrig' else (if ('Racket' %in% bench$vm) 'Racket' else 'Pycket')
 
 # These are currently not run on pycket
 blacklist <- c('slatex', 'fasta')
@@ -305,8 +311,9 @@ if ('ctak' %in% bench$benchmark & 'ackermann' %in% bench$benchmark) {
   if ('ctak' %in% bench$benchmark) {  
     bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
     bench.summary.graph <- bench.summary.graph[bench.summary.graph$vm != reference.vm,,drop=TRUE]
-    bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > MAX.CROSS,]$mean.norm <- MAX.CROSS
-    
+    if (nrow(bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > MAX.CROSS,]) > 0) {
+      bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > MAX.CROSS,]$mean.norm <- MAX.CROSS
+    }    
     
   } else {
     bench.summary.graph <- droplevels(bench.summary[!(bench.summary$benchmark %in% table.only),,drop=TRUE])
@@ -424,7 +431,14 @@ if (multi.variate & do.only.nothing) {
   bench.summary.graph <- droplevels(bench.summary.graph[bench.summary.graph$variable_values == 'nothing',,drop=TRUE])
 }
 
-mn <- mapply(function(vm, n) {if (vm == "Pycket")  n else Inf }, bench.summary.graph$vm, bench.summary.graph$mean.norm)
+mn <- mapply(function(vm, n) {
+  if (
+      ('Pycket' %in% bench.summary.graph$vm && vm == "Pycket") || 
+      ('PycketOrig' %in% bench.summary.graph$vm && vm == "PycketOrig")) {
+    n
+  } else {
+    Inf
+  }}, bench.summary.graph$vm, bench.summary.graph$mean.norm)
 
 bench.summary.graph$benchmark <- 
   reorder(bench.summary.graph$benchmark, mn, min)
@@ -480,10 +494,24 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
   p <- p + facet_null()
   
   p
-  figure.width  <- figure.width / 3
 
-} else {
+  gg.file <- paste0(input.basename, "-overall-norm.pdf")
+  # if ('fannkuch-redux' %in% bench$benchmark) {
+  ggsave(gg.file, width=figure.width / 3, height=figure.height, units=c("in"), colormodel='rgb', useDingbats=FALSE)
+  #ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb', useDingbats=FALSE)
+  embed_fonts(gg.file, options=pdf.embed.options)
+  figure.width <- figure.width * 1.2
+} 
   
+
+bench.summary.graph$isCapped <- " "
+.needs.cap <- bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > CAPPING,]
+if (nrow(.needs.cap) > 0) {
+  bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > CAPPING,]$isCapped <-
+    paste0("> ", format(.needs.cap$mean.norm,digits=0))
+  bench.summary.graph[!is.na(bench.summary.graph$mean.norm) & bench.summary.graph$mean.norm > CAPPING,]$mean.norm <- CAPPING
+}
+
 
 # Normalized bargraph
 dodge <- position_dodge(width=.75)
@@ -515,6 +543,10 @@ p <- ggplot(data=bench.summary.graph,
     legend.key=element_rect(fill="white"),
     legend.key.size=unit(3,"mm")
   )
+if (nrow(.needs.cap) > 0){
+  p <- p + 
+    geom_text(position=position_dodge(width=.9), angle=90,aes(y=(CAPPING*.9), ymax=ymax,label=isCapped), size=2) 
+}
 if ('fannkuch-redux' %in% bench$benchmark) {
   p <- p +
     scale_y_continuous(breaks=seq(0,ymax,1), limits=c(0,ymax),expand=c(0,0)) +
@@ -549,13 +581,16 @@ if (multi.variate & !do.only.nothing) {
 }
 
 p
-}
+
 
 gg.file <- paste0(input.basename, "-norm.pdf")
-# if ('fannkuch-redux' %in% bench$benchmark) {
+gg.file2 <- paste0(input.basename, "2-norm.pdf")
+
+figure.width2 <- (figure.width/30) * length(levels(bench.summary.graph$benchmark))
 ggsave(gg.file, width=figure.width, height=figure.height, units=c("in"), colormodel='rgb', useDingbats=FALSE)
-#ggsave(gg.file, width=20, height=7, units=c("in"), colormodel='rgb', useDingbats=FALSE)
 embed_fonts(gg.file, options=pdf.embed.options)
+ggsave(gg.file2, width=figure.width2, height=figure.height, units=c("in"), colormodel='rgb', useDingbats=FALSE)
+embed_fonts(gg.file2, options=pdf.embed.options)
 
 
 if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
@@ -580,7 +615,7 @@ if ('ackermann' %in% bench$benchmark & 'cpstak' %in% bench$benchmark) {
                  where="htbp", size="footnotesize", #center="centering",
 )
   })()
-  quit(safe="no")
+  quit(save="no")
 }
 
 if (rigorous) {

@@ -1,0 +1,35 @@
+#! /bin/sh
+PROGRAM=`echo $0 | sed 's%.*/%%'`
+PROGDIR="$(cd `dirname $0`; echo $PWD)"
+
+if [ ! -z "$ZSH_VERSION" ]; then
+  setopt shwordsplit
+fi
+
+BENCHDIR="$(dirname $PROGDIR)"
+CHEZDIR="$BENCHDIR/chez"
+CHEZ=scheme
+
+if [ $# -lt 2 ]; then
+    echo "No."
+    exit -1
+fi
+
+VARIABLE=$1
+shift
+BENCHMARK=$1
+shift
+
+SRC="chez/${BENCHMARK}${VARIABLE}.scm"
+TMPFILE="/tmp/${BENCHMARK}${VARIABLE}.out"
+
+if [ ! -f "src/${BENCHMARK}.scm" ]; then echo "ERROR: no such benchmark"; exit 1; fi
+
+
+CHEZ_PRELUDE="${CHEZ_PRELUDE:-configuration/definitions-chez.scm configuration/iterations.rkt}"
+CHEZ_SPECIALIZE="configuration/specialize-chez$VARIABLE.scm"
+
+cat ${CHEZ_PRELUDE} ${CHEZ_SPECIALIZE} src/${BENCHMARK}.scm configuration/main.scm > ${SRC}
+
+exec $CHEZ "$@" --optimize-level 3 --compile-imported-libraries --script $SRC | python ~/src/pycket-bench/CrossBenchmarks/configuration/sanitise_chez.py
+

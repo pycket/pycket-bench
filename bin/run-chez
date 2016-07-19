@@ -21,15 +21,13 @@ BENCHMARK=$1
 shift
 
 SRC="chez/${BENCHMARK}${VARIABLE}.scm"
-TMPFILE="/tmp/${BENCHMARK}${VARIABLE}.out"
 
 if [ ! -f "src/${BENCHMARK}.scm" ]; then echo "ERROR: no such benchmark"; exit 1; fi
-
 
 CHEZ_PRELUDE="${CHEZ_PRELUDE:-configuration/definitions-chez.scm configuration/iterations.rkt}"
 CHEZ_SPECIALIZE="configuration/specialize-chez$VARIABLE.scm"
 
 cat ${CHEZ_PRELUDE} ${CHEZ_SPECIALIZE} src/${BENCHMARK}.scm configuration/main.scm > ${SRC}
 
-exec $CHEZ "$@" --optimize-level 3 --compile-imported-libraries --script $SRC | python ~/src/pycket-bench/CrossBenchmarks/configuration/sanitise_chez.py
+exec $CHEZ "$@" --optimize-level 3 --compile-imported-libraries --script $SRC | python "$PROGDIR/sanitize_chez.py"
 

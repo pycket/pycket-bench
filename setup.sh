@@ -49,6 +49,15 @@ if [ -z "$RACKET" ]; then
     exit 1
 fi
 
+if [ ! -x "$PROGDIR/ChezScheme/bin/scheme" ]; then
+    $ECHO "installing chez"
+    git clone https://github.com/cisco/ChezScheme.git
+    _go ChezScheme
+    ./configure --installprefix="$PROGDIR/ChezScheme"
+    make -j8
+    make install
+    _gone
+fi
 
 if [ ! -x "$PROGDIR/bigloo/bin/bigloo" ]; then
     $ECHO "installing Bigloo"
@@ -165,7 +174,7 @@ if [ ! -x "$PROGDIR/spidermonkery/bin/js24" ]; then
     cd build-release
     mkdir -p $PROGDIR/spidermonkey
     ../configure --prefix=$PROGDIR/spidermonkey
-    make
+    make -j8
     make install
     _gone
 fi

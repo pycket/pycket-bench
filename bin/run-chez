@@ -8,7 +8,7 @@ fi
 
 BENCHDIR="$(dirname $PROGDIR)"
 CHEZDIR="$BENCHDIR/chez"
-CHEZ=scheme
+CHEZ="$BENCHDIR/ChezScheme/bin/scheme"
 
 if [ $# -lt 2 ]; then
     echo "No."

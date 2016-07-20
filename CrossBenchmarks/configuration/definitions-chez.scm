@@ -32,4 +32,4 @@
   (call-with-output-file filename proc))
 
 (define (open-output-file/truncate filename)
-  (open-output-file filename))
+  (open-output-file filename 'truncate))

@@ -4,10 +4,28 @@
       (loop (+ i 1) (run))
       result)))
 
+(define warmup-iters
+ (let ([args (current-command-line-arguments)])
+   (if (< (vector-length args) 1) 0
+     (let ([n (string->number (vector-ref args 0))])
+       (if (fixnum? n) n
+         (error 'main "must have a fixnum argument"))))))
+
+(define (warmup-loop name count ok? run)
+  (define (loop n)
+    (if (= n 0)
+      (void)
+      (begin
+        (run-bench name count ok? run)
+        (loop (- n 1)))))
+  (loop warmup-iters))
+
 (define (run-benchmark name count ok? run-maker . args)
   (newline)
   (let* ((run (apply run-maker args))
-         (result (time (run-bench name count ok? run))))
+         (result (begin
+                   (warmup-loop name count ok? run)
+                   (time (run-bench name count ok? run)))))
     (when (not (ok? result))
       (begin
         (display "*** wrong result ***")

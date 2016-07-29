@@ -11,12 +11,20 @@
        (if (fixnum? n) n
          (error 'main "must have a fixnum argument"))))))
 
+(define (warmup-loop name count ok? run)
+  (define (loop n)
+    (if (= n 0)
+      (void)
+      (begin
+        (run-bench name count ok? run)
+        (loop (- n 1)))))
+  (loop warmup-iters))
+
 (define (run-benchmark name count ok? run-maker . args)
   (newline)
   (let* ((run (apply run-maker args))
          (result (begin
-                   (for ([_ (in-range warmup-iters)])
-                     (run-bench name count ok? run))
+                   (warmup-loop name count ok? run)
                    (time (run-bench name count ok? run)))))
     (when (not (ok? result))
       (begin
